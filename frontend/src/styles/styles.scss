@@ -5,34 +5,3 @@
 
     font-family: monospace;
 }
-
-.exercise-page {
-    margin: 20px 20px;
-
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        a {
-            text-decoration: none;
-        }
-    }
-
-    img {
-        max-width: 100%;
-        height: auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .player-ui {
-        display: flex;
-        max-width: 100%;
-
-        input {
-            flex: 1;
-        }
-    }
-}
