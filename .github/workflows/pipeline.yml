@@ -60,5 +60,5 @@ jobs:
         uses: azure/webapps-deploy@85270a1854658d167ab239bce43949edb336fa7c
         with:
           app-name: "EasyEase"
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_CCBB8D4C9DBF419A8B0CCE9E5390B5B1 }}
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: "./backend"
