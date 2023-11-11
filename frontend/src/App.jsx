@@ -1,12 +1,10 @@
 import React from "react";
-import Cards from "./Components/Cards";
+import {RouterProvider} from "react-router-dom";
+import {routes} from "./routesModule";
 
 const App = () => {
   return (
-    <div>
-      <h1>Heyy</h1>
-      <Cards />
-    </div>
+    <RouterProvider router={routes}></RouterProvider>
   );
 };
 
