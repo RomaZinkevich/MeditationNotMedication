@@ -31,3 +31,6 @@ dist-ssr
 
 *.env
 *.publishsettings
+
+src/audio.js
+

@@ -6,7 +6,8 @@ const pool = require("../db/dbconfig")
 // @desc Get all Sections
 // @route GET /api/sections
 router.get("/", (req, res) => {
-    pool.query('SELECT section_name, content_name, image FROM content AS C, section AS S WHERE S.section_id=C.section_id;', (err, result) => {
+    const query = 'SELECT content_id, content_name, author, section_name, image FROM content AS C, section AS S WHERE S.section_id=C.section_id;';
+    pool.query(query, (err, result) => {
         if (err)
             res.status(500).json(err.message);
         else
