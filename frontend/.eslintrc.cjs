@@ -29,5 +29,6 @@ module.exports = {
   ],
   "rules": {
     "quotes": [2, "double", {"avoidEscape": true}],
+    "linebreak-style": 0,
   },
 };

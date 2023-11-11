@@ -1,9 +1,13 @@
-import React, {useState} from "react";
+import React from "react";
+import Cards from "./Components/Cards";
 
-function App() {
+const App = () => {
   return (
-    <h1>Hello world</h1>
+    <div>
+      <h1>Heyy</h1>
+      <Cards />
+    </div>
   );
-}
+};
 
 export default App;
