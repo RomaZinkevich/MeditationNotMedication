@@ -19,17 +19,15 @@ jobs:
       - name: Run Backend Tests
         working-directory: ./backend
         run: npm run lint && npm run test
-
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Install Node
         uses: actions/setup-node@v3
         with:
           node-version: "18"
-          cache: "npm"
 
       - name: npm install, build, and test
         run: |
