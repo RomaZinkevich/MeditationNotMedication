@@ -1,31 +1,30 @@
 import React from "react";
+import GuideSection from "./GuideSection";
 
 const Cards = () => {
-  const cards = [
+  const sections = [
     {
       id: 1,
-      title: "First Card",
-      img: "",
+      cards: [
+        {gId: 1, title: "Card 1", img: "", description: "Description for Card 1"},
+        {gId: 2, title: "Card 2", img: "", description: "Description for Card 2"},
+      ],
+      name: "Section 1",
     },
     {
       id: 2,
-      title: "Second Card",
-      img: "",
-    },
-    {
-      id: 3,
-      title: "Third Card",
-      img: "",
+      cards: [
+        {gId: 3, title: "Card 3", img: "", description: "Description for Card 3"},
+        {gId: 4, title: "Card 4", img: "", description: "Description for Card 4"},
+      ],
+      name: "Section 2",
     },
   ];
 
   return (
     <div>
-      {cards.map((card) => (
-        <div key={card.id}>
-          <h3>{card.title}</h3>
-          <img src="{card.img}" alt="Audio" />
-        </div>
+      {sections.map((section) => (
+        <GuideSection key={section.id} sectionId={section.id} cards={section.cards} name={section.name} />
       ))}
     </div>
   );

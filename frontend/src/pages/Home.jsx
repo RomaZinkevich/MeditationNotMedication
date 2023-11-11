@@ -1,26 +1,25 @@
-import React, {useEffect} from "react";
+import React from "react";
 import NavBar from "../components/NavBar";
+import GuideSection from "../components/GuideSection";
 
-import Cards from "../components/Cards";
-
-function Home(props) {
-  // const [indexes, setIndexes] = useState({});
-  const indexes = [1, 2, 3];
-
-  useEffect(() => {
-    // TODo: Call from backend
-  }, []);
+function Home() {
+  const sections = [
+    {
+      id: 1,
+      name: "Section 1",
+    },
+    {
+      id: 2,
+      name: "Section 2",
+    },
+  ];
 
   return (
     <>
       <NavBar />
-      <ul>
-        {indexes.map((elem, i) => (
-          <li key={i}>
-            <Cards index = {elem} />
-          </li>),
-        )}
-      </ul>
+      {sections.map((section) => {
+        return <GuideSection sectionID={section.id} name={section.name}/>;
+      })};
     </>
   );
 }
