@@ -18,10 +18,5 @@ const pool = new Pool({
   ssl:{ca:SSL}
 });
 
-// // Example query
-// pool.query('SELECT * FROM your_table', (err, res) => {
-//   console.log(err, res);
-//   pool.end();
-// });
 
 module.exports = pool;
