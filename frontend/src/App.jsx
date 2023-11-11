@@ -1,8 +1,10 @@
-import React, {useState} from "react";
+import React from "react";
+import {RouterProvider} from "react-router-dom";
+import {routes} from "./routesModule";
 
 function App() {
   return (
-    <h1>Hello world</h1>
+    <RouterProvider router={routes}></RouterProvider>
   );
 }
 
