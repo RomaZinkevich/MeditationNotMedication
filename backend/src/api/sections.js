@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
         if (err)
             res.status(500).json({db_host,db_name,db_port,db_user});
         else
-            res.json(result.rows);
+            res.json(db_host);
     });
   });
 
