@@ -9,10 +9,6 @@ function NavBar() {
           <h1>Home</h1>
         </Link>
 
-        <Link to="/exercises">
-          <h1>Exercises</h1>
-        </Link>
-
         <Link to="/profile">
           <h1>Profile</h1>
         </Link>
