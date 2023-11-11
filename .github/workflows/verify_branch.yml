@@ -1,0 +1,21 @@
+name: Branch Verification
+on:
+  push:
+    branches: ["roman"]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Jest Tests
+    steps:
+      - name: Fetch code
+        uses: actions/checkout@v3
+      - name: Install node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install backend dependecies
+        working-directory: ./backend
+        run: npm install
+      - name: Testing backend project
+        working-directory: ./backend
+        run: npm run lint && npm run test
