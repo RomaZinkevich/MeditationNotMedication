@@ -29,5 +29,8 @@ module.exports = {
   ],
   "rules": {
     "quotes": [2, "double", {"avoidEscape": true}],
+    "require-jsdoc": 0,
+    "linebreak-style": 0,
+    "react/prop-types": 0,
   },
 };
