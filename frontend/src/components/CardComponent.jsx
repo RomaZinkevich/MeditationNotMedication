@@ -13,9 +13,12 @@ const CardComponent = ({card, image}) => {
     window.location.href = newLocation;
   };
   return (
-    <div className="insideInfo" style={cardStyle} onClick={handleClick}>
-      <h3 className="cardTitle">{card.title}</h3>
-      <p>{card.description}</p>
+    <div>
+      <div className="insideInfo" style={cardStyle} onClick={handleClick}></div>
+      <div className="details">
+        <h3 className="cardTitle">{card.title}</h3>
+        <p>{card.description}</p>
+      </div>
     </div>
   );
 };
