@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("../db/dbconfig")
+const pool = require("../db/dbconfig");
 
 
 // @desc Get content by ID
@@ -19,7 +19,5 @@ router.get("/:id", (req, res) => {
             
     });
   });
-
-
 
 module.exports = router;

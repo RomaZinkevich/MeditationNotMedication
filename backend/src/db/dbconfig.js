@@ -2,6 +2,7 @@ const { Pool } = require('pg');
 const fs = require('fs');
 const dotenv = require("dotenv").config();
 
+
 const SSL = process.env.SSL;
 const db_user = process.env.DB_USER;
 const db_host = process.env.DB_HOST;
