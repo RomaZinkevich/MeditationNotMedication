@@ -1,7 +1,5 @@
 .container {
-  overflow-x: hidden; 
-  white-space: nowrap;
-  margin: 0 60px;
+  margin: 0 70px;
 }
 
 .container h2{
@@ -36,10 +34,12 @@
   justify-content: center;
   flex-direction: column;
   text-align: left;
+  -webkit-box-shadow: 0 0 20px black;
+        box-shadow: 0 0 20px black;
 }
 
 .cardTitle {
-  width: 35%;
+  width: 100%;
   text-align: left;
 }
 
