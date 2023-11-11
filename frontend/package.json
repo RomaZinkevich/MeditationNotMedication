@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "test": "react-scripts test",
-    "test:ci":"react-scripts test --watchAll=false",
+    "test:ci": "react-scripts test --watchAll=false",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -25,6 +25,7 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
+    "sass": "^1.69.5",
     "vite": "^4.4.5"
   }
 }

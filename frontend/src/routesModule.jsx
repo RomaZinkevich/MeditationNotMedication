@@ -1,7 +1,8 @@
 import React from "react";
 import {createBrowserRouter} from "react-router-dom";
+
 import Home from "./pages/Home";
-import Exercise from "./pages/Exercises";
+import Exercises from "./pages/Exercise";
 import Profile from "./pages/Profile";
 
 export const routes = createBrowserRouter([
@@ -10,8 +11,8 @@ export const routes = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: "/exercise",
-    element: <Exercise />,
+    path: "/exercises/:id",
+    element: <Exercises />,
   },
   {
     path: "/profile",
