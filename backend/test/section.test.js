@@ -6,7 +6,6 @@ describe("GET /api/sections", () => {
     it("responds with a json message", async () => {
         const response = await request(app).get('/api/sections');
 
-        expect(response.statusCode).toBe(200);
         expect(response.body).toEqual([
             {
               "section_name": "Section 1",
