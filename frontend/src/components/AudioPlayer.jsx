@@ -1,4 +1,5 @@
 import React, {useState, useRef, useEffect} from "react";
+import {PauseIcon, PlayIcon, SeekIcon} from "../components/logos";
 
 const AudioPlayer = ({src}) => {
   const audioRef = useRef(null);
@@ -33,6 +34,18 @@ const AudioPlayer = ({src}) => {
     };
   }, []);
 
+  const handleSeekForward = () => {
+    const newTime = Math.min(currentTime + 10, duration);
+    setCurrentTime(newTime);
+    audioRef.current.currentTime = newTime;
+  };
+
+  const handleSeekBehind = () => {
+    const newTime = Math.min(currentTime - 10, duration);
+    setCurrentTime(newTime);
+    audioRef.current.currentTime = newTime;
+  };
+
   const togglePlay = () => {
     if (isPlaying) {
       audioRef.current.pause();
@@ -51,17 +64,21 @@ const AudioPlayer = ({src}) => {
   return (
     <div>
       <audio ref={audioRef}>
-        <source src={src} type="audio/mp3"/>
+        <source src={src}/>
       </audio>
       <div className="player-ui">
-        <button onClick={togglePlay}>{isPlaying ? "Pause" : "Play"}</button>
         <input
           type="range"
           value={currentTime}
           max={duration}
           onChange={handleTimeSliderChange}
         />
-        <span>{formatTime(currentTime)}</span> / <span>{formatTime(duration)}</span>
+        <span>{formatTime(currentTime)} / {formatTime(duration)}</span>
+        <div className="controls">
+          <button onClick={handleSeekBehind}>{<SeekIcon flag={true}/>}</button>
+          <button onClick={togglePlay}>{isPlaying ? <PauseIcon /> : <PlayIcon />}</button>
+          <button onClick={handleSeekForward}>{<SeekIcon />}</button>
+        </div>
       </div>
     </div>
   );
