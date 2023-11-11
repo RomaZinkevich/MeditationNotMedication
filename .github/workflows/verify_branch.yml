@@ -6,6 +6,18 @@ jobs:
   test:
     runs-on: ubuntu-latest
     name: Jest Tests
+
+    env:  # Define environment variables here
+      DB_HOST: ${{ secrets.DB_HOST }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      DB_TESTNAME : ${{ secrets.DB_TESTNAME }}
+      DB_PORT : ${{ secrets.DB_PORT }}
+      NODE_ENV : ${{ secrets.NODE_ENV }}
+      SSL : ${{ secrets.SSL }}
+
+
     steps:
       - name: Fetch code
         uses: actions/checkout@v3
