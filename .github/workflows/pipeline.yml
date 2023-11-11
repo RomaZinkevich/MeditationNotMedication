@@ -1,7 +1,7 @@
 name: CI/CD
 on:
   push:
-    branches: ["main"]
+    branches: ["zhiyuan"]
   workflow_dispatch:
 jobs:
   test:
