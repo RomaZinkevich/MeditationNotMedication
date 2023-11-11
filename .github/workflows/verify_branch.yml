@@ -1,21 +1,21 @@
-name: CI/CD
+name: Branch Verification
 on:
   push:
-    branches: ["main"]
-  workflow_dispatch:
+    branches: ["roman"]
 jobs:
   test:
     runs-on: ubuntu-latest
+    name: Jest Tests
     steps:
-      - name: Fetch Code
+      - name: Fetch code
         uses: actions/checkout@v3
-      - name: Install Node
+      - name: Install node
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
-      - name: Install Backend Dependencies
+          node-version: 18
+      - name: Install backend dependecies
         working-directory: ./backend
         run: npm install
-      - name: Run Backend Tests
+      - name: Testing backend project
         working-directory: ./backend
         run: npm run lint && npm run test
