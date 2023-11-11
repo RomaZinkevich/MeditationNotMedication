@@ -4,7 +4,7 @@
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
     "lint": "eslint --fix src",
-    "test": "jest --verbose"
+    "test": "set NODE_ENV=test && jest --verbose"
   },
   "dependencies": {
     "dotenv": "^16.3.1",
