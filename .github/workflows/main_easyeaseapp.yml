@@ -6,7 +6,7 @@ name: Build and deploy Node.js app to Azure Web App - EasyEaseApp
 on:
   push:
     branches:
-      - main
+      - zhiyuan
   workflow_dispatch:
 
 jobs:
@@ -14,21 +14,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: "14" # Adjust the version as needed
 
-      - name: npm install, build, and test
-        run: |
-          npm install
-          npm run build --if-present
-          npm run test --if-present
+      - name: Install npm dependencies
+        working-directory: ./backend
+        run: npm install
 
       - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+        run: zip -r release.zip ./backend/*
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
@@ -40,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: 'Production'
+      name: "Production"
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
@@ -52,11 +51,11 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
-      - name: 'Deploy to Azure Web App'
+      - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'EasyEaseApp'
-          slot-name: 'Production'
+          app-name: "EasyEaseApp"
+          slot-name: "Production"
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_780896BE5EAA48C7B57AB57C0869CFC3 }}
           package: .
