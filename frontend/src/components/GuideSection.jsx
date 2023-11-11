@@ -9,6 +9,7 @@ const GuideSection = ({Cards, sectionID, name}) => {
       containerRef.current.scrollLeft += scrollOffset;
     }
   };
+  
   return (
     <div className="container">
       <div>

@@ -1,11 +1,7 @@
 import React from "react";
 import "../styles/components/Card.scss";
-import {useLocation} from "react-router-dom";
-
 
 const CardComponent = ({card, image}) => {
-  const location = useLocation();
-
   const cardStyle = {
     backgroundImage: `url(${image})`,
     backgroundRepeat: "no-repeat",

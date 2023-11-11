@@ -26,3 +26,11 @@ dist-ssr
 *.pem
 
 *.env
+
+*.pem
+
+*.env
+*.publishsettings
+
+src/audio.js
+
