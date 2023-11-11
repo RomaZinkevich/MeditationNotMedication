@@ -23,4 +23,11 @@ dist-ssr
 *.sln
 *.sw?
 
+*.pem
+
+*.env
+
+*.pem
+
+*.env
 *.publishsettings
