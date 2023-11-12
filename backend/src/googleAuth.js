@@ -15,7 +15,7 @@ passport.use(
     {
       clientID: "445543763108-fspmjduah3qqm460s8g1ppua369olarc.apps.googleusercontent.com",
       clientSecret: "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",
-      callbackURL: 'http://localhost:5000/auth/google/callback',
+      callbackURL: `http://${process.env.URL}/auth/google/callback`,
     },
     async function (accessToken, refreshToken, profile, done) {
       const result = await checkUser(profile.id);
