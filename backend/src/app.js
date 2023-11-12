@@ -3,6 +3,7 @@ const api = require("./api");
 const session = require('express-session');
 const googleAuth = require('./googleAuth');
 const auth = require("./api/auth");
+const cors = require('cors');
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(session({
   saveUninitialized: true,
   secret: 'SECRET'
 }));
+app.use(cors());
 
 app.use(googleAuth.initialize());
 app.use(googleAuth.session());
