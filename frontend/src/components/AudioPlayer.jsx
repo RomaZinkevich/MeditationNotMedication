@@ -1,7 +1,8 @@
-import React, {useState, useRef, useEffect} from "react";
-import {PauseIcon, PlayIcon, SeekIcon} from "../components/logos";
+import React, { useState, useRef, useEffect } from "react";
 
-const AudioPlayer = ({src}) => {
+import UndoRoundedIcon from "@mui/icons-material/UndoRounded";
+import RedoRoundedIcon from "@mui/icons-material/RedoRounded";
+const AudioPlayer = ({ src }) => {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -64,21 +65,38 @@ const AudioPlayer = ({src}) => {
   return (
     <div>
       <audio ref={audioRef}>
-        <source src={src}/>
+        <source src={src} />
       </audio>
       <div className="player-ui">
+        <div className="controls">
+          <button onClick={handleSeekBehind}>
+            {<UndoRoundedIcon flag={true} />}
+          </button>
+          <button onClick={togglePlay}>
+            {isPlaying ? (
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/64/64485.png"
+                className="pause-button"
+              />
+            ) : (
+              <img
+                src="https://www.svgrepo.com/download/69732/play-button.svg"
+                alt="play-button"
+                className="play-button"
+              />
+            )}
+          </button>
+          <button onClick={handleSeekForward}>{<RedoRoundedIcon />}</button>
+        </div>
         <input
           type="range"
           value={currentTime}
           max={duration}
           onChange={handleTimeSliderChange}
         />
-        <span>{formatTime(currentTime)} / {formatTime(duration)}</span>
-        <div className="controls">
-          <button onClick={handleSeekBehind}>{<SeekIcon flag={true}/>}</button>
-          <button onClick={togglePlay}>{isPlaying ? <PauseIcon /> : <PlayIcon />}</button>
-          <button onClick={handleSeekForward}>{<SeekIcon />}</button>
-        </div>
+        <span>
+          {formatTime(currentTime)} / {formatTime(duration)}
+        </span>
       </div>
     </div>
   );
@@ -87,7 +105,10 @@ const AudioPlayer = ({src}) => {
 const formatTime = (time) => {
   const minutes = Math.floor(time / 60);
   const seconds = Math.floor(time % 60);
-  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
+    2,
+    "0"
+  )}`;
 };
 
 export default AudioPlayer;

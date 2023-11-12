@@ -12,11 +12,11 @@ function NavBar() {
         <h1>Home</h1>
       </Link>
 
-      <Link to="/ease" className="brb">
+      <Link to="/exercises/1" className="brb">
         <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Redbutton.svg/2048px-Redbutton.svg.png"
+          src="https://freesvg.org/storage/img/thumb/infinito.png"
           alt="red button"
-          className="red-button"
+          className="red-button-image"
         />
         <h1>Ease</h1>
       </Link>
