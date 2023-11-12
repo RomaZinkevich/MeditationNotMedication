@@ -4,11 +4,16 @@ import GuideSection from "../components/GuideSection";
 
 function Home() {
   const [sections, setSections] = useState([]);
+  const [hasFetched, setHasFetched] = useState(false);
   useEffect(() => {
-    fetch("https://meditationnotmedication-production.up.railway.app/api/sections/")
+    if (hasFetched) return;
+    fetch(
+      "https://meditationnotmedication-production.up.railway.app/api/sections/"
+    )
       .then((res) => res.json())
       .then((data) => {
         setSections(data);
+        setHasFetched(true);
       });
   }, []);
 
@@ -23,20 +28,20 @@ function Home() {
         <div className="loading">Loading...</div>
       ) : (
         <>
-          {Array.from(new Set(sections.map((section) => section.section_id))).map(
-            (uniqueSectionId) => {
-              const section = sections.find(
-                (s) => s.section_id === uniqueSectionId
-              );
-              return (
-                <GuideSection
-                  key={section.section_id}
-                  sectionID={section.section_id}
-                  name={section.section_name}
-                />
-              );
-            }
-          )}
+          {Array.from(
+            new Set(sections.map((section) => section.section_id))
+          ).map((uniqueSectionId) => {
+            const section = sections.find(
+              (s) => s.section_id === uniqueSectionId
+            );
+            return (
+              <GuideSection
+                key={section.section_id}
+                sectionID={section.section_id}
+                name={section.section_name}
+              />
+            );
+          })}
         </>
       )}
     </div>

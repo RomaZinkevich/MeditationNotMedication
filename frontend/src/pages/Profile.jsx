@@ -4,7 +4,7 @@ import NavBar from "../components/NavBar";
 import "../styles/components/profile.scss";
 
 function Profile() {
-  const [isLogged, setIsLogged] = useState(true);
+  const [isLogged, setIsLogged] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -12,13 +12,8 @@ function Profile() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        if (data) {
-          setIsLogged(true);
-        }
       })
-      .catch((err) => {
-        console.error("Error fetching data:", err);
-      });
+      .catch((err) => console.log(err));
   }, []);
 
   return (
