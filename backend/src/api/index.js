@@ -10,6 +10,13 @@ router.get("/", (req, res) => {
   });
 });
 
+router.get('/getUserData', async (req, res) => {
+  const userData = await req.session.user;
+  console.log("DASJFHJKASs")
+  console.log(req.session.user)
+  res.json(req.session.user);
+});
+
 router.use("/sections", sections);
 router.use("/content", content);
 
