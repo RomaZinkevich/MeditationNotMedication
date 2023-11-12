@@ -5,7 +5,7 @@ const googleAuth = require('../googleAuth');
 // @desc Renders user's information from Google
 // @route GET /auth/success
 router.get('/auth/success', (req, res) => {
-  res.render("../views/pages/success", { user: req.user })
+  res.json({ user: req.user });
 });
 
 // @desc Renders error message if GoogleAuth goes wrong
