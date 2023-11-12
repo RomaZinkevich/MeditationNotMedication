@@ -4,7 +4,9 @@ const googleAuth = require('../googleAuth');
 
 // @desc Renders user's information from Google
 // @route GET /auth/success
-router.get('/auth/success', (req, res) => res.json(req.user));
+router.get('/auth/success', (req, res) => {
+  res.render("../views/pages/success", { user: req.user })
+});
 
 // @desc Renders error message if GoogleAuth goes wrong
 // @route GET /auth/error
@@ -22,7 +24,7 @@ router.get('/auth/google/callback',
   googleAuth.authenticate('google', { failureRedirect: '/auth/error' }),
   function (req, res) {
     // Successful authentication, redirect success.
-    res.redirect('/auth/success');
+    res.redirect('http://localhost:5173/profile');
   }
 );
 
