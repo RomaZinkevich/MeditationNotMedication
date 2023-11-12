@@ -1,8 +1,8 @@
 import React from "react";
-import {createBrowserRouter} from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 
 import Home from "./pages/Home";
-import Exercises from "./pages/Exercise";
+import Exercise from "./pages/Exercise";
 import Profile from "./pages/Profile";
 
 export const routes = createBrowserRouter([
@@ -12,10 +12,14 @@ export const routes = createBrowserRouter([
   },
   {
     path: "/exercises/:id",
-    element: <Exercises />,
+    element: <Exercise />,
   },
   {
     path: "/profile",
     element: <Profile />,
+  },
+  {
+    path: "/ease",
+    element: <div>ease</div>,
   },
 ]);

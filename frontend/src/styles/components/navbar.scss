@@ -1,20 +1,15 @@
 nav {
-    position: fixed;
-    z-index: 1;
-
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    right: 0;
-
-    background-color: rgb(0, 0, 0);
-    height: 6vh;
-
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-
-    column-gap: 20px;
+  position: fixed;
+  z-index: 1;
+  width: 100vw;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  column-gap: 20px;
+  background-color: white;
 
   a {
     text-decoration: none;
@@ -27,18 +22,17 @@ nav {
       font-size: 1rem;
       font-weight: 300;
     }
-    svg {
-      width:50px;
-    }
   }
 
   .brb {
     position: absolute;
-    top: -80%;
-  }
-
-  .red-button {
-    width: 80px;
-    margin-bottom:0.25rem;
+    top: -70%;
+    h1 {
+      font-size:1.25rem;
+      margin-top:-15px;
+    }
+    .red-button-image {
+      width: 90px;
+    }
   }
 }
