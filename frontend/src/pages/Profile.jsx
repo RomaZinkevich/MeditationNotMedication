@@ -12,7 +12,7 @@ function Profile() {
         <h1>Logged In</h1>
       ) : (
         <>
-          <a href="https://meditationnotmedication-production.up.railway.app/auth/google">
+          <a href="http://localhost:5000/auth/google">
             <div className="img-wrapper">
               <img
                 src="https://onymos.com/wp-content/uploads/2020/10/google-signin-button-1024x260.png"
