@@ -30,8 +30,10 @@ app.get("/", (req, res) => {
   });
 });
 
+
 app.use("/", auth);
 
 app.use("/api", api);
+
 
 module.exports = app;

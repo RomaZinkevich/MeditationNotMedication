@@ -5,7 +5,7 @@ const googleAuth = require('../googleAuth');
 // @desc Renders user's information from Google
 // @route GET /auth/success
 router.get('/auth/success', (req, res) => {
-  res.json({ user: req.user });
+  res.json({ user: req.user })
 });
 
 // @desc Renders error message if GoogleAuth goes wrong
@@ -23,9 +23,16 @@ router.get('/auth/google',
 router.get('/auth/google/callback',
   googleAuth.authenticate('google', { failureRedirect: '/auth/error' }),
   function (req, res) {
-    // Successful authentication, redirect success.
-    res.redirect('http://localhost:5173/profile');
+    const user = req.user;
+
+    // Store user data in the session
+    req.session.user = user;
+
+    // Redirect to the React page
+    res.redirect('https://meditationnotmedication-production.up.railway.app/profile');
   }
 );
+
+
 
 module.exports = router;
