@@ -4,7 +4,7 @@ import NavBar from "../components/NavBar";
 import "../styles/components/profile.scss";
 
 function Profile() {
-  const [isLogged, setIsLogged] = useState(false);
+  const [isLogged, setIsLogged] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,10 +22,23 @@ function Profile() {
       {isLogged ? (
         <>
           <div className="stats">
-            <h3>
+            <h1>
+              (This page is still in demo, here are the content of a sample user
+              profile page)
+            </h1>
+            <h2>
+              Type of Chronic Pain: <span>Back Pain</span>{" "}
+            </h2>
+            <h2>
               Ease Button Clicked: <span>23 times</span>{" "}
-            </h3>
-            <h3></h3>
+            </h2>
+            <h2>Hours of mindfulness: 10</h2>
+            <p>
+              The user will log in with Google Auth, and the application will be
+              giving user a list of questions to personalize the user experience
+              (coming soon), and the content and "big red button" content will
+              also be adjusted accordingly
+            </p>
           </div>
         </>
       ) : (
