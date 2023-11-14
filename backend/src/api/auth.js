@@ -29,7 +29,7 @@ router.get('/auth/google/callback',
     req.session.user = user;
 
     // Redirect to the React page
-    res.redirect(`http://localhost:5173/profile?userId=${user.user_id}&userName=${user.user_name}`);
+    res.redirect(`https://eazeease.netlify.app/profile?userId=${user.user_id}&userName=${user.user_name}`);
   }
 );
 
