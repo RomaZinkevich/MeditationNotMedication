@@ -9,18 +9,16 @@ function Login() {
       <form action="">
         <input type="text" />
         <input type="password" />
-      </form>
-      <div className="login-utils">
         <div className="remember-me">
           <input type="checkbox" />
           <span>Remember Me</span>
         </div>
         <p>Forgot Password?</p>
-      </div>
-      <button>Sign in</button>
+        <button type="submit">Sign in</button>
+      </form>
 
       <p>
-        Don't have an account? <Link to="signup">Sign up</Link>
+        Don't have an account? <Link to="/signup">Sign up</Link>
       </p>
     </>
   );

@@ -6,6 +6,7 @@ import Exercise from "../pages/Exercise";
 import Profile from "../pages/Profile";
 import Landing from "../pages/Landing";
 import Login from "../pages/Login";
+import Signup from "../pages/Signup";
 
 export const routes = createBrowserRouter([
   {
@@ -32,4 +33,8 @@ export const routes = createBrowserRouter([
     path: "/login",
     element: <Login />,
   },
+  {
+    path: "/signup",
+    element: <Signup />,
+  }
 ]);
