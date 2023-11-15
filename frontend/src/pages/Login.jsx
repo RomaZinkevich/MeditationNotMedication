@@ -1,25 +1,26 @@
 import React from "react";
-
 import logo from "../images/logo.png";
-import GoogleIcon from "@mui/icons-material/Google";
 import { Link } from "react-router-dom";
 
 function Login() {
   return (
     <>
-      <button>Skip</button>
-      <div className="logo-wrapper">
-        <img src={logo} alt="" />
-        <h1>EazeEase</h1>
+      <img src={logo} alt="logo" />
+      <form action="">
+        <input type="text" />
+        <input type="password" />
+      </form>
+      <div className="login-utils">
+        <div className="remember-me">
+          <input type="checkbox" />
+          <span>Remember Me</span>
+        </div>
+        <p>Forgot Password?</p>
       </div>
-      <section className="login-options">
-        <button>Continue With Email</button>
-        <button>
-          <GoogleIcon></GoogleIcon>Continue With Google
-        </button>
-      </section>
+      <button>Sign in</button>
+
       <p>
-        Don't have an account? <Link to="/signup">Sign up</Link>
+        Don't have an account? <Link to="signup">Sign up</Link>
       </p>
     </>
   );
