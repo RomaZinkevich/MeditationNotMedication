@@ -1,34 +1,26 @@
+const express = require("express");
 const pool = require("../db/dbconfig")
+const router = express.Router();
 
-const checkUser = async (id) => {
-    const query = `SELECT * FROM "User" WHERE user_id='${id}'`;
-    try {
-        const result = await pool.query(query);
-        const finresult = result.rows;
-        if (finresult.length === 0 ){
-            return false;
-        }
-        return finresult[0];
-    } catch (err) {
-        console.error(err);
-        return err;
-    }      
-};
 
-const createUser = async (profile) => {
-    const fullname = profile.name.givenName + " " + profile.name.familyName;
-    const query = `INSERT INTO "User" (user_id, user_name, email, image) VALUES (${profile.id}, '${fullname}', '${profile.emails[0].value}', '${profile.photos[0].value}');`;
-    try {
-        await pool.query(query);
-        const finresult = {"user_id":profile.id, "user_name":fullname, "email":profile.emails[0].value, "image":profile.photos[0].value};
-        return finresult;
-    } catch (err) {
-        console.error(err);
-        return err;
-    } 
-};
+// @desc ISHIDHLAS
+// @route GET /api/user
+router.post("/", (req, res) => {
+    let user = {
+        user_id: Math.random()*100000,
+        user_name: req.body.name,
+        email: req.body.email,
+        image: req.body.image
+    };
+    const query = `INSERT INTO "User" (user_id, user_name, email, image) VALUES ('${Math.random()*100000}','${req.body.name}', '${req.body.email}', '${req.body.image}');`;
+    pool.query(query, (err, result) => {
+        if (err)
+            res.status(500).json(err.message);
+        else
+            res.json("Done");
+    });
 
-module.exports = {
-    checkUser: checkUser,
-    createUser: createUser
-};
+
+  });
+
+module.exports = router;
