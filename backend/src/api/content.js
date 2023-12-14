@@ -5,6 +5,7 @@ const pool = require("../db/dbconfig");
 
 // @desc Get content by ID
 // @route GET /api/content/:id
+// @access Public
 router.get("/:id", (req, res) => {
     const query = `SELECT content_id, content_name, description, author, section_name, audio, image FROM Content LEFT JOIN Section ON Content.section_id = Section.section_id WHERE content_id=${req.params.id} ;`;
     pool.query(query, (err, result) => {

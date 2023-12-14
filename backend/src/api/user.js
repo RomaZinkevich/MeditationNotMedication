@@ -1,26 +1,29 @@
 const express = require("express");
-const pool = require("../db/dbconfig")
+const userdb = require("../db/userdb");
+const jwt = require("jsonwebtoken");
 const router = express.Router();
 
 
-// @desc ISHIDHLAS
-// @route GET /api/user
-router.post("/", (req, res) => {
-    let user = {
-        user_id: Math.random()*100000,
-        user_name: req.body.name,
-        email: req.body.email,
-        image: req.body.image
-    };
-    const query = `INSERT INTO "User" (user_id, user_name, email, image) VALUES ('${Math.random()*100000}','${req.body.name}', '${req.body.email}', '${req.body.image}');`;
-    pool.query(query, (err, result) => {
-        if (err)
-            res.status(500).json(err.message);
-        else
-            res.json("Done");
-    });
 
+// @desc Creates new user in the database
+// @route POST /api/user
+// @access Public
+router.post("/", async (req, res) => {
+    let name = req.body.name;
+    let email = req.body.email;
+    let image = req.body.image;
 
-  });
+    const results = await userdb.createUser(name, email, image);
+
+    if (results.status==="success"){
+        let token = jwt.sign({ name: name, email: email, image: image }, process.env.JWT_SECRET_KEY, {
+            expiresIn: "10m",
+        });
+        res.send({"status": "success", "token": token});
+    } 
+    else{
+        res.status(500).json(results.message);
+    } 
+});
 
 module.exports = router;
