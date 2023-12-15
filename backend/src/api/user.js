@@ -1,26 +1,36 @@
 const express = require("express");
-const pool = require("../db/dbconfig")
+const jwt = require("jsonwebtoken");
+const Joi = require("joi");
+const userdb = require("../db/userdb");
+const { tryCatch } = require("../utils/tryCatch");
+
 const router = express.Router();
 
+const schema = Joi.object({
+    name: Joi.string().required(),
+    email: Joi.string(),
+    image: Joi.string()
+});
 
-// @desc ISHIDHLAS
-// @route GET /api/user
-router.post("/", (req, res) => {
-    let user = {
-        user_id: Math.random()*100000,
-        user_name: req.body.name,
-        email: req.body.email,
-        image: req.body.image
-    };
-    const query = `INSERT INTO "User" (user_id, user_name, email, image) VALUES ('${Math.random()*100000}','${req.body.name}', '${req.body.email}', '${req.body.image}');`;
-    pool.query(query, (err, result) => {
-        if (err)
-            res.status(500).json(err.message);
-        else
-            res.json("Done");
-    });
+// @desc Creates new user in the database
+// @route POST /api/user
+// @access Public
+router.post("/", 
+    tryCatch(async (req, res, next) => {
+        let newUser = {
+            name: req.body.name,
+            email: req.body.email,
+            image: req.body.image
+        }
+        
+        const { error, value } = schema.validate(newUser);
+        if (error) throw error;
 
-
-  });
+        await userdb.createUser(newUser);
+        let token = jwt.sign(newUser, process.env.JWT_SECRET_KEY, {
+            expiresIn: "10m",
+        });
+        return res.json({"status": "success", "token": token});
+}));
 
 module.exports = router;
