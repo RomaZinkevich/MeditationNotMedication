@@ -1,13 +1,12 @@
 const pool = require("./dbconfig")
 
 //@desc Creates new user in database
-const createUser = async (name, email, image) => {
-    const query = `INSERT INTO "user" (user_name, email, image) VALUES ('${name}', '${email}', '${image}');`;
+const createUser = async (newUser) => {
+    const query = `INSERT INTO "user" (user_name, email, image) VALUES ('${newUser.name}', '${newUser.email}', '${newUser.image}');`;
     try {
-        const results = await pool.query(query);
-        return {"status":"success"};
+        await pool.query(query);
     } catch (error) {
-        return error;
+        throw new Error(error);
     }
 };
 
