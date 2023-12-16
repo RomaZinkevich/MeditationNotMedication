@@ -74,5 +74,10 @@ describe('POST /api/user', () => {
         });
         done();
     });
+
+    it('clears database after testing', (done) => {
+        userdb.clearUsers();
+        done();
+    });
   });
 
