@@ -10,8 +10,19 @@ const createUser = async (newUser) => {
     }
 };
 
+//@desc Clears database
+const clearUsers = async () => {
+    const query = `DELETE FROM "user";`;
+    try {
+        await pool.query(query);
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
 module.exports = {
-    createUser: createUser
+    createUser: createUser,
+    clearUsers: clearUsers
 };
 
 
