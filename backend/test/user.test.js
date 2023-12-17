@@ -25,6 +25,7 @@ describe('POST /api/user', () => {
         .end((err, res) => {
             if (err) return done(err);
             console.log(err);
+            console.log(process.env.JWT_SECRET_KEY)
             assert.strictEqual(res.body.status, 'success', 'Expected status to be "success"');
             assert.ok(res.body.token, 'Expected JWT token in the response');
             done();
