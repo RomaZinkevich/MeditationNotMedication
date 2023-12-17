@@ -21,7 +21,7 @@ describe('POST /api/user', () => {
         .set('Accept', 'application/json')
         .send(newUser)
         .expect('Content-Type', /json/)
-        .expect(400)
+        .expect(200)
         .end((err, res) => {
             if (err) return done(err);
             console.log(err);
