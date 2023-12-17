@@ -21,13 +21,9 @@ describe('POST /api/user', () => {
         .set('Accept', 'application/json')
         .send(newUser)
         .expect('Content-Type', /json/)
-        .expect(400)
+        .expect(200)
         .end((err, res) => {
             if (err) return done(err);
-            console.log(err);
-            console.log("-----")
-            console.log(process.env.JWT_SECRET_KEY)
-            console.log("-----")
             assert.strictEqual(res.body.status, 'success', 'Expected status to be "success"');
             assert.ok(res.body.token, 'Expected JWT token in the response');
             done();
