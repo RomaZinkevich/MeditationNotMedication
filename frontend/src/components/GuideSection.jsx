@@ -21,7 +21,7 @@ const GuideSection = ({ sectionID, name }) =>
     <div className="container">
       <h2>{name}</h2>
       <div className="cards_container">
-        {cards.sort().map((card) => (
+        {cards.map((card) => (
           <CardComponent key={card.content_id} card={card} />
         ))}
       </div>
