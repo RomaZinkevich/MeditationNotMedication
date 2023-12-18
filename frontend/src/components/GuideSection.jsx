@@ -12,12 +12,16 @@ const GuideSection = ({ sectionID, name }) =>
       .then((res) => res.json())
       .then((data) =>
       {
-        data.sort((a, b) =>
+        if (sectionID === 1)
         {
-          const dayA = extractDayNumber(a.content_name);
-          const dayB = extractDayNumber(b.content_name);
-          return dayA - dayB;
-        })
+          data.sort((a, b) =>
+          {
+            const dayA = extractDayNumber(a.content_name);
+            const dayB = extractDayNumber(b.content_name);
+            return dayA - dayB;
+          })
+        }
+
         setCards(data);
       });
   }, []);
