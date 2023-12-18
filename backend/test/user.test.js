@@ -13,7 +13,7 @@ describe('POST /api/user', () => {
     it('responds with a json message containing jwt token', (done) => {
         const newUser = {
             name:"Roman",
-            password: "Password!",
+            password: "Password!11",
             email:"roman11@gmail.com",
             image:"image"
         }
@@ -34,7 +34,7 @@ describe('POST /api/user', () => {
     it('responds with an error message due to same email', (done) => {
         const newUser = {
             name:"Roman",
-            password: "Password!",
+            password: "Password!11",
             email:"roman11@gmail.com",
             image:"image"
         }
@@ -51,7 +51,7 @@ describe('POST /api/user', () => {
 
     it('responds with an error message due to no name', (done) => {
         const newUser = {
-            password: "Password!",
+            password: "Password!11",
             email:"roman11@gmail.com",
             image:"image"
         }
@@ -126,7 +126,7 @@ describe('POST /api/user', () => {
         .send(newUser)
         .expect(400, {
             "type": "PasswordValidationError",
-            "details": "Password must contain at least one special character"
+            "details": "Password must contain at least one uppercase letter, one lowercase letter, one special character and one number"
         });
         done();
     });
