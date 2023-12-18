@@ -1,4 +1,4 @@
-const PasswordError = require('../utils/PasswordError');
+const UserError = require('../utils/UserError');
 const hasSpecialCharacterRegex = /[!@#$%^&*(),.?":{}|<>]/;
 const hasNumberRegex = /[0123456789]/;
 const hasUppercaseRegex = /[A-Z]/;
@@ -12,10 +12,10 @@ const validatePassword = (req, res, next) => {
   const hasSpecialCharacter = hasSpecialCharacterRegex.test(password);
   
   if (!password || password.length < 8) {
-    return next(new PasswordError('PasswordValidationError', 'Password must be at least 8 characters'));
+    return next(new UserError('PasswordValidationError', 'Password must be at least 8 characters'));
   }
   if (!(hasLowercase && hasUppercase && hasNumber && hasSpecialCharacter)) {
-    return next(new PasswordError('PasswordValidationError', 'Password must contain at least one uppercase letter, one lowercase letter, one special character and one number'));
+    return next(new UserError('PasswordValidationError', 'Password must contain at least one uppercase letter, one lowercase letter, one special character and one number'));
   }
   next();
 };

@@ -1,10 +1,10 @@
-class PasswordError extends Error {
+class SectionError extends Error {
     constructor(type, details) {
       super(details);
-      this.name = 'PasswordError';
+      this.name = 'SectionError';
       this.type = type;
       this.details = details;
     }
   }
   
-module.exports = PasswordError;
+module.exports = SectionError;

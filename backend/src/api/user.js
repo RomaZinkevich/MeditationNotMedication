@@ -1,7 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
-const userdb = require("../db/userdb");
+const { createUser, clearUsers } = require("../db/userdb");
 const encrypt = require("../utils/passwordEncryption");
 const validatePasswordMiddleware = require("../middleware/validatePassword");
 const { tryCatch } = require("../utils/tryCatch");
@@ -29,7 +29,7 @@ router.post("/", validatePasswordMiddleware,
         const { error, value } = schema.validate(newUser);
         if (error) throw error;
 
-        await userdb.createUser(newUser);
+        await createUser(newUser);
         let token = jwt.sign(newUser, process.env.JWT_SECRET_KEY, {
             expiresIn: "10m",
         });

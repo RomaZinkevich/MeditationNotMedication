@@ -6,13 +6,7 @@ const errorHandler = (error, req, res, next) => {
             details: error.details
         });
     }
-    else if (error.message === "error: duplicate key value violates unique constraint \"email\""){
-        return res.status(400).send({
-            type: "Email not unique",
-            details: error.message
-        });
-    }
-    else if (error.type === "PasswordValidationError"){
+    else if (error.type === "UserError" || error.type === "SectionError"){
         return res.status(400).send({
             type: error.type,
             details: error.details

@@ -43,8 +43,8 @@ describe('POST /api/user', () => {
         .set('Accept', 'application/json')
         .send(newUser)
         .expect(400, {
-            "type": "Email not unique",
-            "details": "error: duplicate key value violates unique constraint \"email\""
+            "type": "EmailValidationError",
+            "details": "Email already exists"
         });
         done();
     });
