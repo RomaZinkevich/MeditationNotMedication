@@ -7,7 +7,7 @@ const createUser = async (newUser) => {
     try {
         await pool.query(query);
     } catch (error) {
-        if (error.message === "error: duplicate key value violates unique constraint \"email\"")
+        if (error.message === "duplicate key value violates unique constraint \"email\"")
             throw new UserError("EmailValidationError", "Email already exists");
         throw new UserError("UserError", "Unexpected database error");
     }
