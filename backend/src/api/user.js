@@ -2,12 +2,15 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 const userdb = require("../db/userdb");
+const encrypt = require("../utils/passwordEncryption");
+const validatePasswordMiddleware = require("../middleware/validatePassword");
 const { tryCatch } = require("../utils/tryCatch");
 
 const router = express.Router();
 
 const schema = Joi.object({
     name: Joi.string().required(),
+    password: Joi.string().required(),
     email: Joi.string(),
     image: Joi.string()
 });
@@ -15,14 +18,14 @@ const schema = Joi.object({
 // @desc Creates new user in the database
 // @route POST /api/user
 // @access Public
-router.post("/", 
+router.post("/", validatePasswordMiddleware,
     tryCatch(async (req, res, next) => {
         let newUser = {
             name: req.body.name,
+            password: await encrypt(req.body.password),
             email: req.body.email,
             image: req.body.image
         }
-        
         const { error, value } = schema.validate(newUser);
         if (error) throw error;
 

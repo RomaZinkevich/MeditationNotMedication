@@ -10,9 +10,18 @@ const errorHandler = (error, req, res, next) => {
         return res.status(400).send({
             type: "Email not unique",
             details: error.message
-        })
+        });
     }
-    return res.status(400).json(error.message);
+    else if (error.type === "PasswordValidationError"){
+        return res.status(400).send({
+            type: error.type,
+            details: error.details
+        });
+    }
+    return res.status(400).send({
+        type: "Unexpected error",
+        details: error.message
+    });
 }
 
 module.exports = errorHandler;

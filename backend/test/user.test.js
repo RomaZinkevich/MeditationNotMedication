@@ -13,6 +13,7 @@ describe('POST /api/user', () => {
     it('responds with a json message containing jwt token', (done) => {
         const newUser = {
             name:"Roman",
+            password: "Password!",
             email:"roman11@gmail.com",
             image:"image"
         }
@@ -33,6 +34,7 @@ describe('POST /api/user', () => {
     it('responds with an error message due to same email', (done) => {
         const newUser = {
             name:"Roman",
+            password: "Password!",
             email:"roman11@gmail.com",
             image:"image"
         }
@@ -49,6 +51,7 @@ describe('POST /api/user', () => {
 
     it('responds with an error message due to no name', (done) => {
         const newUser = {
+            password: "Password!",
             email:"roman11@gmail.com",
             image:"image"
         }
@@ -71,6 +74,59 @@ describe('POST /api/user', () => {
                     }
                 }
             ]
+        });
+        done();
+    });
+
+    it('responds with an error message due to no password', (done) => {
+        const newUser = {
+            name: "Roman",
+            email:"roman11@gmail.com",
+            image:"image"
+        }
+        request(app)
+        .post('/api/user')
+        .set('Accept', 'application/json')
+        .send(newUser)
+        .expect(400, {
+            "type": "PasswordValidationError",
+            "details": "Password must be at least 8 characters"
+        });
+        done();
+    });
+
+    it('responds with an error message due to short password', (done) => {
+        const newUser = {
+            name: "Roman",
+            password: "Hello",
+            email:"roman11@gmail.com",
+            image:"image"
+        }
+        request(app)
+        .post('/api/user')
+        .set('Accept', 'application/json')
+        .send(newUser)
+        .expect(400, {
+            "type": "PasswordValidationError",
+            "details": "Password must be at least 8 characters"
+        });
+        done();
+    });
+
+    it('responds with an error message due to too simple password', (done) => {
+        const newUser = {
+            name: "Roman",
+            password: "HelloWorld",
+            email:"roman11@gmail.com",
+            image:"image"
+        }
+        request(app)
+        .post('/api/user')
+        .set('Accept', 'application/json')
+        .send(newUser)
+        .expect(400, {
+            "type": "PasswordValidationError",
+            "details": "Password must contain at least one special character"
         });
         done();
     });
