@@ -5,17 +5,19 @@ import NavBar from "../components/NavBar";
 import AudioPlayer from "../components/AudioPlayer";
 import "../styles/components/exercise.scss";
 
-function Exercise() {
+function Exercise()
+{
   const { id } = useParams();
   const [card, setCard] = useState([]);
 
-  useEffect(() => {
+  useEffect(() =>
+  {
     fetch(
       `https://meditationnotmedication-production.up.railway.app/api/content/${id}`
     )
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
+      .then((data) =>
+      {
         setCard(data);
       })
       .catch((err) => console.log(err));

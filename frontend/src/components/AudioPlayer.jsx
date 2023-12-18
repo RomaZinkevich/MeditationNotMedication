@@ -2,24 +2,29 @@ import React, { useState, useRef, useEffect } from "react";
 
 import UndoRoundedIcon from "@mui/icons-material/UndoRounded";
 import RedoRoundedIcon from "@mui/icons-material/RedoRounded";
-const AudioPlayer = ({ src }) => {
+const AudioPlayer = ({ src }) =>
+{
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
-  useEffect(() => {
+  useEffect(() =>
+  {
     const audioElement = audioRef.current;
 
-    const handleTimeUpdate = () => {
+    const handleTimeUpdate = () =>
+    {
       setCurrentTime(audioElement.currentTime);
     };
 
-    const handleDurationChange = () => {
+    const handleDurationChange = () =>
+    {
       setDuration(audioElement.duration);
     };
 
-    const handleEnded = () => {
+    const handleEnded = () =>
+    {
       setIsPlaying(false);
       setCurrentTime(0);
     };
@@ -28,35 +33,42 @@ const AudioPlayer = ({ src }) => {
     audioElement.addEventListener("durationchange", handleDurationChange);
     audioElement.addEventListener("ended", handleEnded);
 
-    return () => {
+    return () =>
+    {
       audioElement.removeEventListener("timeupdate", handleTimeUpdate);
       audioElement.removeEventListener("durationchange", handleDurationChange);
       audioElement.removeEventListener("ended", handleEnded);
     };
   }, []);
 
-  const handleSeekForward = () => {
+  const handleSeekForward = () =>
+  {
     const newTime = Math.min(currentTime + 10, duration);
     setCurrentTime(newTime);
     audioRef.current.currentTime = newTime;
   };
 
-  const handleSeekBehind = () => {
+  const handleSeekBehind = () =>
+  {
     const newTime = Math.min(currentTime - 10, duration);
     setCurrentTime(newTime);
     audioRef.current.currentTime = newTime;
   };
 
-  const togglePlay = () => {
-    if (isPlaying) {
+  const togglePlay = () =>
+  {
+    if (isPlaying)
+    {
       audioRef.current.pause();
-    } else {
+    } else
+    {
       audioRef.current.play();
     }
     setIsPlaying(!isPlaying);
   };
 
-  const handleTimeSliderChange = (e) => {
+  const handleTimeSliderChange = (e) =>
+  {
     const newTime = e.target.value;
     setCurrentTime(newTime);
     audioRef.current.currentTime = newTime;
@@ -70,7 +82,7 @@ const AudioPlayer = ({ src }) => {
       <div className="player-ui">
         <div className="controls">
           <button onClick={handleSeekBehind}>
-            {<UndoRoundedIcon flag={true} />}
+            <UndoRoundedIcon flag={true} />
           </button>
           <button onClick={togglePlay}>
             {isPlaying ? (
@@ -92,7 +104,7 @@ const AudioPlayer = ({ src }) => {
           type="range"
           value={currentTime}
           max={duration}
-          onChange={handleTimeSliderChange}
+          onInput={handleTimeSliderChange}
         />
         <span>
           {formatTime(currentTime)} / {formatTime(duration)}
@@ -102,7 +114,8 @@ const AudioPlayer = ({ src }) => {
   );
 };
 
-const formatTime = (time) => {
+const formatTime = (time) =>
+{
   const minutes = Math.floor(time / 60);
   const seconds = Math.floor(time % 60);
   return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
