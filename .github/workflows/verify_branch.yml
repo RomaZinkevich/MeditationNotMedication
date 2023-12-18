@@ -16,6 +16,7 @@ jobs:
       DB_PORT : ${{ secrets.DB_PORT }}
       NODE_ENV : TEST
       SSL : ${{ secrets.SSL }}
+      JWT_SECRET_KEY : ${{ secrets.JWT_SECRET_KEY }}
 
 
     steps:
