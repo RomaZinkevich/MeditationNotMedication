@@ -12,25 +12,10 @@ const GuideSection = ({ sectionID, name }) =>
       .then((res) => res.json())
       .then((data) =>
       {
-        if (sectionID === 1)
-        {
-          data.sort((a, b) =>
-          {
-            const dayA = extractDayNumber(a.content_name);
-            const dayB = extractDayNumber(b.content_name);
-            return dayA - dayB;
-          })
-        }
-
+        data.sort((a, b) => a.content_id - b.content_id);
         setCards(data);
       });
   }, []);
-
-  const extractDayNumber = (contentName) =>
-  {
-    const dayString = contentName.replace("Day ", "");
-    return parseInt(dayString, 10);
-  };
 
   return (
     <div className="container">
