@@ -91,7 +91,8 @@ describe("GET /api/content/:id", () => {
     it("response for id that does not exist", async () => {
         const response = await request(app).get('/api/content/6');
 
-        expect(response.statusCode).toBe(404);
-        expect(response.body.message).toEqual(`ID not found`);
+        expect(response.statusCode).toBe(400);
+        expect(response.body.type).toEqual("ContentError");
+      expect(response.body.details).toEqual("Content ID Not Found");
     });
   });
