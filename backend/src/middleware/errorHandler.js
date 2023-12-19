@@ -5,7 +5,7 @@ const errorHandler = (error, req, res, next) => {
             details: error.details
         });
     }
-    else if (error.type === "UserError" || error.type === "SectionError" || error.type === "ContentError"){
+    else if (error.name === "UserError" || error.name === "SectionError" || error.name === "ContentError"){
         return res.status(400).send({
             type: error.type,
             details: error.details

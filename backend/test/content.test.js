@@ -93,6 +93,6 @@ describe("GET /api/content/:id", () => {
 
         expect(response.statusCode).toBe(400);
         expect(response.body.type).toEqual("ContentError");
-      expect(response.body.details).toEqual("Content ID Not Found");
+        expect(response.body.details).toEqual("Content ID Not Found");
     });
   });
