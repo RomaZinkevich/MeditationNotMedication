@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
   });
 });
 
-router.use("/sections", sections);
+router.use("/section", sections);
 router.use("/content", content);
 router.use("/user", user);
 
