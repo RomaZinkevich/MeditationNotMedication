@@ -11,10 +11,7 @@ const ContentError = require('../utils/ContentError');
 router.get("/:id", 
     tryCatch(async (req, res, next) => {
         const result = await getContent(req.params.id);
-        if (result.rowCount === 0)
-            throw new ContentError("ContentError", "Content ID Not Found");
-        else
-            res.json(result.rows);
+        res.json(result.rows);
 }));
 
 module.exports = router;
