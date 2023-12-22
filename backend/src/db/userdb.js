@@ -1,5 +1,6 @@
 const pool = require("./dbconfig")
 const UserError = require('../utils/UserError');
+const { encrypt, compare } = require("../utils/passwordEncryption");
 
 //@desc Creates new user in database
 const createUser = async (newUser) => {
@@ -9,7 +10,21 @@ const createUser = async (newUser) => {
     } catch (error) {
         if (error.message === "duplicate key value violates unique constraint \"email\"")
             throw new UserError("EmailValidationError", "Email already exists");
-        console.log(error)
+        throw new UserError("UserError", "Unexpected database error");
+    }
+};
+
+//@desc Logs in user
+const loginUser = async (user) => {
+    const query = `SELECT user_name AS name, password FROM "user" WHERE email = '${user.email}'`;
+    try {
+        let result = await pool.query(query);
+        let { name, password } = result.rows[0]; 
+        if (compare(user.password, password)) return {"status":"success","details":{"name": name }};
+        return {"status":"failed","details":"wrong password"}
+    } catch (error) {
+        //More errors to handle 
+        console.log(error);
         throw new UserError("UserError", "Unexpected database error");
     }
 };
@@ -27,6 +42,7 @@ const clearUsers = async () => {
 
 module.exports = {
     createUser: createUser,
-    clearUsers: clearUsers
+    clearUsers: clearUsers,
+    loginUser: loginUser
 };
 
