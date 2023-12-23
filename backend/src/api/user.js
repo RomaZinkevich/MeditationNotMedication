@@ -2,8 +2,8 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 const { createUser, clearUsers, loginUser } = require("../db/userdb");
-const { encrypt, compare } = require("../utils/passwordEncryption");
 const { tryCatch } = require("../utils/tryCatch");
+const checkAuth = require("../middleware/auth");
 
 const router = express.Router();
 
@@ -28,15 +28,17 @@ router.post("/",
         const { error, value } = schema.validate(newUser);
         if (error) throw error;
 
-        newUser.password = await encrypt(newUser.password);
         await createUser(newUser);
+        delete newUser.password;
+        console.log(newUser);
+
         let token = jwt.sign(newUser, process.env.JWT_SECRET_KEY, {
             expiresIn: "10m",
         });
         return res.json({"status": "success", "token": token});
 }));
 
-// @desc Logs in user if he/she exists
+// @desc Logs in user if it exists
 // @route GET /api/user
 // @access Public
 router.get("/",
@@ -45,8 +47,11 @@ router.get("/",
             email: req.body.email,
             password: req.body.password
         };
-
         let response = await loginUser(user);
+        let token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
+            expiresIn: "10m",
+        });
+        return res.json({ "status":"success", "token":token, "details":response });
 }));
 
 module.exports = router;

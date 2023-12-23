@@ -5,28 +5,20 @@
 GET {{host}}
 
 ###
-
-GET {{host}}/api/v1/items
-
-###
 POST {{host}}/api/user
 content-Type: application/json
 
 {
-    "name": "ROMAN",
-    "email":"a",
-    "password":"PaS$W0RD"
+    "name": "Roman",
+    "email": "zrhdik111",
+    "password": "Pa$sw0rd"
 }
 
 ###
 GET {{host}}/api/user
-content-Type: application/json
+Content-Type: application/json
 
 {
-    "email":"a",
-    "password":"PaS$W0RD"
+    "email": "zrhdik111",
+    "password": "Pa$sw0rd"
 }
-
-
-
-

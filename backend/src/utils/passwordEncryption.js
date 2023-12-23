@@ -5,7 +5,12 @@ const encrypt = (plaintextPassword) => {
 }
 
 const compare = async (password, encryptedPassword) => {
-    let result = await bcrypt.compare(password, encryptedPassword);
+    let result = false;
+    try {
+        result = await bcrypt.compare(password, encryptedPassword);
+    } catch(error) {
+        console.log(error);
+    }
     return result;
 }
 

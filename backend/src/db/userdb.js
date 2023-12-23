@@ -4,6 +4,7 @@ const { encrypt, compare } = require("../utils/passwordEncryption");
 
 //@desc Creates new user in database
 const createUser = async (newUser) => {
+    newUser.password = await encrypt(newUser.password);
     const query = `INSERT INTO "user" (user_name, email, password) VALUES ('${newUser.name}', '${newUser.email}', '${newUser.password}');`;
     try {
         await pool.query(query);
@@ -16,16 +17,21 @@ const createUser = async (newUser) => {
 
 //@desc Logs in user
 const loginUser = async (user) => {
-    const query = `SELECT user_name AS name, password FROM "user" WHERE email = '${user.email}'`;
+    const query = `SELECT user_name AS name, password AS encryptedpassword, image  FROM "user" WHERE email = '${user.email}'`;
     try {
-        let result = await pool.query(query);
-        let { name, password } = result.rows[0]; 
-        if (compare(user.password, password)) return {"status":"success","details":{"name": name }};
-        return {"status":"failed","details":"wrong password"}
+        const results = await pool.query(query);
+
+        if (results.rowCount === 0) 
+            throw new UserError("UserError", "Email doesn't exist")
+
+        const { name, encryptedpassword, image } = results.rows[0]; 
+        const isPasswordValid = await compare(user.password, encryptedpassword)
+
+        if (isPasswordValid) 
+            return { "name": name, "image": image  };
+        throw new UserError("UserError", "Wrong or no password");
     } catch (error) {
-        //More errors to handle 
-        console.log(error);
-        throw new UserError("UserError", "Unexpected database error");
+        throw new UserError("UserError", error.details ? error.details : "Unexpected database error");
     }
 };
 
