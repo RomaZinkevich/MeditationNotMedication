@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
 import CardComponent from "./CardComponent";
 
-const GuideSection = ({ sectionID, name }) => {
+const GuideSection = ({ sectionID, name }) =>
+{
   const [cards, setCards] = useState([]);
-  useEffect(() => {
+  useEffect(() =>
+  {
     fetch(
       `https://meditationnotmedication-production.up.railway.app/api/sections/${sectionID}`
     )
       .then((res) => res.json())
-      .then((data) => {
+      .then((data) =>
+      {
+        data.sort((a, b) => a.content_id - b.content_id);
         setCards(data);
       });
   }, []);

@@ -1,0 +1,24 @@
+@hostname = localhost
+@port = 5000
+@host = http://{{hostname}}:{{port}}
+
+GET {{host}}
+
+###
+POST {{host}}/api/users
+content-Type: application/json
+
+{
+    "name": "Roman",
+    "email": "zrhdik111",
+    "password": "Pa$sw0rd"
+}
+
+###
+POST {{host}}/api/users/login
+Content-Type: application/json
+
+{
+    "email": "zrhdik111",
+    "password": "Pa$sw0rd"
+}

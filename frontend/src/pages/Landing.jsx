@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 function Landing() {
   return (
     <>
-      <button>Skip</button>
+      <Link to="/"><button>Skip</button></Link>
       <div className="logo-wrapper">
         <img src={logo} alt="" />
         <h1>EazeEase</h1>

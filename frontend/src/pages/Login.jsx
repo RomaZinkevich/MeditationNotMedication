@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 function Login() {
   return (
     <>
+      <Link to="/landing">
+        <button>Back</button>
+      </Link>
       <img src={logo} alt="logo" />
       <form action="">
         <input type="text" />

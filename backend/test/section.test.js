@@ -51,3 +51,37 @@ describe("GET /api/sections", () => {
           ]);
     });
   });
+
+  describe("GET /api/sections/:id", () => {
+    it("responds with a json message", async () => {
+        const response = await request(app).get('/api/sections/1');
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toEqual([
+          {
+              "content_id": 1,
+              "content_name": "content_1",
+              "author": "author 1",
+              "section_name": "Section 1",
+              "image": "image_url_1",
+              "description": "This is the description for content_id 1"
+          },
+          {
+              "content_id": 2,
+              "content_name": "content_2",
+              "author": "author 1",
+              "section_name": "Section 1",
+              "image": "image_url_2",
+              "description": "This is the description for content_id 2"
+          }
+      ]);
+    });
+
+    it("responds with error due to non-existing id", async () => {
+      const response = await request(app).get('/api/sections/11');
+
+      expect(response.statusCode).toBe(400);
+      expect(response.body.type).toEqual("SectionDatabaseError");
+      expect(response.body.details).toEqual("Section ID Not Found");
+    });
+  });

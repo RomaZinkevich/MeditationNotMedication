@@ -1,34 +1,56 @@
-const pool = require("../db/dbconfig")
+const express = require("express");
+const jwt = require("jsonwebtoken");
+const Joi = require("joi");
+const { createUser, clearUsers, loginUser } = require("../db/userdb");
+const { tryCatch } = require("../utils/tryCatch");
 
-const checkUser = async (id) => {
-    const query = `SELECT * FROM "User" WHERE user_id='${id}'`;
-    try {
-        const result = await pool.query(query);
-        const finresult = result.rows;
-        if (finresult.length === 0 ){
-            return false;
+const router = express.Router();
+
+const schema = Joi.object({
+    name: Joi.string().required(),
+    password: Joi.string().min(8)
+    .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)
+    .required(),
+    email: Joi.string().required()
+});
+
+// @desc Creates new user in the database
+// @route POST /api/user
+// @access Public
+router.post("/",
+    tryCatch(async (req, res, next) => {
+        let newUser = {
+            name: req.body.name,
+            password: req.body.password,
+            email: req.body.email
         }
-        return finresult[0];
-    } catch (err) {
-        console.error(err);
-        return err;
-    }      
-};
+        const { error, value } = schema.validate(newUser);
+        if (error) throw error;
 
-const createUser = async (profile) => {
-    const fullname = profile.name.givenName + " " + profile.name.familyName;
-    const query = `INSERT INTO "User" (user_id, user_name, email, image) VALUES (${profile.id}, '${fullname}', '${profile.emails[0].value}', '${profile.photos[0].value}');`;
-    try {
-        await pool.query(query);
-        const finresult = {"user_id":profile.id, "user_name":fullname, "email":profile.emails[0].value, "image":profile.photos[0].value};
-        return finresult;
-    } catch (err) {
-        console.error(err);
-        return err;
-    } 
-};
+        await createUser(newUser);
+        delete newUser.password;
+        console.log(newUser);
 
-module.exports = {
-    checkUser: checkUser,
-    createUser: createUser
-};
+        let token = jwt.sign(newUser, process.env.JWT_SECRET_KEY, {
+            expiresIn: "10m",
+        });
+        return res.json({"status": "success", "token": token});
+}));
+
+// @desc Logs in user if it exists
+// @route GET /api/user
+// @access Public
+router.post("/login",
+    tryCatch(async (req, res, next) => {
+        let user = {
+            email: req.body.email,
+            password: req.body.password
+        };
+        let response = await loginUser(user);
+        let token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
+            expiresIn: "10m",
+        });
+        return res.json({ "status":"success", "token":token, "details":response });
+}));
+
+module.exports = router;

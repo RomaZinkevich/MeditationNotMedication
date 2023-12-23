@@ -7,6 +7,8 @@ import Profile from "../pages/Profile";
 import Landing from "../pages/Landing";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
+import Favorite from "../pages/Favorite";
+import Search from "../pages/Search";
 
 export const routes = createBrowserRouter([
   {
@@ -36,5 +38,13 @@ export const routes = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />,
+  }
+  {
+    path: "/favorite",
+    element: <Favorite />,
+  },
+  {
+    path: "/search",
+    element: <Search />,
   }
 ]);
