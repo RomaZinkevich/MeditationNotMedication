@@ -11,7 +11,7 @@ const createUser = async (newUser) => {
     } catch (error) {
         if (error.message === "duplicate key value violates unique constraint \"email\"")
             throw new UserError("EmailValidationError", "Email already exists");
-        throw new UserError("UserError", "Unexpected database error");
+        throw new UserError("UserDatabaseError", "Unexpected database error");
     }
 };
 
@@ -22,16 +22,16 @@ const loginUser = async (user) => {
         const results = await pool.query(query);
 
         if (results.rowCount === 0) 
-            throw new UserError("UserError", "Email doesn't exist")
+            throw new UserError("AuthenticationError", "Email doesn't exist")
 
         const { name, encryptedpassword, image } = results.rows[0]; 
         const isPasswordValid = await compare(user.password, encryptedpassword)
 
         if (isPasswordValid) 
             return { "name": name, "image": image  };
-        throw new UserError("UserError", "Wrong or no password");
+        throw new UserError("AuthenticationError", "Wrong or no password");
     } catch (error) {
-        throw new UserError("UserError", error.details ? error.details : "Unexpected database error");
+        throw new UserError("AuthenticationError", error.details ? error.details : "Unexpected database error");
     }
 };
 
@@ -42,7 +42,7 @@ const clearUsers = async () => {
         await pool.query(query);
     } catch (error) {
         console.log(error);
-        throw new UserError("UserError", "Unexpected database error");
+        throw new UserError("UserDatabaseError", "Unexpected database error");
     }
 };
 

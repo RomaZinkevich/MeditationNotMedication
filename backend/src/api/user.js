@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 const { createUser, clearUsers, loginUser } = require("../db/userdb");
 const { tryCatch } = require("../utils/tryCatch");
-const checkAuth = require("../middleware/auth");
 
 const router = express.Router();
 

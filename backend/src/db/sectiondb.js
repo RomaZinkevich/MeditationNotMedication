@@ -7,7 +7,7 @@ const getAllSections = async () => {
     try {
         return await pool.query(query);
     } catch (error) {
-        throw new SectionError("SectionError", "Unexpected database error");
+        throw new SectionError("SectionDatabaseError", "Unexpected database error");
     }
 };
 
@@ -15,9 +15,12 @@ const getAllSections = async () => {
 const getSection = async (id) => {
     const query = `SELECT content_id, content_name, author, section_name, image, description FROM Content AS C LEFT JOIN Section AS S ON C.section_id = S.section_id WHERE C.section_id=${id};`;
     try {
-        return await pool.query(query);
+        let result = await pool.query(query);
+        if (result.rowCount === 0)
+            throw new SectionError("SectionError","Section ID Not Found");
+        return result;
     } catch (error) {
-        throw new SectionError("SectionError", "Unexpected database error");
+        throw new SectionError("SectionDatabaseError", error.details ? error.details : "Unexpected database error");
     }
 };
 

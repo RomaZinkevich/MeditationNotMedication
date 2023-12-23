@@ -81,7 +81,7 @@ describe("GET /api/section", () => {
       const response = await request(app).get('/api/section/11');
 
       expect(response.statusCode).toBe(400);
-      expect(response.body.type).toEqual("SectionError");
+      expect(response.body.type).toEqual("SectionDatabaseError");
       expect(response.body.details).toEqual("Section ID Not Found");
     });
   });

@@ -4,7 +4,7 @@ const userdb = require("../src/db/userdb");
 const app = require("../src/app");
 
 
-describe('POST /api/user', () => {
+describe('Sign up endpoint', () => {
     it('clears database before testing', (done) => {
         userdb.clearUsers();
         done();
@@ -112,3 +112,75 @@ describe('POST /api/user', () => {
     });
   });
 
+  describe('Log in endpoint', () => {
+    it('clears database before testing', (done) => {
+        userdb.clearUsers();
+        done();
+    });
+
+    it('creates new user in db', async () => {
+        const newUser = {
+            name:"Roman",
+            password: "Pas$w0rd",
+            email:"roman@gmail.com"
+        }
+        const response = await request(app)
+        .post('/api/user')
+        .set('Accept', 'application/json')
+        .send(newUser)
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body.status).toEqual("success");
+        expect(response.body.token).toBeDefined();
+    });
+
+    it('responds with a json message containing jwt token', async () => {
+        const user = {
+            email:"roman@gmail.com",
+            password: "Pas$w0rd"
+        }
+        const response = await request(app)
+        .post('/api/user/login')
+        .set('Accept', 'application/json')
+        .send(user)
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body.status).toEqual("success");
+        expect(response.body.token).toBeDefined();
+        expect(response.body.details.name).toEqual("Roman");
+        expect(response.body.details.image).toEqual("https://ih1.redbubble.net/image.1046392292.3346/st,medium,507x507-pad,600x600,f8f8f8.jpg");
+    });
+
+    it("responds with an error due to non-existing email", async () => {
+        const user = {
+            password: "Pas$w0rd"
+        }
+        const response = await request(app)
+        .post('/api/user/login')
+        .set('Accept', 'application/json')
+        .send(user)
+
+        expect(response.statusCode).toBe(400);
+        expect(response.body.type).toEqual("AuthenticationError");
+        expect(response.body.details).toEqual("Email doesn't exist");
+    })
+
+    it("responds with an error due to wrong password", async () => {
+        const user = {
+            email: "roman@gmail.com"
+        }
+        const response = await request(app)
+        .post('/api/user/login')
+        .set('Accept', 'application/json')
+        .send(user)
+
+        expect(response.statusCode).toBe(400);
+        expect(response.body.type).toEqual("AuthenticationError");
+        expect(response.body.details).toEqual("Wrong or no password");
+    })
+
+    it('clears database after testing', (done) => {
+        userdb.clearUsers();
+        done();
+    });
+  });
