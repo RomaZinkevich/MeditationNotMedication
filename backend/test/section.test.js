@@ -2,9 +2,9 @@ const request = require("supertest");
 
 const app = require("../src/app");
 
-describe("GET /api/section", () => {
+describe("GET /api/sections", () => {
     it("responds with a json message", async () => {
-        const response = await request(app).get('/api/section');
+        const response = await request(app).get('/api/sections');
 
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual([
@@ -52,9 +52,9 @@ describe("GET /api/section", () => {
     });
   });
 
-  describe("GET /api/section/:id", () => {
+  describe("GET /api/sections/:id", () => {
     it("responds with a json message", async () => {
-        const response = await request(app).get('/api/section/1');
+        const response = await request(app).get('/api/sections/1');
 
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual([
@@ -78,7 +78,7 @@ describe("GET /api/section", () => {
     });
 
     it("responds with error due to non-existing id", async () => {
-      const response = await request(app).get('/api/section/11');
+      const response = await request(app).get('/api/sections/11');
 
       expect(response.statusCode).toBe(400);
       expect(response.body.type).toEqual("SectionDatabaseError");

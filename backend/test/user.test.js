@@ -17,7 +17,7 @@ describe('Sign up endpoint', () => {
             email:"roman11@gmail.com"
         }
         const response = await request(app)
-        .post('/api/user')
+        .post('/api/users')
         .set('Accept', 'application/json')
         .send(newUser)
 
@@ -33,7 +33,7 @@ describe('Sign up endpoint', () => {
             email:"roman11@gmail.com"
         }
         const response = await request(app)
-        .post('/api/user')
+        .post('/api/users')
         .set('Accept', 'application/json')
         .send(newUser)
 
@@ -48,7 +48,7 @@ describe('Sign up endpoint', () => {
             email:"roman11@gmail.com"
         }
         const response = await request(app)
-        .post('/api/user')
+        .post('/api/users')
         .set('Accept', 'application/json')
         .send(newUser)
 
@@ -63,7 +63,7 @@ describe('Sign up endpoint', () => {
             email:"roman11@gmail.com"
         }
         const response = await request(app)
-        .post('/api/user')
+        .post('/api/users')
         .set('Accept', 'application/json')
         .send(newUser)
 
@@ -79,7 +79,7 @@ describe('Sign up endpoint', () => {
             email:"roman11@gmail.com"
         }
         const response = await request(app)
-        .post('/api/user')
+        .post('/api/users')
         .set('Accept', 'application/json')
         .send(newUser)
 
@@ -96,7 +96,7 @@ describe('Sign up endpoint', () => {
             email:"roman11@gmail.com"
         }
         const response = await request(app)
-        .post('/api/user')
+        .post('/api/users')
         .set('Accept', 'application/json')
         .send(newUser)
 
@@ -125,7 +125,7 @@ describe('Sign up endpoint', () => {
             email:"roman@gmail.com"
         }
         const response = await request(app)
-        .post('/api/user')
+        .post('/api/users')
         .set('Accept', 'application/json')
         .send(newUser)
 
@@ -140,7 +140,7 @@ describe('Sign up endpoint', () => {
             password: "Pas$w0rd"
         }
         const response = await request(app)
-        .post('/api/user/login')
+        .post('/api/users/login')
         .set('Accept', 'application/json')
         .send(user)
 
@@ -156,7 +156,7 @@ describe('Sign up endpoint', () => {
             password: "Pas$w0rd"
         }
         const response = await request(app)
-        .post('/api/user/login')
+        .post('/api/users/login')
         .set('Accept', 'application/json')
         .send(user)
 
@@ -170,7 +170,7 @@ describe('Sign up endpoint', () => {
             email: "roman@gmail.com"
         }
         const response = await request(app)
-        .post('/api/user/login')
+        .post('/api/users/login')
         .set('Accept', 'application/json')
         .send(user)
 

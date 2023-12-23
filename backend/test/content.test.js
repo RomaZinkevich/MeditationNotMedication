@@ -2,9 +2,9 @@ const request = require("supertest");
 
 const app = require("../src/app");
 
-describe("GET /api/content/:id", () => {
+describe("GET /api/contents/:id", () => {
     it("response for id=1", async () => {
-        const response = await request(app).get('/api/content/1');
+        const response = await request(app).get('/api/contents/1');
 
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual([
@@ -21,7 +21,7 @@ describe("GET /api/content/:id", () => {
     });
 
     it("response for id=2", async () => {
-        const response = await request(app).get('/api/content/2');
+        const response = await request(app).get('/api/contents/2');
 
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual([
@@ -38,7 +38,7 @@ describe("GET /api/content/:id", () => {
     });
 
     it("response for id=3", async () => {
-        const response = await request(app).get('/api/content/3');
+        const response = await request(app).get('/api/contents/3');
 
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual([
@@ -55,7 +55,7 @@ describe("GET /api/content/:id", () => {
     });
 
     it("response for id=4", async () => {
-        const response = await request(app).get('/api/content/4');
+        const response = await request(app).get('/api/contents/4');
 
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual([
@@ -72,7 +72,7 @@ describe("GET /api/content/:id", () => {
     });
 
     it("response for id=5", async () => {
-        const response = await request(app).get('/api/content/5');
+        const response = await request(app).get('/api/contents/5');
 
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual([
@@ -89,7 +89,7 @@ describe("GET /api/content/:id", () => {
     });
 
     it("response for id that does not exist", async () => {
-        const response = await request(app).get('/api/content/6');
+        const response = await request(app).get('/api/contents/6');
 
         expect(response.statusCode).toBe(400);
         expect(response.body.type).toEqual("ContentDatabaseError");
