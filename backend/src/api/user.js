@@ -41,7 +41,7 @@ router.post("/",
 // @desc Logs in user if it exists
 // @route GET /api/user
 // @access Public
-router.get("/",
+router.post("/login",
     tryCatch(async (req, res, next) => {
         let user = {
             email: req.body.email,

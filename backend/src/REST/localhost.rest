@@ -15,7 +15,7 @@ content-Type: application/json
 }
 
 ###
-GET {{host}}/api/user
+POST {{host}}/api/user/login
 Content-Type: application/json
 
 {
