@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
 });
 
 router.use("/sections", sections);
-router.use("/content", content);
-router.use("/user", user);
+router.use("/contents", content);
+router.use("/users", user);
 
 module.exports = router;

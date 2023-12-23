@@ -20,10 +20,7 @@ router.get("/",
 router.get("/:id", 
     tryCatch(async (req, res, next) => {
         const result = await getSection(req.params.id);
-        if (result.rowCount === 0)
-            throw new SectionError("SectionError","Section ID Not Found");
-        else
-            res.json(result.rows);
+        res.json(result.rows);
 }));
 
 

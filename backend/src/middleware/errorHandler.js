@@ -1,12 +1,11 @@
 const errorHandler = (error, req, res, next) => {
-    console.log(error);
     if (error.name === "ValidationError") {
         return res.status(400).send({
             type: "ValidationError",
             details: error.details
         });
     }
-    else if (error.type === "UserError" || error.type === "SectionError"){
+    else if (error.name === "UserError" || error.name === "SectionError" || error.name === "ContentError"){
         return res.status(400).send({
             type: error.type,
             details: error.details
