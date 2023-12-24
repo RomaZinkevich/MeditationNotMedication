@@ -1,0 +1,37 @@
+@use "./hamburger.scss";
+
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.primary-nav {
+  display: flex;
+  gap: 1rem;
+
+  align-items: center;
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.web-logo {
+  position: relative;
+  margin: 2rem;
+
+  width: 5rem;
+  height: 3.2rem;
+
+  overflow-y: clip;
+
+  img {
+    position: absolute;
+    top: 0.4rem;
+
+    display: flex;
+    justify-content: center;
+    object-fit: cover;
+  }
+}
