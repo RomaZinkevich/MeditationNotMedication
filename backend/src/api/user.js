@@ -29,7 +29,6 @@ router.post("/",
 
         await createUser(newUser);
         delete newUser.password;
-        console.log(newUser);
 
         let token = jwt.sign(newUser, process.env.JWT_SECRET_KEY, {
             expiresIn: "10m",
@@ -38,7 +37,7 @@ router.post("/",
 }));
 
 // @desc Logs in user if it exists
-// @route GET /api/user
+// @route POST /api/user/login
 // @access Public
 router.post("/login",
     tryCatch(async (req, res, next) => {
@@ -47,10 +46,12 @@ router.post("/login",
             password: req.body.password
         };
         let response = await loginUser(user);
+        delete user.password;
         let token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
             expiresIn: "10m",
         });
         return res.json({ "status":"success", "token":token, "details":response });
 }));
+
 
 module.exports = router;
