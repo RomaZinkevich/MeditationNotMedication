@@ -1,12 +1,11 @@
-import { useRef } from "react";
+import { useState } from "react";
 import logo from "../assets/images/logo.png"
 
 function Navigation() {
-  const hamburgRef = useRef<HTMLDivElement>(null);
+  const [expanded, setExpanded] = useState<boolean>(false);
 
   function handleClassToggle(): void {
-    if (!hamburgRef.current) return;
-    hamburgRef.current.classList.toggle("open");
+    setExpanded(prev => !prev);
   }
 
   return (
@@ -18,23 +17,31 @@ function Navigation() {
           width="80px"
         />
       </a>
-      <nav className="primary-nav">
-        <a href="#">Home</a>
-        <a href="#">Browse</a>
-        <a href="#">Ease</a>
-      </nav>
-      <div
-        id="hamburg"
-        ref={hamburgRef}
+      <button
+        className="mobile-nav-toggle"
         onClick={handleClassToggle}
+        aria-controls="primary-nav"
+        aria-expanded={expanded ? "true" : "false"}
       >
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+        <span className="sr-only">Menu</span>
+        <div id="hamburg" className={expanded ? "open" : ""}>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </button>
+      <nav
+        id="primary-nav"
+        className={`primary-nav ${expanded ? "open" : ""}`}
+      >
+        <a href="#">HOME</a>
+        <a href="#">BROWSE</a>
+        <a href="#">EASE</a>
+        <a href="#">LOGIN</a>
+      </nav>
     </div>
   );
 }
