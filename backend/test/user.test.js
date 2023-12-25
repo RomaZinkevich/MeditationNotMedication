@@ -1,5 +1,5 @@
 const request = require("supertest");
-const assert = require('assert');
+const jwt = require("jsonwebtoken");
 const userdb = require("../src/db/userdb");
 const app = require("../src/app");
 
@@ -112,7 +112,7 @@ describe('Sign up endpoint', () => {
     });
   });
 
-  describe('Log in endpoint', () => {
+describe('Log in endpoint', () => {
     it('clears database before testing', (done) => {
         userdb.clearUsers();
         done();
@@ -178,6 +178,41 @@ describe('Sign up endpoint', () => {
         expect(response.body.type).toEqual("AuthenticationError");
         expect(response.body.details).toEqual("Wrong or no password");
     })
+
+    it('clears database after testing', (done) => {
+        userdb.clearUsers();
+        done();
+    });
+  });
+
+describe('GET /users/api endpoint', () => {
+    it('clears database before testing', (done) => {
+        userdb.clearUsers();
+        done();
+    });
+
+    it('Gets info about user through token', async () => {
+        const user = {
+            name:"Roman",
+            email:"roman@gmail.com",
+            image: "image.png",
+        };
+
+        const token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
+            expiresIn: "10m",
+        });
+
+        const response = await request(app)
+        .get('/api/users')
+        .set('authorization', `Bearer ${token}`);
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body.status).toEqual("success");
+        expect(response.body.data.name).toEqual("Roman");
+        expect(response.body.data.email).toEqual("roman@gmail.com");
+        expect(response.body.data.image).toEqual("image.png");
+    });
+
 
     it('clears database after testing', (done) => {
         userdb.clearUsers();
