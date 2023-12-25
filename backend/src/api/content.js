@@ -6,7 +6,7 @@ const ContentError = require('../utils/ContentError');
 
 
 // @desc Get content by ID
-// @route GET /api/content/:id
+// @route GET /api/contents/:id
 // @access Public
 router.get("/:id", 
     tryCatch(async (req, res, next) => {

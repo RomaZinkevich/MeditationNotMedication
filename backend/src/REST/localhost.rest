@@ -22,3 +22,7 @@ Content-Type: application/json
     "email": "zrhdik111",
     "password": "Pa$sw0rd"
 }
+
+###
+GET {{host}}/api/users
+Authorization: Bearer 
