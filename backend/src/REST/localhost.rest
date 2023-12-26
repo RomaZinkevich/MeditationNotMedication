@@ -2,6 +2,9 @@
 @port = 5000
 @host = http://{{hostname}}:{{port}}
 
+@token =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlpoaUxpdSIsImlkIjoxMDIsIm5hbWUiOiJaaGl5dWFuIiwiaW1hZ2UiOiJodHRwczovL2loMS5yZWRidWJibGUubmV0L2ltYWdlLjEwNDYzOTIyOTIuMzM0Ni9zdCxtZWRpdW0sNTA3eDUwNy1wYWQsNjAweDYwMCxmOGY4ZjguanBnIiwiaWF0IjoxNzAzNTkxNzc4LCJleHAiOjE3MDM1OTIzNzh9.SHSxbQ9fxjNswYpnT25X6i57Cyk7vruTuaBZI6eD2W4
+
+
 GET {{host}}
 
 ###
@@ -9,8 +12,8 @@ POST {{host}}/api/users
 content-Type: application/json
 
 {
-    "name": "Roman",
-    "email": "zrhdik111",
+    "name": "Zhiyuan",
+    "email": "ZhiLisu",
     "password": "Pa$sw0rd"
 }
 
@@ -19,10 +22,22 @@ POST {{host}}/api/users/login
 Content-Type: application/json
 
 {
-    "email": "zrhdik111",
+    "email": "ZhiLiu",
     "password": "Pa$sw0rd"
 }
 
 ###
 GET {{host}}/api/users
-Authorization: Bearer 
+Authorization: Bearer {{token}}
+
+###
+PUT {{host}}/api/users
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "email": "Zhiyuan@mail.com",
+    "password": "newpas$w02D",
+    "name": "Ngueyn",
+    "image": "newImage"
+}
