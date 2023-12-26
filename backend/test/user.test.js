@@ -208,9 +208,9 @@ describe('GET /users/api endpoint', () => {
 
         expect(response.statusCode).toBe(200);
         expect(response.body.status).toEqual("success");
-        expect(response.body.data.name).toEqual("Roman");
-        expect(response.body.data.email).toEqual("roman@gmail.com");
-        expect(response.body.data.image).toEqual("image.png");
+        expect(response.body.details.name).toEqual("Roman");
+        expect(response.body.details.email).toEqual("roman@gmail.com");
+        expect(response.body.details.image).toEqual("image.png");
     });
 
 
