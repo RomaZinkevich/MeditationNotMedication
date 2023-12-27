@@ -8,6 +8,10 @@ const createUser = async (newUser) => {
     const query = `INSERT INTO "user" (user_name, email, password) VALUES ($1, $2, $3) RETURNING *;`;
     try {
         const result = await pool.query(query, [newUser.name, newUser.email, newUser.password]);
+
+        if (result.rowCount === 0) 
+            throw new UserError("AuthenticationError", "Email doesn't exist");
+
         return result.rows[0];
     } catch (error) {
         if (error.message === "duplicate key value violates unique constraint \"email\"")
@@ -27,6 +31,7 @@ const loginUser = async (user) => {
 
         const { user_id, name, encryptedpassword, image, email } = results.rows[0]; 
         const isPasswordValid = await compare(user.password, encryptedpassword)
+        console.log(user.password, encryptedpassword)
 
         if (isPasswordValid) 
             return { "name": name, "image": image, "user_id": user_id };
@@ -37,9 +42,10 @@ const loginUser = async (user) => {
 };
 
 const getUser = async (user) => {
-    const query = `SELECT user_id AS id, user_name AS name, image, email  FROM "user" WHERE user_id = $1`;
+    const query = `SELECT user_id AS id, user_name AS name, image, email, password  FROM "user" WHERE user_id = $1`;
     try {
         const results = await pool.query(query, [user.id]);
+        
         if (results.rowCount === 0) 
             throw new UserError("UserDatabaseError", "User doesn't exist");
 
@@ -51,8 +57,6 @@ const getUser = async (user) => {
 }
 
 //@desc Change user's data
-
-//FIX: IF QUERY RETURNS EMPTY STILL SUCCESS
 const changeUser = async (updatedUser, user) => {
     updatedUser.password = await encrypt(updatedUser.password);
     const query = `UPDATE "user" SET user_name=$1, email=$2, image=$3, password=$4 WHERE user_id=$5`;

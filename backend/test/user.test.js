@@ -208,9 +208,9 @@ describe('GET /users/api endpoint', () => {
         const creationResponse = await request(app)
         .post('/api/users')
         .set('Accept', 'application/json')
-        .send(user)
-
+        .send(user);
         const token = creationResponse.body.token;
+
         const response = await request(app)
         .get('/api/users')
         .set('authorization', `Bearer ${token}`);
@@ -219,6 +219,52 @@ describe('GET /users/api endpoint', () => {
         expect(response.body.details.name).toEqual("Roman");
         expect(response.body.details.email).toEqual("roman@gmail.com");
         expect(response.body.details.image).toEqual(DEFAULT_IMAGE);
+        expect(response.body.details.id).toBeDefined();
+    });
+
+
+    it('clears database after testing', (done) => {
+        userdb.clearUsers();
+        done();
+    });
+  });
+
+  
+describe('PUT /users/api endpoint', () => {
+    it('clears database before testing', (done) => {
+        userdb.clearUsers();
+        done();
+    });
+
+    it('Changes user data through token', async () => {
+        const user = {
+            name:"Roman",
+            email:"roman@gmail.com",
+            password:"Pas$w0rd"
+        };
+        const updatedUser = {
+            name:"Joe",
+            image:"image.png"
+        }
+
+        const creationResponse = await request(app)
+        .post('/api/users')
+        .set('Accept', 'application/json')
+        .send(user);
+        const token = creationResponse.body.token;
+
+        const response = await request(app)
+        .put('/api/users')
+        .set('authorization', `Bearer ${token}`)
+        .set('Accept', 'application/json')
+        .send(updatedUser)
+
+        console.log(response);
+        expect(response.statusCode).toBe(200);
+        expect(response.body.status).toEqual("success");
+        expect(response.body.details.name).toEqual("Joe");
+        expect(response.body.details.email).toEqual("roman@gmail.com");
+        expect(response.body.details.image).toEqual("image.png");
         expect(response.body.details.id).toBeDefined();
     });
 
