@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const userdb = require("../src/db/userdb");
 const app = require("../src/app");
 
+const DEFAULT_IMAGE = "https://ih1.redbubble.net/image.1046392292.3346/st,medium,507x507-pad,600x600,f8f8f8.jpg"
 
 describe('Sign up endpoint', () => {
     it('clears database before testing', (done) => {
@@ -24,6 +25,10 @@ describe('Sign up endpoint', () => {
         expect(response.statusCode).toBe(200);
         expect(response.body.status).toEqual("success");
         expect(response.body.token).toBeDefined();
+        expect(response.body.details.name).toEqual("Roman");
+        expect(response.body.details.id).toBeDefined();
+        expect(response.body.details.email).toEqual("roman11@gmail.com");
+        expect(response.body.details.image).toEqual(DEFAULT_IMAGE);
     });
   
     it('responds with an error message due to same email', async () => {
@@ -148,7 +153,9 @@ describe('Log in endpoint', () => {
         expect(response.body.status).toEqual("success");
         expect(response.body.token).toBeDefined();
         expect(response.body.details.name).toEqual("Roman");
-        expect(response.body.details.image).toEqual("https://ih1.redbubble.net/image.1046392292.3346/st,medium,507x507-pad,600x600,f8f8f8.jpg");
+        expect(response.body.details.id).toBeDefined();
+        expect(response.body.details.email).toEqual("roman@gmail.com");
+        expect(response.body.details.image).toEqual(DEFAULT_IMAGE);
     });
 
     it("responds with an error due to non-existing email", async () => {
@@ -195,22 +202,24 @@ describe('GET /users/api endpoint', () => {
         const user = {
             name:"Roman",
             email:"roman@gmail.com",
-            image: "image.png",
+            password:"Pas$w0rd"
         };
 
-        const token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
-            expiresIn: "10m",
-        });
+        const creationResponse = await request(app)
+        .post('/api/users')
+        .set('Accept', 'application/json')
+        .send(user)
 
+        const token = creationResponse.body.token;
         const response = await request(app)
         .get('/api/users')
         .set('authorization', `Bearer ${token}`);
-
         expect(response.statusCode).toBe(200);
         expect(response.body.status).toEqual("success");
         expect(response.body.details.name).toEqual("Roman");
         expect(response.body.details.email).toEqual("roman@gmail.com");
-        expect(response.body.details.image).toEqual("image.png");
+        expect(response.body.details.image).toEqual(DEFAULT_IMAGE);
+        expect(response.body.details.id).toBeDefined();
     });
 
 

@@ -2,7 +2,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 const checkToken = require("../middleware/auth");
-const { createUser, loginUser, changeUser } = require("../db/userdb");
+const { createUser, loginUser, getUser, changeUser } = require("../db/userdb");
 const { tryCatch } = require("../utils/tryCatch");
 
 const DEFAULT_IMAGE = "https://ih1.redbubble.net/image.1046392292.3346/st,medium,507x507-pad,600x600,f8f8f8.jpg";
@@ -40,7 +40,7 @@ router.post("/",
         let token = jwt.sign(newUser, process.env.JWT_SECRET_KEY, {
             expiresIn: "10m",
         });
-        return res.json({"status": "success", "token": token});
+        return res.json({"status": "success", "token": token, "details": newUser});
 }));
 
 // @desc Logs in user if it exists
@@ -62,7 +62,7 @@ router.post("/login",
         let token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
             expiresIn: "10m",
         });
-        return res.json({ "status": "success", "token": token, "details": response });
+        return res.json({ "status": "success", "token": token, "details": user });
 }));
 
 // @desc Gets user info
@@ -70,7 +70,8 @@ router.post("/login",
 // @access Private
 router.get("/", checkToken,
     tryCatch(async (req, res, next) => {
-        return res.json({ "status": "success", "details": req.user });
+        let response = await getUser(req.user);
+        return res.json({ "status": "success", "details": response });
 }));
 
 // @desc Changes user info
