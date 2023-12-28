@@ -29,9 +29,8 @@ const loginUser = async (user) => {
         if (results.rowCount === 0) 
             throw new UserError("AuthenticationError", "Email doesn't exist");
 
-        const { user_id, name, encryptedpassword, image, email } = results.rows[0]; 
+        const { user_id, name, encryptedpassword, image } = results.rows[0]; 
         const isPasswordValid = await compare(user.password, encryptedpassword)
-        console.log(user.password, encryptedpassword)
 
         if (isPasswordValid) 
             return { "name": name, "image": image, "user_id": user_id };
@@ -42,7 +41,7 @@ const loginUser = async (user) => {
 };
 
 const getUser = async (user) => {
-    const query = `SELECT user_id AS id, user_name AS name, image, email, password  FROM "user" WHERE user_id = $1`;
+    const query = `SELECT user_id AS id, user_name AS name, image, email  FROM "user" WHERE user_id = $1`;
     try {
         const results = await pool.query(query, [user.id]);
         
@@ -56,12 +55,11 @@ const getUser = async (user) => {
     }
 }
 
-//@desc Change user's data
+//@desc Change user's data except for password
 const changeUser = async (updatedUser, user) => {
-    updatedUser.password = await encrypt(updatedUser.password);
-    const query = `UPDATE "user" SET user_name=$1, email=$2, image=$3, password=$4 WHERE user_id=$5`;
+    const query = `UPDATE "user" SET user_name=$1, email=$2, image=$3 WHERE user_id=$4`;
     try {
-        const results = await pool.query(query, [updatedUser.name, updatedUser.email, updatedUser.image, updatedUser.password, user.id]);
+        const results = await pool.query(query, [updatedUser.name, updatedUser.email, updatedUser.image, user.id]);
 
         if (results.rowCount === 0) 
             throw new UserError("UserDatabaseError", "User doesn't exist");

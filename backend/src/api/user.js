@@ -4,7 +4,6 @@ const Joi = require("joi");
 const checkToken = require("../middleware/auth");
 const { createUser, loginUser, getUser, changeUser } = require("../db/userdb");
 const { tryCatch } = require("../utils/tryCatch");
-const { encrypt } = require("../utils/passwordEncryption");
 
 const DEFAULT_IMAGE = "https://ih1.redbubble.net/image.1046392292.3346/st,medium,507x507-pad,600x600,f8f8f8.jpg";
 
@@ -32,7 +31,6 @@ router.post("/",
         }
         const { error, value } = schema.validate(newUser);
         if (error) throw error;
-
         const response = await createUser(newUser);
         delete newUser.password;
         newUser.id = response.user_id
@@ -72,38 +70,22 @@ router.post("/login",
 router.get("/", checkToken,
     tryCatch(async (req, res, next) => {
         let response = await getUser(req.user);
-        delete response.password;
         return res.json({ "status": "success", "details": response });
 }));
 
-// @desc Changes user info
+// @desc Changes user info except for password
 // @route PUT /api/users
 // @access Private
 router.put("/", checkToken,
     tryCatch(async (req, res, next) => {
         const user = await getUser(req.user);
-        delete user.id;
-        const oldPassword = user.password;
 
         user.name = req.body.name ? req.body.name : user.name;
         user.image = req.body.image ? req.body.image : user.image;
         user.email = req.body.email ? req.body.email : user.email;
-        user.password = req.body.password ? req.body.password : "Pa$sw0rd";
         
-        const { error, value } = schema.validate(user);
-        if (error) throw error;
-        if (req.body.password) {
-            user.password = await encrypt(user.password);
-        } else {
-            // If not provided, use the existing hashed password
-            user.password = oldPassword;
-        }  
-        
-        user.password = req.body.password ? await encrypt(user.password) : oldPassword; 
         await changeUser(user, req.user);
-        delete user.password;
-        user.id = req.user.id;
-        console.log(user)
+
         let token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
             expiresIn: "10m",
         });
