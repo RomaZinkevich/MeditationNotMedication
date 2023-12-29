@@ -71,7 +71,7 @@ const changeUser = async (updatedUser, user) => {
 
 //@desc Change user's password
 const changeUserPassword = async (password, user) => {
-    const query = `UPDATE "user" SET password=$1 WHERE user_id=$2 RETURNING *`;
+    const query = `UPDATE "user" SET password=$1 WHERE user_id=$2 RETURNING user_name as name, user_id as id, email, image;`;
     try {
         password = await encrypt(password);
         const results = await pool.query(query, [password, user.id]);

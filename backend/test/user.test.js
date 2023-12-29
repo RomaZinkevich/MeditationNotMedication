@@ -192,7 +192,7 @@ describe('Log in endpoint', () => {
     });
   });
 
-describe('GET /users/api endpoint', () => {
+describe('GET /api/users endpoint', () => {
     it('clears database before testing', (done) => {
         userdb.clearUsers();
         done();
@@ -230,7 +230,7 @@ describe('GET /users/api endpoint', () => {
   });
 
   
-describe('PUT /users/api endpoint', () => {
+describe('PUT /api/users endpoint', () => {
     it('clears database before testing', (done) => {
         userdb.clearUsers();
         done();
@@ -265,6 +265,46 @@ describe('PUT /users/api endpoint', () => {
         expect(response.body.details.email).toEqual("roman@gmail.com");
         expect(response.body.details.image).toEqual("image.png");
         expect(response.body.details.id).toBeDefined();
+    });
+
+    it('chandes user password', async () => {
+        const user = {
+            name:"Roman",
+            email:"roman11@gmail.com",
+            password:"Pas$w0rd"
+        };
+        const updatedUser = {
+            password:"Pass@w0rD"
+        }
+
+        const creationResponse = await request(app)
+        .post('/api/users')
+        .set('Accept', 'application/json')
+        .send(user);
+        const token = await creationResponse.body.token;
+        user.password = updatedUser.password;
+
+        const response = await request(app)
+        .put('/api/users/password')
+        .set('authorization', `Bearer ${token}`)
+        .set('Accept', 'application/json')
+        .send(updatedUser);
+
+        expect(response.statusCode).toBe(200);
+        console.log(response.body)
+        expect(response.body.status).toEqual("success");
+        expect(response.body.details.name).toEqual("Roman");
+        expect(response.body.details.email).toEqual("roman11@gmail.com");
+        expect(response.body.details.image).toEqual(DEFAULT_IMAGE);
+        expect(response.body.details.id).toBeDefined();
+
+        const loginResponse = await request(app)
+        .post('/api/users/login')
+        .set('Accept', 'application/json')
+        .send(user);
+
+        expect(loginResponse.statusCode).toBe(200);
+
     });
 
 

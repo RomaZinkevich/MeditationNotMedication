@@ -110,7 +110,7 @@ router.put("/password", checkToken,
 
         const result = await changeUserPassword(user.password, req.user);
         user = result.rows[0];
-        delete user.password;
+
         let token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
             expiresIn: "10m",
         });
