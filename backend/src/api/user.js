@@ -2,7 +2,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 const checkToken = require("../middleware/auth");
-const { createUser, loginUser, getUser, changeUser } = require("../db/userdb");
+const { createUser, loginUser, getUser, changeUser, changeUserPassword } = require("../db/userdb");
 const { tryCatch } = require("../utils/tryCatch");
 
 const DEFAULT_IMAGE = "https://ih1.redbubble.net/image.1046392292.3346/st,medium,507x507-pad,600x600,f8f8f8.jpg";
@@ -17,6 +17,12 @@ const schema = Joi.object({
     email: Joi.string().required(),
     image: Joi.string().required()
 });
+
+const passwordSchema = Joi.object({
+    password: Joi.string().min(8)
+    .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)
+    .required()
+})
 
 // @desc Creates new user in the database
 // @route POST /api/users
@@ -86,6 +92,25 @@ router.put("/", checkToken,
         
         await changeUser(user, req.user);
 
+        let token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
+            expiresIn: "10m",
+        });
+        return res.json({"status": "success", "token": token, "details": user});
+}));
+
+// @desc Changes user password
+// @route PUT /api/users/password
+// @access Private
+router.put("/password", checkToken,
+    tryCatch(async (req, res, next) => {
+        let user = {"password": req.body.password};
+
+        const { error, value } = passwordSchema.validate(user);
+        if (error) throw error;
+
+        const result = await changeUserPassword(user.password, req.user);
+        user = result.rows[0];
+        delete user.password;
         let token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
             expiresIn: "10m",
         });
