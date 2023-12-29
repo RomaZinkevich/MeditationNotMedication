@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 
 const encrypt = (plaintextPassword) => {
+    console.log(plaintextPassword)
     return bcrypt.hash(plaintextPassword, 10);
 }
 

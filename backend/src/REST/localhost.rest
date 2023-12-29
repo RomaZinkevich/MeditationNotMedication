@@ -2,6 +2,10 @@
 @port = 5000
 @host = http://{{hostname}}:{{port}}
 
+@token =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiUk9NQU4iLCJlbWFpbCI6IkVNQUlsIiwiaW1hZ2UiOiJodHRwczovL2loMS5yZWRidWJibGUubmV0L2ltYWdlLjEwNDYzOTIyOTIuMzM0Ni9zdCxtZWRpdW0sNTA3eDUwNy1wYWQsNjAweDYwMCxmOGY4ZjguanBnIiwiaWQiOjEyMCwiaWF0IjoxNzAzNzk0NDk3LCJleHAiOjE3MDM3OTUwOTd9.RVWLgm2RH0HYswOdOCpJU58xAW_0U77e09E-EPWOUAw
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiUk9NQU4iLCJlbWFpbCI6IkVNQUlMIiwiaW1hZ2UiOiJodHRwczovL2loMS5yZWRidWJibGUubmV0L2ltYWdlLjEwNDYzOTIyOTIuMzM0Ni9zdCxtZWRpdW0sNTA3eDUwNy1wYWQsNjAweDYwMCxmOGY4ZjguanBnIiwiaWQiOjExNywiaWF0IjoxNzAzNzEzNzg4LCJleHAiOjE3MDM3MTQzODh9.eqQ3GCCezfAWRNraXuQA8krUeDihLjTi_GcHflqzSRw
+
+
 GET {{host}}
 
 ###
@@ -9,8 +13,8 @@ POST {{host}}/api/users
 content-Type: application/json
 
 {
-    "name": "Roman",
-    "email": "zrhdik111",
+    "name": "ROMAN",
+    "email": "EMAIl1",
     "password": "Pa$sw0rd"
 }
 
@@ -19,10 +23,20 @@ POST {{host}}/api/users/login
 Content-Type: application/json
 
 {
-    "email": "zrhdik111",
+    "email": "EMAIl",
     "password": "Pa$sw0rd"
 }
 
 ###
 GET {{host}}/api/users
-Authorization: Bearer 
+Authorization: Bearer {{token}}
+
+###
+PUT {{host}}/api/users
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "image": "image",
+    "password":"FLASKLF"
+}

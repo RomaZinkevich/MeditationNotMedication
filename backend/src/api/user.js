@@ -2,7 +2,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 const checkToken = require("../middleware/auth");
-const { createUser, loginUser } = require("../db/userdb");
+const { createUser, loginUser, getUser, changeUser } = require("../db/userdb");
 const { tryCatch } = require("../utils/tryCatch");
 
 const DEFAULT_IMAGE = "https://ih1.redbubble.net/image.1046392292.3346/st,medium,507x507-pad,600x600,f8f8f8.jpg";
@@ -14,7 +14,8 @@ const schema = Joi.object({
     password: Joi.string().min(8)
     .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)
     .required(),
-    email: Joi.string().required()
+    email: Joi.string().required(),
+    image: Joi.string().required()
 });
 
 // @desc Creates new user in the database
@@ -25,19 +26,20 @@ router.post("/",
         let newUser = {
             name: req.body.name,
             password: req.body.password,
-            email: req.body.email
+            email: req.body.email,
+            image: DEFAULT_IMAGE
         }
         const { error, value } = schema.validate(newUser);
         if (error) throw error;
-
-        await createUser(newUser);
+        const response = await createUser(newUser);
         delete newUser.password;
+        newUser.id = response.user_id
         newUser.image = DEFAULT_IMAGE;
 
         let token = jwt.sign(newUser, process.env.JWT_SECRET_KEY, {
             expiresIn: "10m",
         });
-        return res.json({"status": "success", "token": token});
+        return res.json({"status": "success", "token": token, "details": newUser});
 }));
 
 // @desc Logs in user if it exists
@@ -52,13 +54,14 @@ router.post("/login",
         let response = await loginUser(user);
 
         delete user.password;
+        user.id = response.user_id;
         user.name = response.name;
         user.image = response.image;
 
         let token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
             expiresIn: "10m",
         });
-        return res.json({ "status": "success", "token": token, "details": response });
+        return res.json({ "status": "success", "token": token, "details": user });
 }));
 
 // @desc Gets user info
@@ -66,7 +69,27 @@ router.post("/login",
 // @access Private
 router.get("/", checkToken,
     tryCatch(async (req, res, next) => {
-        return res.json({ "status": "success", "data": req.user });
+        let response = await getUser(req.user);
+        return res.json({ "status": "success", "details": response });
+}));
+
+// @desc Changes user info except for password
+// @route PUT /api/users
+// @access Private
+router.put("/", checkToken,
+    tryCatch(async (req, res, next) => {
+        const user = await getUser(req.user);
+
+        user.name = req.body.name ? req.body.name : user.name;
+        user.image = req.body.image ? req.body.image : user.image;
+        user.email = req.body.email ? req.body.email : user.email;
+        
+        await changeUser(user, req.user);
+
+        let token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
+            expiresIn: "10m",
+        });
+        return res.json({"status": "success", "token": token, "details": user});
 }));
 
 
