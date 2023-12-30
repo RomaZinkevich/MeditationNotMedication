@@ -59,6 +59,9 @@ const getUser = async (user) => {
 const changeUser = async (updatedUser, user) => {
     const query = `UPDATE "user" SET user_name=$1, email=$2, image=$3 WHERE user_id=$4`;
     try {
+        if (user.name === updatedUser.name && user.email === updatedUser.email && user.image === updatedUser.image)
+            throw new UserError("UserDatabaseError", "No new data provided for update");
+    
         const results = await pool.query(query, [updatedUser.name, updatedUser.email, updatedUser.image, user.id]);
 
         if (results.rowCount === 0) 
