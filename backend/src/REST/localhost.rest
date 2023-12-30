@@ -2,8 +2,7 @@
 @port = 5000
 @host = http://{{hostname}}:{{port}}
 
-@token =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiUk9NQU4iLCJlbWFpbCI6IkVNQUlsIiwiaW1hZ2UiOiJodHRwczovL2loMS5yZWRidWJibGUubmV0L2ltYWdlLjEwNDYzOTIyOTIuMzM0Ni9zdCxtZWRpdW0sNTA3eDUwNy1wYWQsNjAweDYwMCxmOGY4ZjguanBnIiwiaWQiOjEyMCwiaWF0IjoxNzAzNzk0NDk3LCJleHAiOjE3MDM3OTUwOTd9.RVWLgm2RH0HYswOdOCpJU58xAW_0U77e09E-EPWOUAw
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiUk9NQU4iLCJlbWFpbCI6IkVNQUlMIiwiaW1hZ2UiOiJodHRwczovL2loMS5yZWRidWJibGUubmV0L2ltYWdlLjEwNDYzOTIyOTIuMzM0Ni9zdCxtZWRpdW0sNTA3eDUwNy1wYWQsNjAweDYwMCxmOGY4ZjguanBnIiwiaWQiOjExNywiaWF0IjoxNzAzNzEzNzg4LCJleHAiOjE3MDM3MTQzODh9.eqQ3GCCezfAWRNraXuQA8krUeDihLjTi_GcHflqzSRw
+@token =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiUk9NQU4iLCJlbWFpbCI6IkVNQUlsMTEiLCJpbWFnZSI6Imh0dHBzOi8vaWgxLnJlZGJ1YmJsZS5uZXQvaW1hZ2UuMTA0NjM5MjI5Mi4zMzQ2L3N0LG1lZGl1bSw1MDd4NTA3LXBhZCw2MDB4NjAwLGY4ZjhmOC5qcGciLCJpZCI6MTIzLCJpYXQiOjE3MDM4MzA2MDgsImV4cCI6MTcwMzgzMTIwOH0.HphyNF9LCJE1x1BB0Wwe_Vi3_5KnGZiSs1ODcFy-0NI
 
 
 GET {{host}}
@@ -14,7 +13,7 @@ content-Type: application/json
 
 {
     "name": "ROMAN",
-    "email": "EMAIl1",
+    "email": "EMAIl11",
     "password": "Pa$sw0rd"
 }
 
@@ -23,13 +22,22 @@ POST {{host}}/api/users/login
 Content-Type: application/json
 
 {
-    "email": "EMAIl",
-    "password": "Pa$sw0rd"
+    "email": "EMAIl11",
+    "password": "FLASKLFWEs2!"
 }
 
 ###
 GET {{host}}/api/users
 Authorization: Bearer {{token}}
+
+###
+PUT {{host}}/api/users/password
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "password":"FLASKLFWEs2!"
+}
 
 ###
 PUT {{host}}/api/users

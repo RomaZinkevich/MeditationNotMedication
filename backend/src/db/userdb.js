@@ -65,7 +65,22 @@ const changeUser = async (updatedUser, user) => {
             throw new UserError("UserDatabaseError", "User doesn't exist");
 
     } catch (error) {
-        console.log(error)
+        throw new UserError("UserDatabaseError", error.details ? error.details : "Unexpected database error");
+    }
+};
+
+//@desc Change user's password
+const changeUserPassword = async (password, user) => {
+    const query = `UPDATE "user" SET password=$1 WHERE user_id=$2 RETURNING user_name as name, user_id as id, email, image;`;
+    try {
+        password = await encrypt(password);
+        const results = await pool.query(query, [password, user.id]);
+
+        if (results.rowCount === 0) 
+            throw new UserError("UserDatabaseError", "User doesn't exist");
+
+        return results;
+    } catch (error) {
         throw new UserError("UserDatabaseError", error.details ? error.details : "Unexpected database error");
     }
 };
@@ -83,9 +98,10 @@ const clearUsers = async () => {
 
 module.exports = {
     createUser: createUser,
-    changeUser: changeUser,
     loginUser: loginUser,
     getUser: getUser,
+    changeUser: changeUser,
+    changeUserPassword: changeUserPassword,
     clearUsers: clearUsers
 };
 
