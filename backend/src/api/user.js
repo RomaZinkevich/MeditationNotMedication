@@ -117,5 +117,16 @@ router.put("/password", checkToken,
         return res.json({"status": "success", "token": token, "details": user});
 }));
 
+// @desc Deletes User
+// @route DELETE /api/users
+// @access Private
+router.delete("/", checkToken,
+    tryCatch(async (req, res, next) => {
+        const result = await deleteSingleUser(req.user);
+        const user = result;
+        
+        return res.json({"status": "success", "details": user});
+}));
+
 
 module.exports = router;

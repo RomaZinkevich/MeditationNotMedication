@@ -5,7 +5,7 @@ const { encrypt, compare } = require("../utils/passwordEncryption");
 //@desc Creates new user in database
 const createUser = async (newUser) => {
     newUser.password = await encrypt(newUser.password);
-    const query = `INSERT INTO "user" (user_name, email, password) VALUES ($1, $2, $3) RETURNING *;`;
+    const query = `INSERT INTO "user" (user_name, email, password) VALUES ($1, $2, $3) RETURNING user_id;`;
     try {
         const result = await pool.query(query, [newUser.name, newUser.email, newUser.password]);
 
@@ -89,14 +89,14 @@ const changeUserPassword = async (password, user) => {
 };
 
 const deleteSingleUser = async (user) => {
-    const query = "DELETE FROM \"user\" WHERE user_id = $1 RETURNING *;"
+    const query = "DELETE FROM \"user\" WHERE user_id = $1 RETURNING user_name as name, user_id as id, email, image;"
     try {
         const results =  await pool.query(query, [user.id]);
 
         if (results.rowCount === 0) 
             throw new UserError("UserDatabaseError", "User doesn't exist");
 
-        return results;
+        return results.rows[0];
     } catch (error) {
         throw new UserError("UserDatabaseError", error.details ? error.details : "Unexpected database error");
     }

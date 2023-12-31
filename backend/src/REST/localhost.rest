@@ -2,7 +2,7 @@
 @port = 5000
 @host = http://{{hostname}}:{{port}}
 
-@token =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiUk9NQU4iLCJlbWFpbCI6IkVNQUlsMTEiLCJpbWFnZSI6Imh0dHBzOi8vaWgxLnJlZGJ1YmJsZS5uZXQvaW1hZ2UuMTA0NjM5MjI5Mi4zMzQ2L3N0LG1lZGl1bSw1MDd4NTA3LXBhZCw2MDB4NjAwLGY4ZjhmOC5qcGciLCJpZCI6MTIzLCJpYXQiOjE3MDM4MzA2MDgsImV4cCI6MTcwMzgzMTIwOH0.HphyNF9LCJE1x1BB0Wwe_Vi3_5KnGZiSs1ODcFy-0NI
+@token =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiUk9NQU4iLCJlbWFpbCI6IkVNQWFJc3NsMTEiLCJpbWFnZSI6Imh0dHBzOi8vaWgxLnJlZGJ1YmJsZS5uZXQvaW1hZ2UuMTA0NjM5MjI5Mi4zMzQ2L3N0LG1lZGl1bSw1MDd4NTA3LXBhZCw2MDB4NjAwLGY4ZjhmOC5qcGciLCJpZCI6MTI2LCJpYXQiOjE3MDQwNjcwNDYsImV4cCI6MTcwNDA2NzY0Nn0.xj4wbUICG8ujn2c0bKXF7L5d2VpikjRozr-GjpOaNlM
 
 
 GET {{host}}
@@ -13,9 +13,15 @@ content-Type: application/json
 
 {
     "name": "ROMAN",
-    "email": "EMAIl11",
+    "email": "EMAaIssl11",
     "password": "Pa$sw0rd"
 }
+
+
+###
+DELETE {{host}}/api/users
+Authorization: Bearer {{token}}
+
 
 ###
 POST {{host}}/api/users/login
