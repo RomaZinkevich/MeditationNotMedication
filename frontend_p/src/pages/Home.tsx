@@ -1,9 +1,11 @@
-import Navigation from "../components/Navigation";
+import Sections from "./Sections";
 
 function Home() {
-  return ( 
-    <Navigation />
-   );
+  return (
+    <>
+      <Sections />
+    </>
+  );
 }
 
 export default Home;

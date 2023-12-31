@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import logo from "../assets/images/logo.png"
 
 function Navigation() {
@@ -10,13 +11,13 @@ function Navigation() {
 
   return (
     <div className="navigation">
-      <a href="#" className="web-logo">
+      <Link to="#" className="web-logo">
         <img
           src={logo}
           alt="EasyEase"
           width="80px"
         />
-      </a>
+      </Link>
       <button
         className="mobile-nav-toggle"
         onClick={handleClassToggle}
@@ -37,10 +38,10 @@ function Navigation() {
         id="primary-nav"
         className={`primary-nav ${expanded ? "open" : ""}`}
       >
-        <a href="#">HOME</a>
-        <a href="#">BROWSE</a>
-        <a href="#">EASE</a>
-        <a href="#">LOGIN</a>
+        <Link to="/">HOME</Link>
+        <Link to="/browse">BROWSE</Link>
+        <Link to="/ease">EASE</Link>
+        <Link to="#">LOGIN</Link>
       </nav>
     </div>
   );
