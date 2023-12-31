@@ -88,6 +88,20 @@ const changeUserPassword = async (password, user) => {
     }
 };
 
+const deleteSingleUser = async (user) => {
+    const query = "DELETE FROM \"user\" WHERE user_id = $1 RETURNING *;"
+    try {
+        const results =  await pool.query(query, [user.id]);
+
+        if (results.rowCount === 0) 
+            throw new UserError("UserDatabaseError", "User doesn't exist");
+
+        return results;
+    } catch (error) {
+        throw new UserError("UserDatabaseError", error.details ? error.details : "Unexpected database error");
+    }
+};
+
 //@desc Clears database
 const clearUsers = async () => {
     const query = `DELETE FROM "user";`;
@@ -105,6 +119,7 @@ module.exports = {
     getUser: getUser,
     changeUser: changeUser,
     changeUserPassword: changeUserPassword,
+    deleteSingleUser: deleteSingleUser,
     clearUsers: clearUsers
 };
 

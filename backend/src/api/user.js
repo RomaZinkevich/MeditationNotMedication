@@ -2,7 +2,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 const checkToken = require("../middleware/auth");
-const { createUser, loginUser, getUser, changeUser, changeUserPassword } = require("../db/userdb");
+const { createUser, loginUser, getUser, changeUser, changeUserPassword, deleteSingleUser } = require("../db/userdb");
 const { tryCatch } = require("../utils/tryCatch");
 
 const DEFAULT_IMAGE = "https://ih1.redbubble.net/image.1046392292.3346/st,medium,507x507-pad,600x600,f8f8f8.jpg";
