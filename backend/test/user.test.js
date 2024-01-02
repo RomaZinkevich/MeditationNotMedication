@@ -132,7 +132,7 @@ describe("Log in endpoint", () => {
         .post("/api/users/login")
         .set("Accept", "application/json")
         .send(user);
-        console.log(response.body)
+
         expect(response.statusCode).toBe(200);
         expect(response.body.status).toEqual("success");
         expect(response.body.token).toBeDefined();
@@ -168,7 +168,7 @@ describe("Log in endpoint", () => {
 
     it("responds with an error due to wrong password", async () => {
         const user = {
-            email: "roman@gmail.com"
+            email: "RomanZin@gmail.com"
         }
         const response = await request(app)
         .post("/api/users/login")
