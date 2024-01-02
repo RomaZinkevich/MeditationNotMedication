@@ -5,7 +5,7 @@ const { encrypt, compare } = require("../utils/passwordEncryption");
 //@desc Creates new user in database
 const createUser = async (newUser) => {
     newUser.password = await encrypt(newUser.password);
-    const query = `INSERT INTO "user" (user_name, email, password) VALUES ($1, $2, $3) RETURNING *;`;
+    const query = `INSERT INTO "user" (user_name, email, password) VALUES ($1, $2, $3) RETURNING user_id;`;
     try {
         const result = await pool.query(query, [newUser.name, newUser.email, newUser.password]);
 
@@ -88,11 +88,35 @@ const changeUserPassword = async (password, user) => {
     }
 };
 
+const deleteSingleUser = async (user) => {
+    const query = "DELETE FROM \"user\" WHERE user_id = $1 RETURNING user_name as name, user_id as id, email, image;"
+    try {
+        const results =  await pool.query(query, [user.id]);
+
+        if (results.rowCount === 0) 
+            throw new UserError("UserDatabaseError", "User doesn't exist");
+
+        return results.rows[0];
+    } catch (error) {
+        throw new UserError("UserDatabaseError", error.details ? error.details : "Unexpected database error");
+    }
+};
+
 //@desc Clears database
 const clearUsers = async () => {
     const query = `DELETE FROM "user";`;
     try {
         await pool.query(query);
+    } catch (error) {
+        console.log(error);
+        throw new UserError("UserDatabaseError", "Unexpected database error");
+    }
+};
+
+const seedDb = async () => {
+    const query = "INSERT INTO \"user\" (email, user_name, password) VALUES ($1, $2, $3);"
+    try {
+        await pool.query(query, ["RomanZin@gmail.com", "Roman", "$2b$10$SL1V.hi1uVJD9P.OQK3MpOW3i2apznVjp.hKez.HGG/e9mqST4rvG"]);
     } catch (error) {
         console.log(error);
         throw new UserError("UserDatabaseError", "Unexpected database error");
@@ -105,6 +129,8 @@ module.exports = {
     getUser: getUser,
     changeUser: changeUser,
     changeUserPassword: changeUserPassword,
-    clearUsers: clearUsers
+    deleteSingleUser: deleteSingleUser,
+    clearUsers: clearUsers,
+    seedDb: seedDb
 };
 

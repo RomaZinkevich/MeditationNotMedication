@@ -2,7 +2,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 const checkToken = require("../middleware/auth");
-const { createUser, loginUser, getUser, changeUser, changeUserPassword } = require("../db/userdb");
+const { createUser, loginUser, getUser, changeUser, changeUserPassword, deleteSingleUser } = require("../db/userdb");
 const { tryCatch } = require("../utils/tryCatch");
 
 const DEFAULT_IMAGE = "https://ih1.redbubble.net/image.1046392292.3346/st,medium,507x507-pad,600x600,f8f8f8.jpg";
@@ -115,6 +115,17 @@ router.put("/password", checkToken,
             expiresIn: "10m",
         });
         return res.json({"status": "success", "token": token, "details": user});
+}));
+
+// @desc Deletes User
+// @route DELETE /api/users
+// @access Private
+router.delete("/", checkToken,
+    tryCatch(async (req, res, next) => {
+        const result = await deleteSingleUser(req.user);
+        const user = result;
+        
+        return res.json({"status": "success", "details": user});
 }));
 
 
