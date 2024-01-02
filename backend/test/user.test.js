@@ -142,6 +142,11 @@ describe("Log in endpoint", () => {
         expect(response.body.details.image).toEqual(DEFAULT_IMAGE);
     });
 
+    it("Clears and seeds db", async () => {
+        await userdb.clearUsers();
+        await userdb.seedDb();
+    });
+
     it("responds with an error due to non-existing email", async () => {
         const user = {
             password: "Pas$w0rd"
@@ -154,7 +159,12 @@ describe("Log in endpoint", () => {
         expect(response.statusCode).toBe(400);
         expect(response.body.type).toEqual("AuthenticationError");
         expect(response.body.details).toEqual("Email doesn't exist");
-    })
+    });
+
+    it("Clears and seeds db", async () => {
+        await userdb.clearUsers();
+        await userdb.seedDb();
+    });
 
     it("responds with an error due to wrong password", async () => {
         const user = {
@@ -168,11 +178,11 @@ describe("Log in endpoint", () => {
         expect(response.statusCode).toBe(400);
         expect(response.body.type).toEqual("AuthenticationError");
         expect(response.body.details).toEqual("Wrong or no password");
-    })
+    });
 
-    it("clears database after testing", (done) => {
-        userdb.clearUsers();
-        done();
+    it("Clears and seeds db", async () => {
+        await userdb.clearUsers();
+        await userdb.seedDb();
     });
   });
 
