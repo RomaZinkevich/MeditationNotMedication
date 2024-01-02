@@ -125,7 +125,7 @@ describe("Log in endpoint", () => {
 
     it("responds with a json message containing jwt token", async () => {
         const user = {
-            email:"roman@gmail.com",
+            email:"RomanZin@gmail.com",
             password: "Pa$sw0rd"
         }
         const response = await request(app)
@@ -138,7 +138,7 @@ describe("Log in endpoint", () => {
         expect(response.body.token).toBeDefined();
         expect(response.body.details.name).toEqual("Roman");
         expect(response.body.details.id).toBeDefined();
-        expect(response.body.details.email).toEqual("roman@gmail.com");
+        expect(response.body.details.email).toEqual("RomanZin@gmail.com");
         expect(response.body.details.image).toEqual(DEFAULT_IMAGE);
     });
 

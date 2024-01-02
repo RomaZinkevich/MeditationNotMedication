@@ -116,7 +116,7 @@ const clearUsers = async () => {
 const seedDb = async () => {
     const query = "INSERT INTO \"user\" (email, user_name, password) VALUES ($1, $2, $3);"
     try {
-        await pool.query(query, ["roman@gmail.com", "Roman", "$2b$10$SL1V.hi1uVJD9P.OQK3MpOW3i2apznVjp.hKez.HGG/e9mqST4rvG"]);
+        await pool.query(query, ["RomanZin@gmail.com", "Roman", "$2b$10$SL1V.hi1uVJD9P.OQK3MpOW3i2apznVjp.hKez.HGG/e9mqST4rvG"]);
     } catch (error) {
         console.log(error);
         throw new UserError("UserDatabaseError", "Unexpected database error");
