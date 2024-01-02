@@ -6,9 +6,9 @@ const app = require("../src/app");
 const DEFAULT_IMAGE = "https://ih1.redbubble.net/image.1046392292.3346/st,medium,507x507-pad,600x600,f8f8f8.jpg"
 
 describe("Sign up endpoint", () => {
-    it("clears database before testing", (done) => {
-        userdb.clearUsers();
-        done();
+    beforeEach(async () => {
+        await userdb.clearUsers();
+        await userdb.seedDb();
     });
 
     it("responds with a json message containing jwt token", async () => {
@@ -35,7 +35,7 @@ describe("Sign up endpoint", () => {
         const newUser = {
             name:"Roman",
             password: "Password!11",
-            email:"roman11@gmail.com"
+            email:"RomanZin@gmail.com"
         }
         const response = await request(app)
         .post("/api/users")
@@ -110,15 +110,10 @@ describe("Sign up endpoint", () => {
         expect(response.body.type).toEqual("ValidationError");
         expect(response.body.details[0].message).toEqual(`\"password\" with value \"${newUser.password}\" fails to match the required pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]+$/`)
     });
-
-    it("clears database after testing", (done) => {
-        userdb.clearUsers();
-        done();
-    });
-  });
+});
 
 describe("Log in endpoint", () => {
-    it("Clears and seeds db", async () => {
+    beforeEach(async () => {
         await userdb.clearUsers();
         await userdb.seedDb();
     });
@@ -142,11 +137,6 @@ describe("Log in endpoint", () => {
         expect(response.body.details.image).toEqual(DEFAULT_IMAGE);
     });
 
-    it("Clears and seeds db", async () => {
-        await userdb.clearUsers();
-        await userdb.seedDb();
-    });
-
     it("responds with an error due to non-existing email", async () => {
         const user = {
             password: "Pas$w0rd"
@@ -159,11 +149,6 @@ describe("Log in endpoint", () => {
         expect(response.statusCode).toBe(400);
         expect(response.body.type).toEqual("AuthenticationError");
         expect(response.body.details).toEqual("Email doesn't exist");
-    });
-
-    it("Clears and seeds db", async () => {
-        await userdb.clearUsers();
-        await userdb.seedDb();
     });
 
     it("responds with an error due to wrong password", async () => {
@@ -179,17 +164,12 @@ describe("Log in endpoint", () => {
         expect(response.body.type).toEqual("AuthenticationError");
         expect(response.body.details).toEqual("Wrong or no password");
     });
-
-    it("Clears and seeds db", async () => {
-        await userdb.clearUsers();
-        await userdb.seedDb();
-    });
   });
 
 describe("GET /api/users endpoint", () => {
-    it("clears database before testing", (done) => {
-        userdb.clearUsers();
-        done();
+    beforeEach(async () => {
+        await userdb.clearUsers();
+        await userdb.seedDb();
     });
 
     it("gets info about user through token", async () => {
@@ -234,18 +214,13 @@ describe("GET /api/users endpoint", () => {
         expect(response.body.type).toEqual("AuthorizationError");
         expect(response.body.details).toEqual("Unauthorized token");
     });
-
-    it("clears database after testing", (done) => {
-        userdb.clearUsers();
-        done();
-    });
   });
 
   
 describe("PUT /api/users endpoint", () => {
-    it("clears database before testing", (done) => {
-        userdb.clearUsers();
-        done();
+    beforeEach(async () => {
+        await userdb.clearUsers();
+        await userdb.seedDb();
     });
 
     it("changes user data through token", async () => {
@@ -333,18 +308,13 @@ describe("PUT /api/users endpoint", () => {
         expect(response.body.type).toEqual("UserDatabaseError");
         expect(response.body.details).toEqual("No new data provided for update");
     });
-
-    it("clears database after testing", (done) => {
-        userdb.clearUsers();
-        done();
-    });
   });
 
   
 describe("PUT /api/users/password endpoint", () => {
-    it("clears database before testing", (done) => {
-        userdb.clearUsers();
-        done();
+    beforeEach(async () => {
+        await userdb.clearUsers();
+        await userdb.seedDb();
     });
 
     it("changes user password", async () => {
@@ -438,10 +408,5 @@ describe("PUT /api/users/password endpoint", () => {
 
         expect(response.body.type).toEqual("ValidationError");
         expect(response.body.details[0].message).toEqual("\"password\" is required");
-    });
-
-    it("clears database after testing", (done) => {
-        userdb.clearUsers();
-        done();
     });
   });

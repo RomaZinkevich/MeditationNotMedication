@@ -6,9 +6,9 @@ const app = require("../src/app");
 const DEFAULT_IMAGE = "https://ih1.redbubble.net/image.1046392292.3346/st,medium,507x507-pad,600x600,f8f8f8.jpg"
 
 describe("DELETE /api/users endpoint", () => {
-    it("clears database before testing", (done) => {
-        userdb.clearUsers();
-        done();
+    beforeEach(async () => {
+        await userdb.clearUsers();
+        await userdb.seedDb();
     });
 
     it("deletes user through token", async () => {
@@ -27,8 +27,6 @@ describe("DELETE /api/users endpoint", () => {
         const response = await request(app)
         .delete("/api/users")
         .set("authorization", `Bearer ${token}`);
-
-        console.log(response.body)
 
         expect(response.statusCode).toBe(200);
         expect(response.body.status).toEqual("success");
@@ -55,10 +53,5 @@ describe("DELETE /api/users endpoint", () => {
         expect(response.statusCode).toBe(400);
         expect(response.body.type).toEqual("AuthorizationError");
         expect(response.body.details).toEqual("Unauthorized token");
-    });
-
-    it("clears database after testing", (done) => {
-        userdb.clearUsers();
-        done();
     });
   });
