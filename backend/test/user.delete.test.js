@@ -27,6 +27,9 @@ describe("DELETE /api/users endpoint", () => {
         const response = await request(app)
         .delete("/api/users")
         .set("authorization", `Bearer ${token}`);
+
+        console.log(response.body)
+
         expect(response.statusCode).toBe(200);
         expect(response.body.status).toEqual("success");
         expect(response.body.details.name).toEqual("Roman");
