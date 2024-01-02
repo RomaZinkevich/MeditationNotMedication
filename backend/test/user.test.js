@@ -118,37 +118,21 @@ describe("Sign up endpoint", () => {
   });
 
 describe("Log in endpoint", () => {
-    it("clears database before testing", (done) => {
-        userdb.clearUsers();
-        done();
-    });
-
-    it("creates new user in db", async () => {
-        const newUser = {
-            name:"Roman",
-            password: "Pas$w0rd",
-            email:"roman@gmail.com"
-        }
-        const response = await request(app)
-        .post("/api/users")
-        .set("Accept", "application/json")
-        .send(newUser)
-
-        expect(response.statusCode).toBe(200);
-        expect(response.body.status).toEqual("success");
-        expect(response.body.token).toBeDefined();
+    it("Clears and seeds db", async () => {
+        await userdb.clearUsers();
+        await userdb.seedDb();
     });
 
     it("responds with a json message containing jwt token", async () => {
         const user = {
             email:"roman@gmail.com",
-            password: "Pas$w0rd"
+            password: "Pa$sw0rd"
         }
         const response = await request(app)
         .post("/api/users/login")
         .set("Accept", "application/json")
         .send(user);
-
+        console.log(response.body)
         expect(response.statusCode).toBe(200);
         expect(response.body.status).toEqual("success");
         expect(response.body.token).toBeDefined();
