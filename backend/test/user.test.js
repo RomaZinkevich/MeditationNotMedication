@@ -147,7 +147,7 @@ describe("Log in endpoint", () => {
         const response = await request(app)
         .post("/api/users/login")
         .set("Accept", "application/json")
-        .send(user)
+        .send(user);
 
         expect(response.statusCode).toBe(200);
         expect(response.body.status).toEqual("success");
