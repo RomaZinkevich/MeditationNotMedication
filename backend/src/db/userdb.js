@@ -53,7 +53,7 @@ const getUser = async (user) => {
     } catch (error) {
         throw new UserError("UserDatabaseError", error.details ? error.details : "Unexpected database error");
     }
-}
+};
 
 //@desc Change user's data except for password
 const changeUser = async (updatedUser, user) => {

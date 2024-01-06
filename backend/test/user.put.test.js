@@ -36,6 +36,7 @@ describe("PUT /api/users endpoint", () => {
         expect(response.statusCode).toBe(200);
         
         expect(response.body.status).toEqual("success");
+        expect(response.body.details.role).toEqual(0);
         expect(response.body.details.name).toEqual("Roman");
         expect(response.body.details.email).toEqual("roman@gmail.com");
         expect(response.body.details.image).toEqual("image.png");
