@@ -22,18 +22,18 @@ const createUser = async (newUser) => {
 
 //@desc Logs in user
 const loginUser = async (user) => {
-    const query = `SELECT user_id, user_name AS name, password AS encryptedpassword, image  FROM "user" WHERE email = $1`;
+    const query = `SELECT user_id, user_name AS name, password AS encryptedpassword, image, role  FROM "user" WHERE email = $1`;
     try {
         const results = await pool.query(query, [user.email]);
 
         if (results.rowCount === 0) 
             throw new UserError("AuthenticationError", "Email doesn't exist");
 
-        const { user_id, name, encryptedpassword, image } = results.rows[0]; 
+        const { user_id, name, encryptedpassword, image, role } = results.rows[0]; 
         const isPasswordValid = await compare(user.password, encryptedpassword)
 
         if (isPasswordValid) 
-            return { "name": name, "image": image, "user_id": user_id };
+            return { "name": name, "image": image, "user_id": user_id, "role": role };
         throw new UserError("AuthenticationError", "Wrong or no password");
     } catch (error) {
         throw new UserError("AuthenticationError", error.details ? error.details : "Unexpected database error");
@@ -41,7 +41,7 @@ const loginUser = async (user) => {
 };
 
 const getUser = async (user) => {
-    const query = `SELECT user_id AS id, user_name AS name, image, email  FROM "user" WHERE user_id = $1`;
+    const query = `SELECT user_id AS id, user_name AS name, image, email, role  FROM "user" WHERE user_id = $1`;
     try {
         const results = await pool.query(query, [user.id]);
         
@@ -74,7 +74,7 @@ const changeUser = async (updatedUser, user) => {
 
 //@desc Change user's password
 const changeUserPassword = async (password, user) => {
-    const query = `UPDATE "user" SET password=$1 WHERE user_id=$2 RETURNING user_name as name, user_id as id, email, image;`;
+    const query = `UPDATE "user" SET password=$1 WHERE user_id=$2 RETURNING user_name as name, user_id as id, email, image, role;`;
     try {
         password = await encrypt(password);
         const results = await pool.query(query, [password, user.id]);
@@ -88,8 +88,9 @@ const changeUserPassword = async (password, user) => {
     }
 };
 
+//@desc Deletes one user
 const deleteSingleUser = async (user) => {
-    const query = "DELETE FROM \"user\" WHERE user_id = $1 RETURNING user_name as name, user_id as id, email, image;"
+    const query = "DELETE FROM \"user\" WHERE user_id = $1 RETURNING user_name as name, user_id as id, email, image, role;"
     try {
         const results =  await pool.query(query, [user.id]);
 
@@ -102,6 +103,17 @@ const deleteSingleUser = async (user) => {
     }
 };
 
+//@desc Gets all users
+const getAllUsers = async () => {
+    const query = "SELECT * FROM \"user\";"
+    try {
+        const results =  await pool.query(query);
+        return results.rows;
+    } catch (error) {
+        throw new UserError("UserDatabaseError", error.details ? error.details : "Unexpected database error");
+    }
+}
+
 //@desc Clears database
 const clearUsers = async () => {
     const query = `DELETE FROM "user";`;
@@ -113,6 +125,7 @@ const clearUsers = async () => {
     }
 };
 
+//@desc Seeds database with mock data
 const seedDb = async () => {
     const query = "INSERT INTO \"user\" (email, user_name, password) VALUES ($1, $2, $3);"
     try {
@@ -130,6 +143,7 @@ module.exports = {
     changeUser: changeUser,
     changeUserPassword: changeUserPassword,
     deleteSingleUser: deleteSingleUser,
+    getAllUsers: getAllUsers,
     clearUsers: clearUsers,
     seedDb: seedDb
 };

@@ -17,4 +17,16 @@ const checkToken = (req, res, next) => {
     }
 };
 
-module.exports = checkToken;
+const adminToken = (req, res, next) => {
+    console.log(req.user)
+    if (req.user.role === 1) {
+        next();
+    } else {
+        throw new UserError("AuthenticationError", "No rights to access this endpoint");
+    }
+}
+
+module.exports = {
+    checkToken: checkToken,
+    adminToken: adminToken
+};
