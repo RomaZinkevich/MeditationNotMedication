@@ -24,6 +24,7 @@ describe("Sign up endpoint", () => {
         expect(response.statusCode).toBe(200);
         expect(response.body.status).toEqual("success");
         expect(response.body.token).toBeDefined();
+        expect(response.body.details.role).toEqual(0);
         expect(response.body.details.name).toEqual("Roman");
         expect(response.body.details.id).toBeDefined();
         expect(response.body.details.email).toEqual("roman11@gmail.com");
@@ -130,6 +131,7 @@ describe("Log in endpoint", () => {
         expect(response.statusCode).toBe(200);
         expect(response.body.status).toEqual("success");
         expect(response.body.token).toBeDefined();
+        expect(response.body.details.role).toEqual(0);
         expect(response.body.details.name).toEqual("Roman");
         expect(response.body.details.id).toBeDefined();
         expect(response.body.details.email).toEqual("RomanZin@gmail.com");

@@ -2,7 +2,7 @@
 @port = 5000
 @host = http://{{hostname}}:{{port}}
 
-@token =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiUk9NQU4iLCJlbWFpbCI6IkVNQWFJc3NsMTEiLCJpbWFnZSI6Imh0dHBzOi8vaWgxLnJlZGJ1YmJsZS5uZXQvaW1hZ2UuMTA0NjM5MjI5Mi4zMzQ2L3N0LG1lZGl1bSw1MDd4NTA3LXBhZCw2MDB4NjAwLGY4ZjhmOC5qcGciLCJpZCI6MTI2LCJpYXQiOjE3MDQwNjcwNDYsImV4cCI6MTcwNDA2NzY0Nn0.xj4wbUICG8ujn2c0bKXF7L5d2VpikjRozr-GjpOaNlM
+@token =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkFETUlOIiwiaWQiOjEyOCwibmFtZSI6IkFETUlOIiwiaW1hZ2UiOiJodHRwczovL2loMS5yZWRidWJibGUubmV0L2ltYWdlLjEwNDYzOTIyOTIuMzM0Ni9zdCxtZWRpdW0sNTA3eDUwNy1wYWQsNjAweDYwMCxmOGY4ZjguanBnIiwicm9sZSI6MSwiaWF0IjoxNzA0NTY1NzA0LCJleHAiOjE3MDQ1NjYzMDR9.gB61Gfbf3X_4ES-mIbf7s3WYovJv1qg5bp_UGzX_A8w
 
 
 GET {{host}}
@@ -28,8 +28,8 @@ POST {{host}}/api/users/login
 Content-Type: application/json
 
 {
-    "email": "EMAIl11",
-    "password": "FLASKLFWEs2!"
+    "email": "ADMIN",
+    "password": "admin"
 }
 
 ###
@@ -54,3 +54,8 @@ Content-Type: application/json
     "image": "image",
     "password":"FLASKLF"
 }
+
+
+###
+GET {{host}}/api/users/admin
+Authorization: Bearer {{token}}

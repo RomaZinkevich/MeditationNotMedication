@@ -1,7 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
-const checkToken = require("../middleware/auth");
+const { checkToken, adminToken } = require("../middleware/auth");
 const { createUser, loginUser, getUser, changeUser, changeUserPassword, deleteSingleUser } = require("../db/userdb");
 const { tryCatch } = require("../utils/tryCatch");
 
@@ -15,7 +15,8 @@ const schema = Joi.object({
     .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)
     .required(),
     email: Joi.string().required(),
-    image: Joi.string().required()
+    image: Joi.string().required(),
+    role: Joi.number()
 });
 
 const passwordSchema = Joi.object({
@@ -33,14 +34,14 @@ router.post("/",
             name: req.body.name,
             password: req.body.password,
             email: req.body.email,
-            image: DEFAULT_IMAGE
+            image: DEFAULT_IMAGE,
+            role: 0
         }
         const { error, value } = schema.validate(newUser);
         if (error) throw error;
         const response = await createUser(newUser);
         delete newUser.password;
         newUser.id = response.user_id
-        newUser.image = DEFAULT_IMAGE;
 
         let token = jwt.sign(newUser, process.env.JWT_SECRET_KEY, {
             expiresIn: "10m",
@@ -63,6 +64,7 @@ router.post("/login",
         user.id = response.user_id;
         user.name = response.name;
         user.image = response.image;
+        user.role = response.role;
 
         let token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
             expiresIn: "10m",
