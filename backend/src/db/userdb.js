@@ -105,7 +105,7 @@ const deleteSingleUser = async (user) => {
 
 //@desc Gets all users
 const getAllUsers = async () => {
-    const query = "SELECT * FROM \"user\";"
+    const query = "SELECT user_id, user_name, email, image, role FROM \"user\";"
     try {
         const results =  await pool.query(query);
         return results.rows;
@@ -127,9 +127,11 @@ const clearUsers = async () => {
 
 //@desc Seeds database with mock data
 const seedDb = async () => {
-    const query = "INSERT INTO \"user\" (email, user_name, password) VALUES ($1, $2, $3);"
+    let query = "INSERT INTO \"user\" (email, user_name, password) VALUES ('RomanZin@gmail.com', 'Roman', '$2b$10$SL1V.hi1uVJD9P.OQK3MpOW3i2apznVjp.hKez.HGG/e9mqST4rvG');"
+    query += "INSERT INTO \"user\" (user_name, email, password) VALUES ('ADMIN', 'ADMIN', '$2b$10$tiiq4L6hsZTQCStM54lI4etpYHiduUjFmTjmeNGnXgEsMwS8K4WBq');"
+    query += "UPDATE \"user\" SET role=1 WHERE email='ADMIN';"
     try {
-        await pool.query(query, ["RomanZin@gmail.com", "Roman", "$2b$10$SL1V.hi1uVJD9P.OQK3MpOW3i2apznVjp.hKez.HGG/e9mqST4rvG"]);
+        await pool.query(query);
     } catch (error) {
         console.log(error);
         throw new UserError("UserDatabaseError", "Unexpected database error");
