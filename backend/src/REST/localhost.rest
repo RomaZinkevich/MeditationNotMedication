@@ -60,3 +60,12 @@ Content-Type: application/json
 ###
 GET {{host}}/api/users/admin
 Authorization: Bearer {{token}}
+
+###
+PUT {{host}}/api/users/admin/101
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "role":1
+}
