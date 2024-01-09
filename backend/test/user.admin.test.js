@@ -91,6 +91,7 @@ describe("PUT /api/users/admin/:id endpoint", () => {
         .set("authorization", `Bearer ${token}`);
 
         expect(putResponse.statusCode).toBe(200);
+        expect(putResponse.body.status).toEqual("success");
         expect(response.statusCode).toBe(200);
         expect(response.body.status).toEqual("success");
         expect(response.body.details[1].user_id).toBeDefined();
@@ -103,5 +104,51 @@ describe("PUT /api/users/admin/:id endpoint", () => {
         expect(response.body.details[0].email).toEqual("ADMIN");
         expect(response.body.details[0].image).toEqual(DEFAULT_IMAGE);
         expect(response.body.details[0].role).toEqual(1);
+    });
+
+    it("responds with an error due to invalid role value", async () => {
+        const user = {
+            email:"ADMIN",
+            password:"admin"
+        };
+
+        const loginResponse = await request(app)
+        .post("/api/users/login")
+        .set("Accept", "application/json")
+        .send(user);
+        const id = loginResponse.body.details.id;
+        const token = loginResponse.body.token;
+
+        const putResponse = await request(app)
+        .put(`/api/users/admin/${id-1}`)
+        .set("authorization", `Bearer ${token}`)
+        .send({"role":10});
+
+        expect(putResponse.statusCode).toBe(400);
+        expect(putResponse.body.type).toEqual("UserDatabaseError");
+        expect(putResponse.body.details).toEqual("Passed role value is invalid");
+    });
+
+    it("responds with an error due to invalid id", async () => {
+        const user = {
+            email:"ADMIN",
+            password:"admin"
+        };
+
+        const loginResponse = await request(app)
+        .post("/api/users/login")
+        .set("Accept", "application/json")
+        .send(user);
+        const id = loginResponse.body.details.id;
+        const token = loginResponse.body.token;
+
+        const putResponse = await request(app)
+        .put(`/api/users/admin/${id+10}`)
+        .set("authorization", `Bearer ${token}`)
+        .send({"role":1});
+
+        expect(putResponse.statusCode).toBe(400);
+        expect(putResponse.body.type).toEqual("UserDatabaseError");
+        expect(putResponse.body.details).toEqual("User doesn't exist");
     });
 });
