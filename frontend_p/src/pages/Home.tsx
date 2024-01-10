@@ -1,9 +1,10 @@
-import Sections from "./Sections";
+import Navigation from "../components/Navigation";
 
 function Home() {
   return (
     <>
-      <Sections />
+      <Navigation />
+      <div>Hello Home</div>
     </>
   );
 }

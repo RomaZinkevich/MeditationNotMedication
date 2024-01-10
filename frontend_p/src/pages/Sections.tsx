@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
-import Navigation from "../components/Navigation";
 import { Section } from "../interfaces/Section";
+import Navigation from "../components/Navigation";
+import ListSections from "../components/ListSections";
 
 function Sections() {
-  const [section, setSection] = useState<Section[]>([]);
+  const [allData, setAllData] = useState<Section[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    const fetchAllSections = async () => {
+    const fetchAllData = async () => {
       setError(null);
       setLoading(true);
 
@@ -16,23 +17,26 @@ function Sections() {
         const response = await fetch("http://localhost:5000/api/sections/", { method: "GET" });
         const data = await response.json();
 
-        setSection(data);
-        console.log(data);
+        setAllData(data);
       }
       catch (err) {
         console.error(err);
         setError(err as Error);
       }
+      finally {
+        setLoading(false);
+      }
     }
 
-    fetchAllSections();
+    fetchAllData();
   }, []);
 
   return (
     <>
       <Navigation />
       <main>
-        <h3>Hello</h3>
+        <div>Browsing</div>
+        <ListSections data={allData} />
       </main>
     </>
   );

@@ -11,7 +11,7 @@ function Navigation() {
 
   return (
     <div className="navigation">
-      <Link to="#" className="web-logo">
+      <Link to="/" className="web-logo">
         <img
           src={logo}
           alt="EasyEase"
@@ -38,9 +38,7 @@ function Navigation() {
         id="primary-nav"
         className={`primary-nav ${expanded ? "open" : ""}`}
       >
-        <Link to="/">HOME</Link>
-        <Link to="/browse">BROWSE</Link>
-        <Link to="/ease">EASE</Link>
+        <Link to="/browse">START BROWSING</Link>
         <Link to="#">LOGIN</Link>
       </nav>
     </div>
