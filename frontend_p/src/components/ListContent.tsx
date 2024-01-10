@@ -1,12 +1,12 @@
 import { Section } from "../interfaces/Section";
 
 function ListContent({contents}: {contents: Section[]}) {
-  return ( 
-    <div>
+  return (
+    <>
       {contents.map((content, i) => (
-        <li key={i}>{content.content_name}</li>
+        <p className="content-title" key={i}>{content.content_name}</p>
       ))}
-    </div>
+    </>
   );
 }
 

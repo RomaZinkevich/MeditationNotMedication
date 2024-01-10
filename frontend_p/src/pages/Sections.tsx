@@ -35,7 +35,7 @@ function Sections() {
     <>
       <Navigation />
       <main>
-        <div>Browsing</div>
+        <div>Browsing Page...</div>
         <ListSections data={allData} />
       </main>
     </>

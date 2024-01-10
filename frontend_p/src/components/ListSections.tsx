@@ -13,13 +13,11 @@ function OrganizeBySectionName(data: Section[]): SectionMap {
 
 function ListSections({data}:{data: Section[]}) {
   const organizedData: SectionMap = OrganizeBySectionName(data);
-  
+
   return (
     Object.keys(organizedData).map((secName, i) => (
-      <div>
-        <h3>
-          <li key={i}>{secName}</li>
-        </h3>
+      <div key={i}>
+        <h3>{secName}</h3>
         <ListContent contents={organizedData[secName]}/>
       </div>
     ))

@@ -1,14 +1,14 @@
 import Navigation from "../components/Navigation";
 
-function EasePage() {
+function UserPage() {
   return (
     <>
       <Navigation />
       <main>
-        <h3>Ease Page...</h3>
+        <div>User Login Or SignUp...</div>
       </main>
     </>
   );
 }
 
-export default EasePage;
+export default UserPage;
