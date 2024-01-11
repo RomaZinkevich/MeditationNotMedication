@@ -5,7 +5,6 @@ const app = require("../src/app");
 describe("GET /api/contents/:id", () => {
     it("response for id=1", async () => {
         const response = await request(app).get('/api/contents/1');
-      console.log(response.body)
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual([
             {

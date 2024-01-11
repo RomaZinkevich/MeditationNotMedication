@@ -12,7 +12,7 @@ const router = express.Router();
 const schema = Joi.object({
     name: Joi.string().required(),
     password: Joi.string().min(8)
-    .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)
+    .pattern(/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)/)
     .required(),
     email: Joi.string().required(),
     image: Joi.string().required(),
@@ -21,7 +21,7 @@ const schema = Joi.object({
 
 const passwordSchema = Joi.object({
     password: Joi.string().min(8)
-    .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&,/#^()-_=+'"`])[A-Za-z\d@$!%*?&]+$/)
+    .pattern(/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)/)
     .required()
 })
 
