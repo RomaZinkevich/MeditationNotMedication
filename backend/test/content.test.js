@@ -5,11 +5,12 @@ const app = require("../src/app");
 describe("GET /api/contents/:id", () => {
     it("response for id=1", async () => {
         const response = await request(app).get('/api/contents/1');
-
+      console.log(response.body)
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual([
             {
               "content_id": 1,
+              "section_id": 1,
               "content_name": "content_1",
               "description": "This is the description for content_id 1",
               "author": "author 1",
@@ -27,6 +28,7 @@ describe("GET /api/contents/:id", () => {
         expect(response.body).toEqual([
             {
               "content_id": 2,
+              "section_id": 1,
               "content_name": "content_2",
               "description": "This is the description for content_id 2",
               "author": "author 1",
@@ -44,6 +46,7 @@ describe("GET /api/contents/:id", () => {
         expect(response.body).toEqual([
             {
               "content_id": 3,
+              "section_id": 2,
               "content_name": "content_3",
               "description": "This is the description for content_id 3",
               "author": "author 2",
@@ -61,6 +64,7 @@ describe("GET /api/contents/:id", () => {
         expect(response.body).toEqual([
             {
               "content_id": 4,
+              "section_id": 2,
               "content_name": "content_4",
               "description": "This is the description for content_id 4",
               "author": "author 3",
@@ -78,6 +82,7 @@ describe("GET /api/contents/:id", () => {
         expect(response.body).toEqual([
             {
               "content_id": 5,
+              "section_id": 2,
               "content_name": "content_5",
               "description": "This is the description for content_id 5",
               "author": "author 2",

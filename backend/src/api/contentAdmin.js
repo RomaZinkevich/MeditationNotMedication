@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const { getContent, changeContent } = require("../db/contentdb");
+const { adminToken } = require("../middleware/auth");
 const { tryCatch } = require("../utils/tryCatch");
 
 // @desc Changes content item
 // @route PUT /api/contents/admin/:id
 // @access Private (Admin)
-router.put("/:id", checkToken,
+router.put("/:id", adminToken,
     tryCatch(async (req, res, next) => {
         const content = await getContent(req.params.id);
 

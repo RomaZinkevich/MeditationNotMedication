@@ -3,7 +3,7 @@ const ContentError = require('../utils/ContentError');
 
 //@desc Gets one Content by id
 const getContent = async (id) => {
-    const query = `SELECT content_id, section_id content_name, description, author, section_name, audio, image FROM Content LEFT JOIN Section ON Content.section_id = Section.section_id WHERE content_id=${id};`;
+    const query = `SELECT content_id, Content.section_id, content_name, description, author, section_name, audio, image FROM Content LEFT JOIN Section ON Content.section_id = Section.section_id WHERE content_id=${id};`;
     try {
         let result = await pool.query(query);
         if (result.rowCount === 0)
