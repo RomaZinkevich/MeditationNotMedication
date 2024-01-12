@@ -11,6 +11,8 @@ const errorHandler = (error, req, res, next) => {
             details: error.details
         });
     }
+
+    console.log(error)
     return res.status(400).send({
         type: "Unexpected error",
         details: error.message

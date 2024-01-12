@@ -1,13 +1,21 @@
 const request = require("supertest");
-
+const userdb = require("../src/db/userdb");
+const contentdb = require("../src/db/contentdb");
 const app = require("../src/app");
 
 describe("GET /api/sections", () => {
+    beforeEach(async () => {
+        await userdb.clearUsers();
+        await userdb.seedDb();
+        await contentdb.clearContents();
+        await contentdb.seedDb();
+    });
+
     it("responds with a json message", async () => {
         const response = await request(app).get('/api/sections');
 
         expect(response.statusCode).toBe(200);
-        expect(response.body).toEqual([
+        expect(response.body[1]).toEqual(
           {
             "section_id": 1,
             "content_id": 2,
@@ -15,7 +23,8 @@ describe("GET /api/sections", () => {
             "author": "author 1",
             "section_name": "Section 1",
             "image": "image_url_2"
-          },
+          });
+          expect(response.body[0]).toEqual(
           {
             "section_id": 1,
             "content_id": 1,
@@ -23,7 +32,8 @@ describe("GET /api/sections", () => {
             "author": "author 1",
             "section_name": "Section 1",
             "image": "image_url_1"
-          },
+          });
+          expect(response.body[3]).toEqual(
           {
             "section_id": 2,
             "content_id": 4,
@@ -31,7 +41,8 @@ describe("GET /api/sections", () => {
             "author": "author 3",
             "section_name": "Section 2",
             "image": "image_url_4"
-          },
+          });
+          expect(response.body[4]).toEqual(
           {
             "section_id": 2,
             "content_id": 5,
@@ -39,7 +50,8 @@ describe("GET /api/sections", () => {
             "author": "author 2",
             "section_name": "Section 2",
             "image": "image_url_5"
-          },
+          });
+          expect(response.body[2]).toEqual(
           {
             "section_id": 2,
             "content_id": 3,
@@ -47,8 +59,7 @@ describe("GET /api/sections", () => {
             "author": "author 2",
             "section_name": "Section 2",
             "image": "image_url_3"
-          }
-          ]);
+          });
     });
   });
 

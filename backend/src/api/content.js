@@ -10,7 +10,7 @@ const { tryCatch } = require("../utils/tryCatch");
 router.get("/:id",
     tryCatch(async (req, res, next) => {
         const result = await getContent(req.params.id);
-        res.json(result.rows);
+        res.json(result);
 }));
 
 module.exports = router;
