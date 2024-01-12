@@ -30,7 +30,7 @@ describe("Sign up endpoint", () => {
         expect(response.body.details.email).toEqual("roman11@gmail.com");
         expect(response.body.details.image).toEqual(DEFAULT_IMAGE);
     });
-  
+
     it("responds with an error message due to same email", async () => {
         const newUser = {
             name:"Roman",
@@ -108,7 +108,7 @@ describe("Sign up endpoint", () => {
 
         expect(response.statusCode).toBe(400);
         expect(response.body.type).toEqual("ValidationError");
-        expect(response.body.details[0].message).toEqual(`\"password\" with value \"${newUser.password}\" fails to match the required pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]+$/`)
+        expect(response.body.details[0].message).toEqual(`\"password\" with value \"${newUser.password}\" fails to match the required pattern: /(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*\\W)/`)
     });
 });
 

@@ -12,7 +12,7 @@ const router = express.Router();
 const schema = Joi.object({
     name: Joi.string().required(),
     password: Joi.string().min(8)
-    .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)
+    .pattern(/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)/)
     .required(),
     email: Joi.string().required(),
     image: Joi.string().required(),
@@ -21,7 +21,7 @@ const schema = Joi.object({
 
 const passwordSchema = Joi.object({
     password: Joi.string().min(8)
-    .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)
+    .pattern(/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)/)
     .required()
 })
 
@@ -91,7 +91,7 @@ router.put("/", checkToken,
         user.name = req.body.name ? req.body.name : user.name;
         user.image = req.body.image ? req.body.image : user.image;
         user.email = req.body.email ? req.body.email : user.email;
-        
+
         await changeUser(user, req.user);
 
         let token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
@@ -126,7 +126,7 @@ router.delete("/", checkToken,
     tryCatch(async (req, res, next) => {
         const result = await deleteSingleUser(req.user);
         const user = result;
-        
+
         return res.json({"status": "success", "details": user});
 }));
 
