@@ -22,6 +22,12 @@
 - **Meditation Sessions**: Users can access guided meditation sessions.
 - **Big Red Button**: Provides users with a relevant audio guide that will ease their discomfort, ranging from guided meditation and visualization practices
 - **User Authentication**: Secure user accounts with authentication.
+  
+## Contributors
+
+- **Prabesh Sharma** and **Vasu Bhatnagar:** Frontend development
+- **Roman Zinkevich:** Backend development
+- **Zhiyuan Liu:** Code Reviewer
 
 ## API Endpoints
 
@@ -131,4 +137,9 @@
         "role": "1"
     }
     ```
+
+## ERD
+![image](https://github.com/ZealinBee/MeditationNotMedication/assets/75644570/dc01da79-06f1-4fce-9e8c-0e1cac47e5ed)
+
+
 
