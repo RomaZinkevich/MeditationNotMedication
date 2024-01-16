@@ -3,7 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
 import Sections from "./pages/Sections";
 import EasePage from "./pages/EasePage";
-import UserPage from "./pages/UserPage";
+import UserAccountPage from "./pages/UserAccouPantge";
 
 export const routes = createBrowserRouter([
   {
@@ -19,7 +19,11 @@ export const routes = createBrowserRouter([
     element: <EasePage />
   },
   {
-    path: "/user-action",
-    element: <UserPage />
-  }
+    path: "/user-action-sign",
+    element: <UserAccountPage login={true} />
+  },
+  {
+    path: "/user-action-regis",
+    element: <UserAccountPage login={false} />
+  },
 ]);

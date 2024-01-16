@@ -39,8 +39,8 @@ function Navigation() {
         className={`primary-nav ${expanded ? "open" : ""}`}
       >
         <Link to="/browse">START BROWSING</Link>
-        <Link to="/user-action">LOGIN</Link>
-        <Link to="/user-action">SIGN UP</Link>
+        <Link to="/user-action-sign">LOGIN</Link>
+        <Link to="/user-action-regis">SIGN UP</Link>
       </nav>
     </div>
   );

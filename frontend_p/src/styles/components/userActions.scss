@@ -1,0 +1,23 @@
+.user-action {
+  padding: 4rem 3rem;
+  background-color: hsl(0 0 0% / 0.3);
+  backdrop-filter: blur(1rem);
+  border-radius: 1ch;
+
+  form {
+    display: grid;
+    gap: 2.5ch;
+    width: 23rem;
+  }
+
+  h1 {
+    color: white;
+    text-shadow: 1px 1px 0 black;
+    text-align: center;
+  }
+
+  button {
+    font-size: 1em;
+    padding: 1.5ch 0;
+  }
+}

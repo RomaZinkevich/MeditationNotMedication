@@ -1,0 +1,64 @@
+.input-wrapper {
+  display: grid;
+  gap: 0.5ch;
+
+  label {
+    color: white;
+    font-size: 0.85em;
+    font-weight: 600;
+    letter-spacing: 0.05rem;
+  }
+
+  input {
+    font-size: 1em;
+    border-radius: 0.5ch;
+    border: none;
+
+    padding: 1rem;
+
+    &:invalid[data-was-focused="true"] {
+      border: 2px solid red;
+      outline: none;
+
+      & ~ ul {
+        display: block;
+      }
+    }
+  }
+
+  .info-box {
+    position: relative;
+    display: none;
+
+    color: red;
+    background-color: hsl(0 0 100 / 0.2);
+    border-radius: 0 1ch 1ch 1ch;
+
+    padding-inline: 3ch;
+    padding-block: 1ch;
+    list-style-type: "•   ";
+
+    li {
+      font-size: 0.9em;
+      text-shadow: -1px 1px black;
+    }
+
+    button {
+      position: absolute;
+      inset-block: 0;
+      right: 0;
+      padding: 0 1ch;
+
+      border: none;
+      background: none;
+      border-radius: 1rem;
+
+      z-index: 1000;
+      cursor: pointer;
+
+      svg {
+        color: red;
+      }
+    }
+  }
+}
