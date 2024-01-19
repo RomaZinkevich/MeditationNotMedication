@@ -1,9 +1,19 @@
 const express = require("express");
 const router = express.Router();
+const Joi = require("joi");
 const { getContent, changeContent, createContent } = require("../db/contentdb");
 const { getSectionByName, createSection } = require("../db/sectiondb");
 const { checkToken, adminToken } = require("../middleware/auth");
 const { tryCatch } = require("../utils/tryCatch");
+
+const schema = Joi.object({
+    content_name: Joi.string().required(),
+    description: Joi.string().required(),
+    audio: Joi.string().required(),
+    image: Joi.string().required(),
+    author: Joi.string().required(),
+    section_id: Joi.number().required()
+});
 
 // @desc Changes content item
 // @route PUT /api/contents/admin/:id
@@ -30,11 +40,9 @@ router.put("/:id", checkToken, adminToken,
 router.post("/", checkToken, adminToken,
     tryCatch(async (req, res, next) => {
         let section_id = await getSectionByName(req.body.section_name);
-        console.log(section_id)
         if (!section_id) {
             section_id = await createSection(req.body.section_name);
         }
-        console.log(section_id)
         const content = {
             "content_name": req.body.content_name,
             "description": req.body.description,
@@ -43,8 +51,11 @@ router.post("/", checkToken, adminToken,
             "author": req.body.author,
             "section_id": section_id
         };
+
+        const { error, value } = schema.validate(content);
+        if (error) throw error;
+
         const result = await createContent(content);
-        console.log(result)
         return res.json({"status": "success", "details": result});
 }));
 

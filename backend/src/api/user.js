@@ -39,6 +39,7 @@ router.post("/",
         }
         const { error, value } = schema.validate(newUser);
         if (error) throw error;
+
         const response = await createUser(newUser);
         delete newUser.password;
         newUser.id = response.user_id

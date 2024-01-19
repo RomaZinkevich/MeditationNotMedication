@@ -30,8 +30,8 @@ const getSectionByName = async (name) => {
     try {
         let result = await pool.query(query, [name]);
         if (result.rowCount === 0)
-            throw new SectionError("SectionError","Section Not Found");
-        return result;
+            return false;
+        return result.rows[0].section_id;
     } catch (error) {
         throw new SectionError("SectionDatabaseError", error.details ? error.details : "Unexpected database error");
     }
@@ -44,7 +44,7 @@ const createSection = async (name) => {
         let result = await pool.query(query, [name]);
         if (result.rowCount === 0)
             throw new Error;
-        return result;
+        return result.rows[0].section_id;
     } catch (error) {
         throw new SectionError("SectionDatabaseError", error.details ? error.details : "Unexpected database error");
     }
