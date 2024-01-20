@@ -1,3 +1,5 @@
+@use "./components/formInput.scss";
+@use "./components/userActions.scss";
 @use "./components/navbar.scss";
 
 * {
@@ -12,9 +14,9 @@ html {
 }
 
 body {
-  background-image: url("../assets/images/flower.jpg");
-  background-repeat: no-repeat;
-  background-position: 97% 65%;
+  // background-image: url("../assets/images/flower.jpg");
+  // background-repeat: no-repeat;
+  // background-position: 97% 65%;
 
   overflow-x: hidden;
 }
@@ -28,4 +30,10 @@ body {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
+}
+
+@media (max-width: 35em) {
+  body {
+    background-position: 95% 65%;
+  }
 }
