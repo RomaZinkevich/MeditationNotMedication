@@ -28,6 +28,19 @@ const changeContent = async (content) => {
     }
 };
 
+//@desc Creates new content
+const createContent = async (content) => {
+    const query = "INSERT INTO content (content_name, description, image, audio, author, section_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *";
+    try {
+        let result = await pool.query(query, [content.content_name, content.description, content.image, content.audio, content.author, content.section_id]);
+        if (result.rowCount === 0)
+            throw new Error;
+        return result.rows[0];
+    } catch (error) {
+        throw new ContentError("ContentDatabaseError", error.details ? error.details : "Unexpected database error");
+    }
+}
+
 //@desc Clears database
 const clearContents = async () => {
     const query = `DELETE FROM "content"; DELETE FROM "section";`;
@@ -62,6 +75,7 @@ const seedDb = async () => {
 module.exports = {
     getContent: getContent,
     changeContent: changeContent,
+    createContent: createContent,
     clearContents: clearContents,
     seedDb: seedDb
 };
