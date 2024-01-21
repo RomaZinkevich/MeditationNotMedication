@@ -5,11 +5,11 @@
 ### Frontend
 
 - Production: [eazeease.netlify.app](https://eazeease.netlify.app)
-  
+
 ### Backend
 
 - Production: [meditationnotmedication-production.up.railway.app](https://meditationnotmedication-production.up.railway.app)
-        
+
 ## Technologies:
 - ### *Frontend*:
   - React + Vite
@@ -22,7 +22,7 @@
 - **Meditation Sessions**: Users can access guided meditation sessions.
 - **Big Red Button**: Provides users with a relevant audio guide that will ease their discomfort, ranging from guided meditation and visualization practices
 - **User Authentication**: Secure user accounts with authentication.
-  
+
 ## Contributors
 
 - **Prabesh Sharma** and **Vasu Bhatnagar:** Frontend development
@@ -135,6 +135,23 @@
     ```json
     {
         "role": "1"
+    }
+    ```
+
+- #### **Admin: Create New Content**
+  - **Endpoint**: `/api/contents/admin`
+  - **Description**: Infuse the spiritual realm with new "content" as an admin.
+  - **Authorization**: Bearer Admin Token Required
+  - **Example**: `POST https://meditationnotmedication-production.up.railway.app/api/contents/admin`
+  - **Request Body**:
+    ```json
+    {
+        "content_name": "NewContent",
+        "description": "NewDescription",
+        "audio": "NewAudio",
+        "image": "NewImage",
+        "author": "NewAuthor",
+        "section_name": "Section 1"
     }
     ```
 
