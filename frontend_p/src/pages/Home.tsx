@@ -16,7 +16,7 @@ function Home() {
 
           <div className="redirect-buttons">
             <Link className="browse-button" to="/browse">Take a look around</Link> or
-            <Link className="user-action-button" to="user-action">Join us</Link>
+            <Link className="user-action-button" to="/redirect-user-reg">Join us</Link>
           </div>
         </p>
       </main>
