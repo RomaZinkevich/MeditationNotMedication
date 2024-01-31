@@ -1,7 +1,12 @@
-import { Section } from "../interfaces/Section";
-import ListContent from "./ListContent";
+import { Section } from "../interfaces/DataTypes";
+import ShowContent from "./ShowContent";
 
 interface SectionMap { [key: string]: Section[] }
+
+interface ListSectionProps {
+  data: Section[];
+  onContentFetch: (id: number) => void;
+}
 
 function OrganizeBySectionName(data: Section[]): SectionMap {
   return data.reduce((acc: SectionMap, section: Section) => {
@@ -11,15 +16,20 @@ function OrganizeBySectionName(data: Section[]): SectionMap {
   }, {});
 }
 
-function ListSections({data}:{data: Section[]}) {
+function ListSections({ data, onContentFetch }: ListSectionProps) {
   const organizedData: SectionMap = OrganizeBySectionName(data);
+  const sections: string[] = Object.keys(organizedData);
 
   return (
-    Object.keys(organizedData).map((secName, i) => (
-      <div key={i}>
+    sections.map((secName, i) => (
+      <>
         <h3>{secName}</h3>
-        <ListContent contents={organizedData[secName]}/>
-      </div>
+        <div key={i} style={{ display: "flex", gap: "2ch" }}>
+          {organizedData[secName].map((content) => (
+            <ShowContent key={content.content_id} {...content} onContentFetch={onContentFetch} />
+          ))}
+        </div>
+      </>
     ))
   );
 }
