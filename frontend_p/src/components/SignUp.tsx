@@ -7,10 +7,21 @@ interface SignUpProp {
 }
 
 const signUpSchema = z.object({
-  username: z.string().min(3, "Username must be atleast 3 characters"),
-  email: z.string().email(),
-  password: z.string().min(8, "Password must be atleast 8 characters"),
-  confirmPassword: z.string(),
+  username: z
+    .string()
+    .min(3, "Username must be atleast 3 characters"),
+  email: z
+    .string()
+    .email(),
+  password: z
+    .string()
+    .min(8, "Password must be atleast 8 characters")
+    .regex(
+      /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)/,
+      "Requires atleast a special, an uppercase character, and a number"
+    ),
+  confirmPassword: z
+    .string(),
 }).refine(data =>
   data.password === data.confirmPassword, {
   message: "Passwords must match",
