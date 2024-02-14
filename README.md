@@ -40,6 +40,11 @@
   - **Endpoint**: `/api/sections`
   - **Description**: Explore a tapestry of "Sections," each weaving its unique story.
   - **Example**: `GET https://meditationnotmedication-production.up.railway.app/api/sections`
+  - **Parameters**:
+    - `sort` (optional): Sort the sections based on a specific attribute (e.g., `content_name`, `author`). Equals to 'section_id' by default.
+    - `order` (optional): Specify the sorting order as either `asc` (ascending) or `desc` (descending). Equals to 'asc' by default.
+  - **Example with Sorting**:
+    - `GET https://meditationnotmedication-production.up.railway.app/api/sections?sort=content_name&order=desc`
 
 - #### **Get Content by Section ID**
   - **Endpoint**: `/api/sections/:id`
