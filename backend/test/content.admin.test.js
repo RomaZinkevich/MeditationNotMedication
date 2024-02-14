@@ -12,14 +12,13 @@ describe("PUT /api/contents/admin/:id endpoint", () => {
         await contentdb.seedDb();
     });
 
-    it("changes content through ADMIN profile", async () => {
+    it("changes content using existing section_name", async () => {
         const user = {
             email:"ADMIN",
             password:"admin"
         };
 
         const changedContent = {
-            "section_id": 2,
             "content_name": "content_1_updated",
             "description": "This is the description for new content_id 1",
             "author": "author 2",
@@ -57,7 +56,91 @@ describe("PUT /api/contents/admin/:id endpoint", () => {
           );
     });
 
-    it("changes content through ADMIN profile", async () => {
+    it("changes content using new section name", async () => {
+        const user = {
+            email:"ADMIN",
+            password:"admin"
+        };
+
+        const changedContent = {
+            "content_name": "content_1_updated",
+            "description": "This is the description for new content_id 1",
+            "author": "author 2",
+            "section_name": "Section NEW",
+            "audio": "audio_url_10",
+            "image": "image_url_10"
+          }
+
+        const loginResponse = await request(app)
+        .post("/api/users/login")
+        .set("Accept", "application/json")
+        .send(user);
+        const token = loginResponse.body.token;
+
+        const putResponse = await request(app)
+        .put(`/api/contents/admin/1`)
+        .set("authorization", `Bearer ${token}`)
+        .send(changedContent);
+
+        const response =  await request(app)
+        .get("/api/contents/1");
+
+        expect(putResponse.statusCode).toBe(200);
+        expect(response.body.section_id).toBeDefined();
+        expect(response.body.content_id).toEqual(1);
+        expect(response.body.content_name).toEqual("content_1_updated");
+        expect(response.body.description).toEqual("This is the description for new content_id 1");
+        expect(response.body.author).toEqual("author 2");
+        expect(response.body.section_name).toEqual("Section NEW");
+        expect(response.body.audio).toEqual("audio_url_10");
+        expect(response.body.image).toEqual("image_url_10");
+    });
+
+    it("changes content without using section", async () => {
+      const user = {
+          email:"ADMIN",
+          password:"admin"
+      };
+
+      const changedContent = {
+          "content_name": "content_1_updated",
+          "description": "This is the description for new content_id 1",
+          "author": "author 2",
+          "audio": "audio_url_10",
+          "image": "image_url_10"
+        }
+
+      const loginResponse = await request(app)
+      .post("/api/users/login")
+      .set("Accept", "application/json")
+      .send(user);
+      const token = loginResponse.body.token;
+
+      const putResponse = await request(app)
+      .put(`/api/contents/admin/1`)
+      .set("authorization", `Bearer ${token}`)
+      .send(changedContent);
+      console.log(putResponse.body)
+      const response =  await request(app)
+      .get("/api/contents/1");
+
+      expect(putResponse.statusCode).toBe(200);
+      expect(response.body).toEqual(
+          {
+            "content_id": 1,
+            "section_id": 1,
+            "content_name": "content_1_updated",
+            "description": "This is the description for new content_id 1",
+            "author": "author 2",
+            "section_name": "Section 1",
+            "audio": "audio_url_10",
+            "image": "image_url_10"
+          }
+        );
+  });
+
+
+    it("responds with an error due to no content with specified ID", async () => {
       const user = {
           email:"ADMIN",
           password:"admin"
