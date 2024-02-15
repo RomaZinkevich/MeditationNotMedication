@@ -21,7 +21,9 @@ router.get("/",
 // @access Public
 router.get("/:id",
     tryCatch(async (req, res, next) => {
-        const result = await getSection(req.params.id);
+        let sortBy = ALLOWED_COLUMNS.includes(req.query.sort) ? req.query.sort : "content_id";
+        let order = ALLOWED_ORDER.includes(req.query.order) ? req.query.order : "asc";
+        const result = await getSection(req.params.id, sortBy, order);
         res.json(result.rows);
 }));
 
