@@ -20,6 +20,13 @@ const schema = Joi.object({
 // @access Private (Admin)
 router.put("/:id", checkToken, adminToken,
     tryCatch(async (req, res, next) => {
+        let section_id;
+        if (req.body.section_name){
+            section_id = await getSectionByName(req.body.section_name);
+            if (!section_id) {
+                section_id = await createSection(req.body.section_name);
+            }
+        }
         const content = await getContent(req.params.id);
 
         content.content_name = req.body.content_name ? req.body.content_name : content.content_name;
@@ -27,7 +34,7 @@ router.put("/:id", checkToken, adminToken,
         content.audio = req.body.audio ? req.body.audio : content.audio;
         content.image = req.body.image ? req.body.image : content.image;
         content.author = req.body.author ? req.body.author : content.author;
-        content.section_id = req.body.section_id ? req.body.section_id : content.section_id;
+        content.section_id = section_id ? section_id : content.section_id;
 
         await changeContent(content);
 
