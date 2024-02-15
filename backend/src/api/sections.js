@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { getAllSections, getSection } = require("../db/sectiondb");
 const { tryCatch } = require("../utils/tryCatch");
-const { ALLOWED_COLUMNS, ALLOWED_ORDER } = require("./allowedSortOptions");
+const { ALLOWED_SECTION_COLUMNS, ALLOWED_ORDER } = require("./allowedSortOptions");
 
 
 // @desc Gets all Sections
@@ -10,7 +10,7 @@ const { ALLOWED_COLUMNS, ALLOWED_ORDER } = require("./allowedSortOptions");
 // @access Public
 router.get("/",
     tryCatch(async (req, res, next) => {
-        let sortBy = ALLOWED_COLUMNS.includes(req.query.sort) ? req.query.sort : "section_id";
+        let sortBy = ALLOWED_SECTION_COLUMNS.includes(req.query.sort) ? req.query.sort : "section_id";
         let order = ALLOWED_ORDER.includes(req.query.order) ? req.query.order : "asc";
         const result = await getAllSections(sortBy, order);
         return res.json(result.rows);
@@ -21,7 +21,7 @@ router.get("/",
 // @access Public
 router.get("/:id",
     tryCatch(async (req, res, next) => {
-        let sortBy = ALLOWED_COLUMNS.includes(req.query.sort) ? req.query.sort : "content_id";
+        let sortBy = ALLOWED_SECTION_COLUMNS.includes(req.query.sort) ? req.query.sort : "content_id";
         let order = ALLOWED_ORDER.includes(req.query.order) ? req.query.order : "asc";
         const result = await getSection(req.params.id, sortBy, order);
         res.json(result.rows);

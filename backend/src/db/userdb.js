@@ -9,7 +9,7 @@ const createUser = async (newUser) => {
     try {
         const result = await pool.query(query, [newUser.name, newUser.email, newUser.password]);
 
-        if (result.rowCount === 0) 
+        if (result.rowCount === 0)
             throw new UserError("AuthenticationError", "Email doesn't exist");
 
         return result.rows[0];
@@ -26,13 +26,13 @@ const loginUser = async (user) => {
     try {
         const results = await pool.query(query, [user.email]);
 
-        if (results.rowCount === 0) 
+        if (results.rowCount === 0)
             throw new UserError("AuthenticationError", "Email doesn't exist");
 
-        const { user_id, name, encryptedpassword, image, role } = results.rows[0]; 
+        const { user_id, name, encryptedpassword, image, role } = results.rows[0];
         const isPasswordValid = await compare(user.password, encryptedpassword)
 
-        if (isPasswordValid) 
+        if (isPasswordValid)
             return { "name": name, "image": image, "user_id": user_id, "role": role };
         throw new UserError("AuthenticationError", "Wrong or no password");
     } catch (error) {
@@ -44,11 +44,11 @@ const getUser = async (user) => {
     const query = `SELECT user_id AS id, user_name AS name, image, email, role  FROM "user" WHERE user_id = $1`;
     try {
         const results = await pool.query(query, [user.id]);
-        
-        if (results.rowCount === 0) 
+
+        if (results.rowCount === 0)
             throw new UserError("UserDatabaseError", "User doesn't exist");
 
-        const fetchedUser = results.rows[0]; 
+        const fetchedUser = results.rows[0];
         return fetchedUser;
     } catch (error) {
         throw new UserError("UserDatabaseError", error.details ? error.details : "Unexpected database error");
@@ -61,10 +61,10 @@ const changeUser = async (updatedUser, user) => {
     try {
         if (user.name === updatedUser.name && user.email === updatedUser.email && user.image === updatedUser.image)
             throw new UserError("UserDatabaseError", "No new data provided for update");
-    
+
         const results = await pool.query(query, [updatedUser.name, updatedUser.email, updatedUser.image, user.id]);
 
-        if (results.rowCount === 0) 
+        if (results.rowCount === 0)
             throw new UserError("UserDatabaseError", "User doesn't exist");
 
     } catch (error) {
@@ -79,7 +79,7 @@ const changeUserPassword = async (password, user) => {
         password = await encrypt(password);
         const results = await pool.query(query, [password, user.id]);
 
-        if (results.rowCount === 0) 
+        if (results.rowCount === 0)
             throw new UserError("UserDatabaseError", "User doesn't exist");
 
         return results;
@@ -94,7 +94,7 @@ const deleteSingleUser = async (user) => {
     try {
         const results =  await pool.query(query, [user.id]);
 
-        if (results.rowCount === 0) 
+        if (results.rowCount === 0)
             throw new UserError("UserDatabaseError", "User doesn't exist");
 
         return results.rows[0];
@@ -120,10 +120,10 @@ const changeUserRole = async (role, user_id) => {
     try {
         if (role !== 0 && role !== 1)
             throw new UserError("UserDatabaseError", "Passed role value is invalid");
-        
+
         const results =  await pool.query(query, [role, user_id]);
-        
-        if (results.rowCount === 0) 
+
+        if (results.rowCount === 0)
             throw new UserError("UserDatabaseError", "User doesn't exist");
 
         return results;

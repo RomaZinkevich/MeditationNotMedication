@@ -191,6 +191,30 @@ describe("GET /api/sections", () => {
       ]);
     });
 
+    it("responds with a json message (sorting DESC)", async () => {
+        const response = await request(app).get('/api/sections/1?order=desc');
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toEqual([
+          {
+              "content_id": 2,
+              "content_name": "content_2",
+              "author": "author 1",
+              "section_name": "Section 1",
+              "image": "image_url_2",
+              "description": "This is the description for content_id 2"
+          },
+          {
+              "content_id": 1,
+              "content_name": "content_1",
+              "author": "author 1",
+              "section_name": "Section 1",
+              "image": "image_url_1",
+              "description": "This is the description for content_id 1"
+          }
+      ]);
+    });
+
     it("responds with error due to non-existing id", async () => {
       const response = await request(app).get('/api/sections/11');
 
