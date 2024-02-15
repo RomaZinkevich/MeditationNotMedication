@@ -104,8 +104,8 @@ const deleteSingleUser = async (user) => {
 };
 
 //@desc Gets all users
-const getAllUsers = async () => {
-    const query = "SELECT user_id, user_name, email, image, role FROM \"user\";"
+const getAllUsers = async (sortBy="user_id", order="asc") => {
+    const query = `SELECT user_id, user_name, email, image, role FROM \"user\" ORDER BY ${sortBy} ${order};`
     try {
         const results =  await pool.query(query);
         return results.rows;
