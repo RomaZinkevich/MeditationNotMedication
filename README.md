@@ -50,6 +50,11 @@
   - **Endpoint**: `/api/sections/:id`
   - **Description**: Uncover the depth of wisdom within one "section's" treasures.
   - **Example**: `GET https://meditationnotmedication-production.up.railway.app/api/sections/1`
+  - **Parameters**:
+    - `sort` (optional): Sort the contents based on a specific attribute (e.g., `content_name`, `author`). Equals to 'content_id' by default.
+    - `order` (optional): Specify the sorting order as either `asc` (ascending) or `desc` (descending). Equals to 'asc' by default.
+  - **Example with Sorting**:
+    - `GET https://meditationnotmedication-production.up.railway.app/api/sections/1?sort=content_name&order=desc`
 
 - #### **Create New User**
   - **Endpoint**: `/api/users`
@@ -130,6 +135,11 @@
   - **Description**: Ascend to the heights of awareness with insights into all users in the database.
   - **Authorization**: Bearer Admin Token Required
   - **Example**: `GET https://meditationnotmedication-production.up.railway.app/api/users/admin`
+  - **Parameters**:
+    - `sort` (optional): Sort the users based on a specific attribute (e.g., `user_id`, `email`). Equals to 'user_id' by default.
+    - `order` (optional): Specify the sorting order as either `asc` (ascending) or `desc` (descending). Equals to 'asc' by default.
+  - **Example with Sorting**:
+    - `GET https://meditationnotmedication-production.up.railway.app/api/users/admin?sort=content_name&order=desc`
 
 - #### **Admin: Update User Role**
   - **Endpoint**: `/api/users/admin/:id`
