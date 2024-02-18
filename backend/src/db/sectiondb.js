@@ -2,8 +2,8 @@ const pool = require("./dbconfig");
 const SectionError = require('../utils/SectionError');
 
 //@desc Gets all Sections from database
-const getAllSections = async () => {
-    const query = "SELECT S.section_id, content_id, content_name, author, section_name, image FROM content AS C, section AS S WHERE S.section_id=C.section_id;";
+const getAllSections = async (sortBy, order) => {
+    const query = `SELECT S.section_id, content_id, content_name, author, section_name, image FROM content AS C, section AS S WHERE S.section_id=C.section_id ORDER BY ${sortBy} ${order};`;
     try {
         return await pool.query(query);
     } catch (error) {
@@ -12,10 +12,10 @@ const getAllSections = async () => {
 };
 
 //@desc Gets all content from one section by id
-const getSection = async (id) => {
-    const query = `SELECT content_id, content_name, author, section_name, image, description FROM Content AS C LEFT JOIN Section AS S ON C.section_id = S.section_id WHERE C.section_id=${id};`;
+const getSection = async (id, sortBy, order) => {
+    const query = `SELECT content_id, content_name, author, section_name, image, description FROM Content AS C LEFT JOIN Section AS S ON C.section_id = S.section_id WHERE C.section_id=$1 ORDER BY ${sortBy} ${order};`;
     try {
-        let result = await pool.query(query);
+        let result = await pool.query(query, [id]);
         if (result.rowCount === 0)
             throw new SectionError("SectionError","Section ID Not Found");
         return result;

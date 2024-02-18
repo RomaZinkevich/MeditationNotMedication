@@ -2,6 +2,7 @@ const express = require("express");
 const { checkToken, adminToken } = require("../middleware/auth");
 const { getAllUsers, changeUserRole } = require("../db/userdb");
 const { tryCatch } = require("../utils/tryCatch");
+const { ALLOWED_USER_COLUMNS, ALLOWED_ORDER } = require("./allowedSortOptions");
 
 const router = express.Router();
 
@@ -10,7 +11,9 @@ const router = express.Router();
 // @access Private (Admin)
 router.get("/", checkToken, adminToken,
     tryCatch(async (req, res, next) => {
-        let response = await getAllUsers();
+        let sortBy = ALLOWED_USER_COLUMNS.includes(req.query.sortBy) ? req.query.sort : "user_id";
+        let order = ALLOWED_ORDER.includes(req.query.order) ? req.query.order : "asc";
+        let response = await getAllUsers(sortBy, order);
         return res.json({ "status": "success", "details": response });
 }));
 

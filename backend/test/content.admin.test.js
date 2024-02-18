@@ -120,7 +120,6 @@ describe("PUT /api/contents/admin/:id endpoint", () => {
       .put(`/api/contents/admin/1`)
       .set("authorization", `Bearer ${token}`)
       .send(changedContent);
-      console.log(putResponse.body)
       const response =  await request(app)
       .get("/api/contents/1");
 
