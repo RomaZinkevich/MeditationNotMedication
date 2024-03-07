@@ -3,8 +3,7 @@ const SectionError = require('../utils/SectionError');
 
 //@desc Gets all Sections from database
 const getAllSections = async (sortBy, order) => {
-    //const query = `SELECT S.section_id, content_id, content_name, author, section_name, image FROM content AS C, section AS S WHERE S.section_id=C.section_id ORDER BY ${sortBy} ${order};`;
-    const query = "SELECT * FROM section"
+    const query = `SELECT S.section_id, content_id, content_name, author, section_name, image FROM content AS C, section AS S WHERE S.section_id=C.section_id ORDER BY ${sortBy} ${order};`;
     try {
         return await pool.query(query);
     } catch (error) {
