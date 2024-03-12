@@ -7,6 +7,7 @@ const getAllSections = async (sortBy, order) => {
     try {
         return await pool.query(query);
     } catch (error) {
+        console.log(error)
         throw new SectionError("SectionDatabaseError", "Unexpected database error");
     }
 };
