@@ -1,0 +1,49 @@
+.home-page-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  text-align: center;
+  h1 {
+    margin-bottom: 1rem;
+  }
+  .redirect-buttons {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    a {
+      margin: 0.5rem 0;
+      button {
+        background-color: #222;
+        border-radius: 4px;
+        border-style: none;
+        box-sizing: border-box;
+        color: #fff;
+        cursor: pointer;
+        display: inline-block;
+        font-family: "Farfetch Basis", "Helvetica Neue", Arial, sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1.5;
+        margin: 0;
+        max-width: none;
+        min-height: 44px;
+        min-width: 10px;
+        outline: none;
+        overflow: hidden;
+        padding: 9px 20px 8px;
+        position: relative;
+        text-align: center;
+        text-transform: none;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        width: 60%;
+        &:hover {
+          opacity: 0.75;
+        }
+      }
+    }
+  }
+}

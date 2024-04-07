@@ -2,6 +2,9 @@
 @use "./components/userActions.scss";
 @use "./components/navbar.scss";
 
+// pages styles
+@use "./pages/home.scss";
+
 * {
   margin: 0;
   padding: 0;
