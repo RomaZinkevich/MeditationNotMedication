@@ -19,5 +19,6 @@ module.exports = {
     "linebreak-style": 0,
     "react/prop-types": 0,
     "max-len": 0,
+    "no-unused-vars": 0,
   },
 }

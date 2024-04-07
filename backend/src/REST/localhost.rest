@@ -2,6 +2,10 @@
 @port = 5000
 @host = http://{{hostname}}:{{port}}
 
+@token =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkFETUlOIiwiaWQiOjEyOCwibmFtZSI6IkFETUlOIiwiaW1hZ2UiOiJodHRwczovL2loMS5yZWRidWJibGUubmV0L2ltYWdlLjEwNDYzOTIyOTIuMzM0Ni9zdCxtZWRpdW0sNTA3eDUwNy1wYWQsNjAweDYwMCxmOGY4ZjguanBnIiwicm9sZSI6MSwiaWF0IjoxNzA0NzIwMTM0LCJleHAiOjE3MDQ3MjA3MzR9.wEwJb-XluO0lp45myDr_gZwqqiaTSm5HbnfQUxFquqs
+
+
+
 GET {{host}}
 
 ###
@@ -9,16 +13,59 @@ POST {{host}}/api/users
 content-Type: application/json
 
 {
-    "name": "Roman",
-    "email": "zrhdik111",
+    "name": "ROMAN",
+    "email": "EMAaIssl11",
     "password": "Pa$sw0rd"
 }
+
+
+###
+DELETE {{host}}/api/users
+Authorization: Bearer {{token}}
+
 
 ###
 POST {{host}}/api/users/login
 Content-Type: application/json
 
 {
-    "email": "zrhdik111",
-    "password": "Pa$sw0rd"
+    "email": "ADMIN",
+    "password": "admin"
+}
+
+###
+GET {{host}}/api/users
+Authorization: Bearer {{token}}
+
+###
+PUT {{host}}/api/users/password
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "password":"FLASKLFWEs2!"
+}
+
+###
+PUT {{host}}/api/users
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "image": "image",
+    "password":"FLASKLF"
+}
+
+
+###
+GET {{host}}/api/users/admin
+Authorization: Bearer {{token}}
+
+###
+PUT {{host}}/api/users/admin/101
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "role":1
 }
