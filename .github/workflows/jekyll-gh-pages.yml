@@ -36,18 +36,18 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          cd frontend
+          cd frontend_p
           npm install
 
       - name: Build
         run: |
-          cd frontend
+          cd frontend_p
           npm run build 
           
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: frontend/dist # Adjust this to the build directory of your project
+          path: frontend_p/dist # Adjust this to the build directory of your project
 
   # Deployment job
   deploy:
@@ -61,4 +61,4 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
         with:
-          path: frontend/dist # Ensure this path matches the output directory of your build
+          path: frontend_p/dist # Ensure this path matches the output directory of your build
