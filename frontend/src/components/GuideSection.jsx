@@ -7,7 +7,7 @@ const GuideSection = ({ sectionID, name }) =>
   useEffect(() =>
   {
     fetch(
-      `https://meditationnotmedication-production.up.railway.app/api/sections/${sectionID}`
+      `https://eazyeaze.190304.xyz/api/sections/${sectionID}`
     )
       .then((res) => res.json())
       .then((data) =>
