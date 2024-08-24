@@ -47,7 +47,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: frontend/build # Adjust this to the build directory of your project
+          path: frontend/dist # Adjust this to the build directory of your project
 
   # Deployment job
   deploy:
@@ -61,4 +61,4 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
         with:
-          path: frontend/build # Ensure this path matches the output directory of your build
+          path: frontend/dist # Ensure this path matches the output directory of your build
