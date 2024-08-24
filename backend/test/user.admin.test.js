@@ -10,7 +10,7 @@ describe("GET /api/users/admin endpoint", () => {
         await userdb.seedDb();
     });
 
-    it("gets info about user through token", async () => {
+    it("gets info about users through token", async () => {
         const user = {
             email:"ADMIN",
             password:"admin"
@@ -38,6 +38,37 @@ describe("GET /api/users/admin endpoint", () => {
         expect(response.body.details[1].email).toEqual("ADMIN");
         expect(response.body.details[1].image).toEqual(DEFAULT_IMAGE);
         expect(response.body.details[1].role).toEqual(1);
+    });
+
+    it("gets info about users through token (sorting DESC)", async () => {
+        const user = {
+            email:"ADMIN",
+            password:"admin"
+        };
+
+        const loginResponse = await request(app)
+        .post("/api/users/login")
+        .set("Accept", "application/json")
+        .send(user);
+        const token = loginResponse.body.token;
+
+        const response = await request(app)
+        .get("/api/users/admin?order=desc")
+        .set("authorization", `Bearer ${token}`);
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body.status).toEqual("success");
+        expect(response.body.details[0].user_id).toBeDefined();
+        expect(response.body.details[0].user_name).toEqual("ADMIN");
+        expect(response.body.details[0].email).toEqual("ADMIN");
+        expect(response.body.details[0].image).toEqual(DEFAULT_IMAGE);
+        expect(response.body.details[0].role).toEqual(1);
+        expect(response.body.details[1].user_id).toBeDefined();
+        expect(response.body.details[1].user_name).toEqual("Roman");
+        expect(response.body.details[1].email).toEqual("RomanZin@gmail.com");
+        expect(response.body.details[1].image).toEqual(DEFAULT_IMAGE);
+        expect(response.body.details[1].role).toEqual(0);
+
     });
 
     it("responds with an error cause of wrong token", async () => {
@@ -94,16 +125,16 @@ describe("PUT /api/users/admin/:id endpoint", () => {
         expect(putResponse.body.status).toEqual("success");
         expect(response.statusCode).toBe(200);
         expect(response.body.status).toEqual("success");
-        expect(response.body.details[1].user_id).toBeDefined();
-        expect(response.body.details[1].user_name).toEqual("Roman");
-        expect(response.body.details[1].email).toEqual("RomanZin@gmail.com");
-        expect(response.body.details[1].image).toEqual(DEFAULT_IMAGE);
-        expect(response.body.details[1].role).toEqual(1);
         expect(response.body.details[0].user_id).toBeDefined();
-        expect(response.body.details[0].user_name).toEqual("ADMIN");
-        expect(response.body.details[0].email).toEqual("ADMIN");
+        expect(response.body.details[0].user_name).toEqual("Roman");
+        expect(response.body.details[0].email).toEqual("RomanZin@gmail.com");
         expect(response.body.details[0].image).toEqual(DEFAULT_IMAGE);
         expect(response.body.details[0].role).toEqual(1);
+        expect(response.body.details[1].user_id).toBeDefined();
+        expect(response.body.details[1].user_name).toEqual("ADMIN");
+        expect(response.body.details[1].email).toEqual("ADMIN");
+        expect(response.body.details[1].image).toEqual(DEFAULT_IMAGE);
+        expect(response.body.details[1].role).toEqual(1);
     });
 
     it("responds with an error due to invalid role value", async () => {
