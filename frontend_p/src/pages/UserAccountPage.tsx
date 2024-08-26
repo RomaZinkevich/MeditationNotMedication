@@ -3,8 +3,8 @@ import FormInput from "../components/FormInput";
 import { InputParams } from "../interfaces/FormInterface";
 import Navigation from "../components/Navigation";
 
-export const USERNAME_REGEX = "^[a-zA-Z0-9_\\-]{3,16}$";
-export const PASSWORD_REGEX = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[-_!@#$%]).{8,24}$"
+export const USERNAME_REGEX: string = "^[a-zA-Z0-9_\\-]{3,16}$";
+export const PASSWORD_REGEX: string = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.])[A-Za-z\\d@$!%*?&.]{8,}$";
 
 interface SignUpInterface {
   username: string;
@@ -40,7 +40,7 @@ function UserAccountPage({ login }: { login: boolean }) {
       name: "username",
       type: "text",
       placeholder: "Username",
-      pattern: USERNAME_REGEX,
+      pattern: "^[a-zA-Z0-9_\\-]{3,16}$",
       autoComplete: "off",
       autoFocus: true,
       required: true,
@@ -70,9 +70,10 @@ function UserAccountPage({ login }: { login: boolean }) {
       pattern: PASSWORD_REGEX,
       required: true,
       errors: [
-        "Must be 8-24 characters long",
-        "Must contain atleast one digit",
-        "Must contain atleast one special character",
+        "Atleast 8 characters",
+        "Atleast one digit",
+        "Atleast one special character",
+        "Atleast one upper and lowercase character",
       ],
     },
     {
@@ -111,9 +112,10 @@ function UserAccountPage({ login }: { login: boolean }) {
       pattern: PASSWORD_REGEX,
       required: true,
       errors: [
-        "Must be 8-24 characters long",
-        "Must contain atleast one digit",
-        "Must contain atleast one special character",
+        "Atleast 8 characters",
+        "Atleast one digit",
+        "Atleast one special character",
+        "Atleast one upper and lowercase character",
       ],
     },
   ]

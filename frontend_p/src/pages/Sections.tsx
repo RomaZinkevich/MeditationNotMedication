@@ -32,20 +32,20 @@ function Sections() {
   }, []);
 
   return (
-  <>
-    <Navigation />
-    <main>
-      {loading && <div>Loading...</div>}
-      {error && <div>Error: {error.message}</div>}
-      {!loading && !error && (
-        <>
-          <div>Browsing Page...</div>
-          <ListSections data={allData} />
-        </>
-      )}
-    </main>
-  </>
-);
+    <>
+      <Navigation />
+      <main>
+        {loading && <div>Loading...</div>}
+        {error && <div>Error: {error.message}</div>}
+        {!loading && !error && (
+          <div>
+            <div>Browsing Page...</div>
+            <ListSections data={allData} />
+          </div>
+        )}
+      </main>
+    </>
+  );
 }
 
 export default Sections;

@@ -20,9 +20,10 @@ function FormInput(prop: FormInputParams) {
         {...inputProps}
         value={value}
         onChange={handleChange}
-        onBlur={() => setFocused(true)}
+        onBlur={() => { setFocused(true); }}
         onFocus={() => { inputProps.name === "confirmPassword" && setFocused(true) }}
         data-was-focused={focused.toString()}
+        pattern={inputProps.pattern}
       />
       <ul className="info-box">
         {errors.map((err, i) => (
@@ -31,7 +32,7 @@ function FormInput(prop: FormInputParams) {
         <button
           type="button"
           className="close-info"
-          onClick={() => setFocused(false)}
+          onClick={() => { setFocused(false); }}
         >
           <CiMinimize1 />
         </button>

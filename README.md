@@ -8,7 +8,7 @@
 
 ### Backend
 
-- Production: [meditationnotmedication-production.up.railway.app](https://meditationnotmedication-production.up.railway.app)
+- Production: [https://eazyeaze.190304.xyz](https://eazyeaze.190304.xyz)
 
 ## Technologies:
 - ### *Frontend*:
@@ -34,32 +34,32 @@
 - #### **Retrieve Content by ID**
   - **Endpoint**: `/api/contents/:id`
   - **Description**: Embark on a mindful journey with one "content" retrieved by id from the database.
-  - **Example**: `GET https://meditationnotmedication-production.up.railway.app/api/contents/1`
+  - **Example**: `GET https://eazyeaze.190304.xyz/api/contents/1`
 
 - #### **Get All Sections**
   - **Endpoint**: `/api/sections`
   - **Description**: Explore a tapestry of "Sections," each weaving its unique story.
-  - **Example**: `GET https://meditationnotmedication-production.up.railway.app/api/sections`
+  - **Example**: `GET https://eazyeaze.190304.xyz/api/sections`
   - **Parameters**:
     - `sort` (optional): Sort the sections based on a specific attribute (e.g., `content_name`, `author`). Equals to 'section_id' by default.
     - `order` (optional): Specify the sorting order as either `asc` (ascending) or `desc` (descending). Equals to 'asc' by default.
   - **Example with Sorting**:
-    - `GET https://meditationnotmedication-production.up.railway.app/api/sections?sort=content_name&order=desc`
+    - `GET https://eazyeaze.190304.xyz/api/sections?sort=content_name&order=desc`
 
 - #### **Get Content by Section ID**
   - **Endpoint**: `/api/sections/:id`
   - **Description**: Uncover the depth of wisdom within one "section's" treasures.
-  - **Example**: `GET https://meditationnotmedication-production.up.railway.app/api/sections/1`
+  - **Example**: `GET https://eazyeaze.190304.xyz/api/sections/1`
   - **Parameters**:
     - `sort` (optional): Sort the contents based on a specific attribute (e.g., `content_name`, `author`). Equals to 'content_id' by default.
     - `order` (optional): Specify the sorting order as either `asc` (ascending) or `desc` (descending). Equals to 'asc' by default.
   - **Example with Sorting**:
-    - `GET https://meditationnotmedication-production.up.railway.app/api/sections/1?sort=content_name&order=desc`
+    - `GET https://eazyeaze.190304.xyz/api/sections/1?sort=content_name&order=desc`
 
 - #### **Create New User**
   - **Endpoint**: `/api/users`
   - **Description**: Begin your meditation quest with a new user account.
-  - **Example**: `POST https://meditationnotmedication-production.up.railway.app/api/users`
+  - **Example**: `POST https://eazyeaze.190304.xyz/api/users`
   - **Request Body**:
     ```json
     {
@@ -71,7 +71,7 @@
 - #### **User Login**
   - **Endpoint**: `/api/users/login`
   - **Description**: Open the door to serenity by logging in if you've wandered here before.
-  - **Example**: `POST https://meditationnotmedication-production.up.railway.app/api/users/login`
+  - **Example**: `POST https://eazyeaze.190304.xyz/api/users/login`
   - **Request Body**:
     ```json
     {
@@ -84,13 +84,13 @@
   - **Endpoint**: `/api/users`
   - **Description**: Peek into the mirror of self-awareness with information about the logged-in user.
   - **Authorization**: Bearer Token Required
-  - **Example**: `GET https://meditationnotmedication-production.up.railway.app/api/users`
+  - **Example**: `GET https://eazyeaze.190304.xyz/api/users`
 
 - #### **Update User Information**
   - **Endpoint**: `/api/users`
   - **Description**: Sculpt your profile with the gentle touch of personalized changes.
   - **Authorization**: Bearer Token Required
-  - **Example**: `PUT https://meditationnotmedication-production.up.railway.app/api/users`
+  - **Example**: `PUT https://eazyeaze.190304.xyz/api/users`
   - **Request Body**:
     ```json
     {
@@ -103,7 +103,7 @@
   - **Endpoint**: `/api/users/password`
   - **Description**: Renew your spiritual essence by changing your password.
   - **Authorization**: Bearer Token Required
-  - **Example**: `PUT https://meditationnotmedication-production.up.railway.app/api/users/password`
+  - **Example**: `PUT https://eazyeaze.190304.xyz/api/users/password`
   - **Request Body**:
     ```json
     {
@@ -115,13 +115,13 @@
   - **Endpoint**: `/api/users`
   - **Description**: Bid farewell to your account, gracefully leaving the tranquil space.
   - **Authorization**: Bearer Token Required
-  - **Example**: `DELETE https://meditationnotmedication-production.up.railway.app/api/users`
+  - **Example**: `DELETE https://eazyeaze.190304.xyz/api/users`
 
 - #### **Admin: Update Content Data**
   - **Endpoint**: `/api/contents/admin/:id`
   - **Description**: Craft and mold the essence of "content" data with divine precision.
   - **Authorization**: Bearer Admin Token Required
-  - **Example**: `PUT https://meditationnotmedication-production.up.railway.app/api/contents/admin/1`
+  - **Example**: `PUT https://eazyeaze.190304.xyz/api/contents/admin/1`
   - **Request Body**:
     ```json
     {
@@ -134,18 +134,18 @@
   - **Endpoint**: `/api/users/admin`
   - **Description**: Ascend to the heights of awareness with insights into all users in the database.
   - **Authorization**: Bearer Admin Token Required
-  - **Example**: `GET https://meditationnotmedication-production.up.railway.app/api/users/admin`
+  - **Example**: `GET https://eazyeaze.190304.xyz/api/users/admin`
   - **Parameters**:
     - `sort` (optional): Sort the users based on a specific attribute (e.g., `user_id`, `email`). Equals to 'user_id' by default.
     - `order` (optional): Specify the sorting order as either `asc` (ascending) or `desc` (descending). Equals to 'asc' by default.
   - **Example with Sorting**:
-    - `GET https://meditationnotmedication-production.up.railway.app/api/users/admin?sort=content_name&order=desc`
+    - `GET https://eazyeaze.190304.xyz/api/users/admin?sort=content_name&order=desc`
 
 - #### **Admin: Update User Role**
   - **Endpoint**: `/api/users/admin/:id`
   - **Description**: Bestow roles with the wisdom of the ancients upon the chosen user.
   - **Authorization**: Bearer Admin Token Required
-  - **Example**: `PUT https://meditationnotmedication-production.up.railway.app/api/users/admin/1`
+  - **Example**: `PUT https://eazyeaze.190304.xyz/api/users/admin/1`
   - **Request Body**:
     ```json
     {
@@ -157,7 +157,7 @@
   - **Endpoint**: `/api/contents/admin`
   - **Description**: Infuse the spiritual realm with new "content" as an admin.
   - **Authorization**: Bearer Admin Token Required
-  - **Example**: `POST https://meditationnotmedication-production.up.railway.app/api/contents/admin`
+  - **Example**: `POST https://eazyeaze.190304.xyz/api/contents/admin`
   - **Request Body**:
     ```json
     {
