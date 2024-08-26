@@ -5,19 +5,17 @@ import NavBar from "../components/NavBar";
 import AudioPlayer from "../components/AudioPlayer";
 import "../styles/components/exercise.scss";
 
-function Exercise()
-{
+function Exercise() {
   const { id } = useParams();
-  const [card, setCard] = useState([]);
+  const [card, setCard] = useState({});
 
-  useEffect(() =>
-  {
+  useEffect(() => {
     fetch(
-      `https://meditationnotmedication-production.up.railway.app/api/content/${id}`
+      `${import.meta.env.VITE_FETCH_URL}/contents/${id}`
     )
       .then((res) => res.json())
-      .then((data) =>
-      {
+      .then((data) => {
+        console.log(data);
         setCard(data);
       })
       .catch((err) => console.log(err));
@@ -37,14 +35,14 @@ function Exercise()
           </header>
 
           <div className="exercise-info">
-            <h1>{card[0].content_name}</h1>
-            <h3>{card[0].description}</h3>
+            <h1>{card.content_name}</h1>
+            <h3>{card.description}</h3>
             <div className="img-wrapper">
-              <img src={card[0].image} alt="calming image" />
+              <img src={card.image} alt="calming image" />
             </div>
           </div>
           <div className="music-player">
-            <AudioPlayer src={card[0].audio} />
+            <AudioPlayer src={card.audio} />
           </div>
         </div>
       )}
