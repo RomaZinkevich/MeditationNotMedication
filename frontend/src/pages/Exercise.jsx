@@ -15,7 +15,7 @@ function Exercise() {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        console.log(data.audio)
         setCard(data);
       })
       .catch((err) => console.log(err));

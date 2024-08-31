@@ -19,6 +19,7 @@ function Home() {
 
   return (
     <div style={backgroundStyle}>
+
       <NavBar />
       {sections.length === 0 ? (
         <div className="loading">Loading...</div>
