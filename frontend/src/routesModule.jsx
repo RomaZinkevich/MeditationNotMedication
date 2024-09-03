@@ -4,10 +4,11 @@ import { createBrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
 import Exercise from "./pages/Exercise";
 import Profile from "./pages/Profile";
+import LandingPage from "./pages/LandingPage";
 
 export const routes = createBrowserRouter([
   {
-    path: "/",
+    path: "/home",
     element: <Home />,
   },
   {
@@ -22,4 +23,8 @@ export const routes = createBrowserRouter([
     path: "/ease",
     element: <div>ease</div>,
   },
+  {
+    path: "/",
+    element: <LandingPage />,
+  }
 ]);

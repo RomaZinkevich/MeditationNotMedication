@@ -4,16 +4,9 @@ import "../styles/components/profile.scss";
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
-
-  // useEffect(() => {
-  //   // Fetch user data from the server
-  //   fetch(`${process.env.FETCH_URL}/getUserData`)  // create an API endpoint to get user data
-  //     .then(response => response.json())
-  //     .then(data => setUserData(data));
-  // }, []);
-
   return (
     <div>
+      <NavBar />
       {userData ? (
         <div>
           <p>User ID: {userData.id}</p>
