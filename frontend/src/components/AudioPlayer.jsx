@@ -10,7 +10,6 @@ const AudioPlayer = ({ src }) => {
 
   useEffect(() => {
     const audioElement = audioRef.current;
-
     const handleTimeUpdate = () => {
       setCurrentTime(audioElement.currentTime);
     };

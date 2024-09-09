@@ -6,6 +6,7 @@
   align-items: center;
   margin-top: 15px;
   margin-bottom: 50px;
+  font-size:0.9rem;
   @media (max-width: 768px) {
     gap: 15px;
     margin-bottom:30px;
@@ -25,8 +26,7 @@
   justify-content: center;
   flex-direction: column;
   text-align: left;
-  -webkit-box-shadow: 0 0 20px black;
-        box-shadow: 0 0 20px black;
+
   @media (max-width: 768px) {
     height:200px;
     width:200px;
