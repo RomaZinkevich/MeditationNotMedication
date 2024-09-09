@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import AudioPlayer from "../components/AudioPlayer";
 import "../styles/components/exercise.scss";
-import { Link } from "react-router-dom";
 
 function Exercise() {
   const { id } = useParams();
@@ -20,6 +19,7 @@ function Exercise() {
         setCard(data);
       })
       .catch((err) => console.log(err));
+    window.scrollTo(0, 0);
   }, [id]);
 
   return (

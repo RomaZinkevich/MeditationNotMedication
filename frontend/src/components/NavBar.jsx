@@ -12,12 +12,7 @@ function NavBar() {
         <HomeOutlinedIcon />
         <h1>Home</h1>
       </Link>
-<<<<<<< HEAD
       <Link to="/exercises/1" className="brb">
-=======
-      {/* The idea is for it to go to a selected random exercise that helps the user  */}
-      <Link to="/exercises/8" className="brb">
->>>>>>> 9844dd9b4cdaa9fa4ab699396c250b38c78d7a68
         <img
           src="https://freesvg.org/storage/img/thumb/infinito.png"
           alt="red button"

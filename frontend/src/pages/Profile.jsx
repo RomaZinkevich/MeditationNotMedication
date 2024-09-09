@@ -1,32 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 import NavBar from "../components/NavBar";
 import "../styles/components/profile.scss";
+import { useProfile } from "../contexts/ProfileProvider";
 
 const Profile = () => {
-  const [userData, setUserData] = useState(null);
+  const { profile, setProfile } = useProfile();
   return (
-    <div>
+    <>
       <NavBar />
-      {userData ? (
+      {profile ? (
         <div>
-          <p>User ID: {userData.id}</p>
-          <p>User Name: {userData.name}</p>
+          <p>User ID: {profile.id}</p>
+          <p>User Name: {profile.name}</p>
+          <p>User Email: {profile.email}</p>
+          <p>User Picture: </p>
+          <img src={profile.picture} alt="profile picture" />
         </div>
       ) : (
         <>
-          <a href="http://localhost:5000/auth/google">
-            <div className="img-wrapper">
-              <img
-                src="https://onymos.com/wp-content/uploads/2020/10/google-signin-button-1024x260.png"
-                alt="google"
-              />
-            </div>
-          </a>
+          <div>
+            Not Logged In, go back
+            <Link to="/"> Home </Link>
+            for login
+          </div>
         </>
       )}
     </>
   );
-}
+};
 
 export default Profile;
