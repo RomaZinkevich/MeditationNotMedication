@@ -18,8 +18,9 @@ const CardComponent = ({card}) => {
         <h3 className="cardTitle">{card.content_name}</h3>
         <p>{card.description}</p>
       </div>
-      </Link>
-    </div>
+    </Link>
+    </div >
+
   );
 };
 
