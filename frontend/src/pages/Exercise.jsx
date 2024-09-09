@@ -4,6 +4,7 @@ import { useParams } from "react-router";
 import NavBar from "../components/NavBar";
 import AudioPlayer from "../components/AudioPlayer";
 import "../styles/components/exercise.scss";
+import { Link } from "react-router-dom";
 
 function Exercise() {
   const { id } = useParams();
@@ -15,7 +16,6 @@ function Exercise() {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setCard(data);
       })
       .catch((err) => console.log(err));
@@ -29,9 +29,9 @@ function Exercise() {
       ) : (
         <div className="exercise-page">
           <header>
-            <a href="/" className="back">
+            <Link to={"/home"} className="back">
               <h1>Back</h1>
-            </a>
+            </Link>
           </header>
 
           <div className="exercise-info">

@@ -2,14 +2,30 @@ import React, { useState, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import GuideSection from "../components/GuideSection";
 
-
+import "../styles/pages/home.scss";
 function Home() {
   const [sections, setSections] = useState([]);
+<<<<<<< HEAD
   useEffect(() => {
     fetch(`${import.meta.env.VITE_FETCH_URL}/sections`)
+=======
+<<<<<<< HEAD
+  const [hasFetched, setHasFetched] = useState(false);
+  useEffect(() => {
+    if (hasFetched) return;
+    fetch(
+      "https://meditationnotmedication-production.up.railway.app/api/sections/"
+    )
+=======
+  useEffect(() =>
+  {
+    fetch("https://meditationnotmedication-production.up.railway.app/api/sections/")
+>>>>>>> cd1e64443624eea8492cd904b0a6dfa9add90d61
+>>>>>>> d5bfe5518aa80bf9e470ef5dab3155f6818d5132
       .then((res) => res.json())
       .then((data) => {
         setSections(data);
+        setHasFetched(true);
       });
   }, []);
 
@@ -19,11 +35,13 @@ function Home() {
 
   return (
     <div style={backgroundStyle}>
+
       <NavBar />
       {sections.length === 0 ? (
         <div className="loading">Loading...</div>
+<<<<<<< HEAD
       ) : (
-        <>
+        <main>
           {Array.from(new Set(sections.map((section) => section.section_id))).map(
             (uniqueSectionId) => {
               const section = sections.find(
@@ -38,8 +56,33 @@ function Home() {
               );
             }
           )}
+          <div style={{marginTop:"8rem"}}></div>
+        </main>
+      )}
+=======
+<<<<<<< HEAD
+      ) : (
+        <>
+          {Array.from(
+            new Set(sections.map((section) => section.section_id))
+          ).map((uniqueSectionId) => {
+            const section = sections.find(
+              (s) => s.section_id === uniqueSectionId
+            );
+            return (
+              <GuideSection
+                key={section.section_id}
+                sectionID={section.section_id}
+                name={section.section_name}
+              />
+            );
+          })}
         </>
       )}
+=======
+      ) : renderedSections}
+>>>>>>> cd1e64443624eea8492cd904b0a6dfa9add90d61
+>>>>>>> d5bfe5518aa80bf9e470ef5dab3155f6818d5132
     </div>
   );
 }

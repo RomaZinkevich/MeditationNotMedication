@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import CardComponent from "./CardComponent";
 
+import "../styles/components/guide_section.scss";
+
 const GuideSection = ({ sectionID, name }) => {
   const [cards, setCards] = useState([]);
   useEffect(() => {
