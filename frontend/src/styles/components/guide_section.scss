@@ -1,0 +1,42 @@
+.container {
+    overflow-x: scroll;
+  }
+
+  /* Custom scrollbar styles */
+  .container::-webkit-scrollbar {
+    width: 12px; /* Width of the entire scrollbar */
+    height: 10px;
+  }
+
+  .container::-webkit-scrollbar-track {
+    background: #f0f0f0; /* Background of the scrollbar track */
+    border-radius: 10px; /* Rounded corners on the track */
+  }
+
+  .container::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color of the scrollbar handle */
+    border-radius: 10px; /* Rounded corners on the handle */
+    border: 3px solid #f0f0f0; /* Space between handle and track */
+  }
+
+  .container::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Color on hover */
+  }
+
+  .container {
+    margin: 0 70px;
+    @media (max-width: 768px) {
+      margin: 0 20px;
+      font-size: 0.75rem;
+    }
+    h2 {
+      margin-left: 8px;
+      margin-top: 10px;
+    }
+    .cards_container > div:first-child {
+      margin-left: 0.5rem;
+    }
+    .cards_container > div:last-child {
+      margin-right: 3rem;
+    }
+  }

@@ -1,4 +1,4 @@
-nav {
+.main-nav-container {
   position: fixed;
   z-index: 1;
   width: 100vw;
@@ -10,7 +10,6 @@ nav {
   align-items: center;
   column-gap: 20px;
   background-color: white;
-
   a {
     text-decoration: none;
     color: black;
@@ -23,7 +22,6 @@ nav {
       font-weight: 300;
     }
   }
-
   .brb {
     position: absolute;
     top: -70%;

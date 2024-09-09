@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import GuideSection from "../components/GuideSection";
 
-
+import "../styles/pages/home.scss";
 function Home() {
   const [sections, setSections] = useState([]);
   useEffect(() => {
@@ -19,11 +19,12 @@ function Home() {
 
   return (
     <div style={backgroundStyle}>
+
       <NavBar />
       {sections.length === 0 ? (
         <div className="loading">Loading...</div>
       ) : (
-        <>
+        <main>
           {Array.from(new Set(sections.map((section) => section.section_id))).map(
             (uniqueSectionId) => {
               const section = sections.find(
@@ -38,7 +39,8 @@ function Home() {
               );
             }
           )}
-        </>
+          <div style={{marginTop:"8rem"}}></div>
+        </main>
       )}
     </div>
   );

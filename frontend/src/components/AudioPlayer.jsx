@@ -64,8 +64,7 @@ const AudioPlayer = ({ src }) => {
 
   return (
     <div>
-      <audio ref={audioRef}>
-        <source src={src} />
+      <audio ref={audioRef} src={src}>
       </audio>
       <div className="player-ui">
         <div className="controls">

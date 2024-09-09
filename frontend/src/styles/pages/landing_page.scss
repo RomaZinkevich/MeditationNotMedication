@@ -1,0 +1,125 @@
+.landing-nav {
+    display: flex;
+    ul {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      background-color: rgba(58, 78, 90, 0.9);
+      height: 100vh;
+      position: absolute;
+      right: 0;
+      width: 60%;
+      align-items: center;
+      @media (min-width: 700px) {
+        flex-direction: row;
+        position: block;
+        width: auto;
+        height: auto;
+        margin-top: 2rem;
+        background-color: transparent;
+      }
+      li {
+        margin-top: 1rem;
+        @media (min-width: 700px) {
+          margin-top: 0;
+        }
+      }
+      li:first-child {
+        margin-top: 6rem;
+        @media (min-width: 700px) {
+          margin-top: 0;
+        }
+      }
+      li:last-child {
+        @media (min-width: 700px) {
+          margin-right: 2rem;
+        }
+      }
+      a {
+        color: white;
+        @media (min-width: 700px) {
+          margin-right: 1rem;
+          color: black;
+        }
+      }
+    }
+
+    button {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      z-index: 999;
+      font-size: 1.75rem;
+      color: white;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      outline: none;
+      @media (min-width: 700px) {
+        display: none;
+      }
+      .hamburger-icon {
+        color: black;
+      }
+    }
+  }
+
+  .landing-nav .logo {
+    margin-top: 0.5rem;
+    width: 80px;
+    height: 80px;
+    img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      aspect-ratio: 1/1;
+    }
+  }
+
+  ul.hide {
+    @media (min-width: 700px) {
+      display: flex;
+    }
+    display: none;
+  }
+  .cta {
+    margin-top: 7rem;
+  }
+
+  .cta h1 {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 3rem;
+  }
+
+  .cta p {
+    text-align: center;
+    font-size: 1.25rem;
+  }
+
+  .cta-buttons {
+    margin-top: 3rem;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    .google-cta {
+      background: linear-gradient(90deg, #4285f4, #4285f5);
+      color: white;
+    }
+
+    .trial-cta {
+      border: 1px black solid;
+      &:hover {
+        background-color: rgb(233, 222, 222);
+      }
+    }
+
+    a {
+      padding: 1rem 3rem;
+      border-radius: 4rem;
+      margin-right: 2rem;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 
 import NavBar from "../components/NavBar";
 import AudioPlayer from "../components/AudioPlayer";
@@ -29,9 +30,9 @@ function Exercise() {
       ) : (
         <div className="exercise-page">
           <header>
-            <a href="/" className="back">
+            <Link href="/home" className="back">
               <h1>Back</h1>
-            </a>
+            </Link>
           </header>
 
           <div className="exercise-info">
