@@ -12,3 +12,33 @@
   font-size: 0.9rem;
   margin: 0.5rem;
 }
+
+.profile-not-logged {
+  margin-top: 5rem;
+  text-align: center;
+  font-size: 1.5rem;
+  a {
+    color: red;
+  }
+}
+
+.profile-logged-in {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5rem;
+  text-align: center;
+  align-items: center;
+  img {
+    width: 75px;
+    margin-bottom: 1rem;
+  }
+  button {
+    background: linear-gradient(90deg, #4285f4, #4285f5);
+    border: none;
+    color: white;
+    border-radius: 2rem;
+    padding: 0.5rem 2rem;
+    margin-top: 1rem;
+    cursor: pointer;
+  }
+}

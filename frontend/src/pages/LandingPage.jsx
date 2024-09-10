@@ -1,50 +1,63 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { faX } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faX } from "@fortawesome/free-solid-svg-icons";
 import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 
 import "../styles/pages/landing_page.scss";
 import { useProfile } from "../contexts/ProfileProvider";
+
 function LandingPage() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [user, setUser] = useState(null);
+  const [navigating, setNavigating] = useState(false); // Added state to control navigation
   const { profile, setProfile } = useProfile();
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   const login = useGoogleLogin({
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       setUser(response);
+      setNavigating(true); // Set navigating state to true
     },
     onFailure: (response) => console.log("Login failed" + response),
   });
 
   useEffect(() => {
-    if (user) {
-      axios
-        .get(
-          `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
-          {
-            headers: {
-              Authorization: `Bearer ${user.access_token}`,
-              Accept: "application/json",
-            },
+    const fetchGoogleUserInfo = async () => {
+      if (user) {
+        try {
+          const googleUserInfo = await axios(
+            `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
+            {
+              headers: {
+                Authorization: `Bearer ${user.access_token}`,
+                Accept: "application/json",
+              },
+            }
+          );
+
+          setProfile(googleUserInfo.data);
+        } catch (err) {
+          console.error(
+            "Error fetching user info or communicating with backend:",
+            err
+          );
+        } finally {
+          if (navigating) {
+            navigate("/home");
+            setNavigating(false);
           }
-        )
-        .then((res) => {
-          console.log(res.data);
-          setProfile(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, [user]);
+        }
+      }
+    };
+
+    fetchGoogleUserInfo();
+  }, [user, navigating]);
 
   return (
     <>
@@ -94,7 +107,10 @@ function LandingPage() {
         <h1 className="cta-header">Meditation, Not Medication.</h1>
         <p>Ease Your Chronic Pain Through Meditation</p>
         <div className="cta-buttons">
-          <Link className="google-cta" onClick={() => login()}>
+          <Link
+            className="google-cta"
+            onClick={() => login()}
+          >
             Login With Google
           </Link>
           <Link to="/home" className="trial-cta">
