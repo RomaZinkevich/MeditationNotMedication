@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Exercise from "./pages/Exercise";
 import Profile from "./pages/Profile";
 import LandingPage from "./pages/LandingPage";
+import NewUserFlow from "./pages/NewUserFlow";
 
 export const routes = createBrowserRouter([
   {
@@ -26,5 +27,9 @@ export const routes = createBrowserRouter([
   {
     path: "/",
     element: <LandingPage />,
+  },
+  {
+    path: "/newUserFlow",
+    element: <NewUserFlow />,
   }
 ]);

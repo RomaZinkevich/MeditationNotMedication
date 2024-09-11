@@ -40,7 +40,11 @@ function LandingPage() {
               },
             }
           );
-
+          // send the access token to the server, checks it, if it is valid, gets back a JWT token, if not valid, returns 401
+          const response = await axios.post(`${import.meta.env.VITE_FETCH_URL}/google/auth`, {
+            access_token: user.access_token,
+          });
+          localStorage.setItem("token", response.data.token);
           setProfile(googleUserInfo.data);
         } catch (err) {
           console.error(
