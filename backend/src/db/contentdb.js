@@ -41,6 +41,18 @@ const createContent = async (content) => {
     }
 }
 
+//@desc Gets all tags from Content
+const getContentsTag = async (content_id) => {
+    const query = `SELECT t.tag_id, t.tag_name FROM tags t JOIN contenttags ct ON t.tag_id = ct.tag_id WHERE ct.content_id = ${content_id};`;
+    try {
+        let result = await pool.query(query);
+        return result.rows;
+    } catch (error) {
+        console.log(error)
+        throw new ContentError("ContentTagsDatabaseError", error.details ? error.details : "Unexpected database error");
+    }
+}
+
 //@desc Clears database
 const clearContents = async () => {
     const query = `DELETE FROM "content"; DELETE FROM "section";`;
@@ -76,6 +88,7 @@ module.exports = {
     getContent: getContent,
     changeContent: changeContent,
     createContent: createContent,
+    getContentsTag: getContentsTag,
     clearContents: clearContents,
     seedDb: seedDb
 };
