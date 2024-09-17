@@ -126,6 +126,17 @@ const getUserTags = async (user) => {
     }
 };
 
+//@desc Posts user's tags
+const postUserTags = async (id_pairs) => {
+    const query = `INSERT INTO usertags (user_id, tag_id) VALUES ${id_pairs} RETURNING usertags.tag_id;`
+    try {
+        const results =  await pool.query(query);
+        return results.rows;
+    } catch (error) {
+        console.log(error)
+        throw new UserError("UserTagsDatabaseError", error.details ? error.details : "Unexpected database error");
+    }
+};
 //@desc Changes user's role
 const changeUserRole = async (role, user_id) => {
     const query = "UPDATE \"user\" SET role=$1 WHERE user_id=$2;"
@@ -178,6 +189,7 @@ module.exports = {
     deleteSingleUser: deleteSingleUser,
     getAllUsers: getAllUsers,
     changeUserRole: changeUserRole,
+    postUserTags: postUserTags,
     clearUsers: clearUsers,
     seedDb: seedDb,
     getUserTags: getUserTags
