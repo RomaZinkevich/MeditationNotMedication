@@ -27,6 +27,5 @@ jobs:
         ssh -o StrictHostKeyChecking=no ${{ env.SSH_USERNAME }}@${{ env.SSH_SERVER_IP }} << 'EOF'
           cd /home/deploy/eazyeaze/MeditationNotMedication
           git pull
-          pm2 restart 0
           pm2 restart 2
         EOF
