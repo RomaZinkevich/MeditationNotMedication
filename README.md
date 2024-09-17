@@ -224,4 +224,5 @@
 
 ## ERD
 
-![image](https://github.com/ZealinBee/MeditationNotMedication/assets/75644570/dc01da79-06f1-4fce-9e8c-0e1cac47e5ed)
+![image](https://github.com/user-attachments/assets/9d60906e-e77d-4635-b24b-948b74fbfca3)
+
