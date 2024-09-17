@@ -34,12 +34,8 @@
 
 ## API Endpoints
 
-- #### **Retrieve Content by ID**
-
-  - **Endpoint**: `/api/contents/:id`
-  - **Description**: Embark on a mindful journey with one "content" retrieved by id from the database.
-  - **Example**: `GET https://eazyeaze.190304.xyz/api/contents/1`
-
+- ### Sections
+  
 - #### **Get All Sections**
 
   - **Endpoint**: `/api/sections`
@@ -62,11 +58,21 @@
   - **Example with Sorting**:
     - `GET https://eazyeaze.190304.xyz/api/sections/1?sort=content_name&order=desc`
 
+- ### Content
+
+- #### **Retrieve Content by ID**
+
+  - **Endpoint**: `/api/contents/:id`
+  - **Description**: Embark on a mindful journey with one "content" retrieved by id from the database.
+  - **Example**: `GET https://eazyeaze.190304.xyz/api/contents/1`
+
 - #### **Get Content's tags**
 
   - **Endpoint**: `/api/contents/tags/:id`
   - **Description**: Dive deep into a section’s essence by revealing the wisdom tied to its unique "Tags".
   - **Example**: `GET https://eazyeaze.190304.xyz/api/contents/tags/1`
+
+- ### Tags
 
 - #### **Get All Tags**
   
@@ -79,6 +85,8 @@
   - **Endpoint**: `/api/tags/contents/:id`
   - **Description**: Traverse through content bound by a specific "Tag", revealing stories interconnected by theme.
   - **Example**: `GET https://eazyeaze.190304.xyz/api/tags/contents/1`
+ 
+- ### Users
 
 - #### **Create New User**
 
@@ -166,6 +174,8 @@
     }
     ```
 
+- ### Admin Content
+
 - #### **Admin: Update Content Data**
 
   - **Endpoint**: `/api/contents/admin/:id`
@@ -179,6 +189,26 @@
       "description": "Enhanced and refined for supreme tranquility"
     }
     ```
+
+- #### **Admin: Create New Content**
+
+  - **Endpoint**: `/api/contents/admin`
+  - **Description**: Infuse the spiritual realm with new "content" as an admin.
+  - **Authorization**: Bearer Admin Token Required
+  - **Example**: `POST https://eazyeaze.190304.xyz/api/contents/admin`
+  - **Request Body**:
+    ```json
+    {
+      "content_name": "NewContent",
+      "description": "NewDescription",
+      "audio": "NewAudio",
+      "image": "NewImage",
+      "author": "NewAuthor",
+      "section_name": "Section 1"
+    }
+    ```
+    
+- ### Admin User
 
 - #### **Admin: Get All Users**
 
@@ -202,23 +232,6 @@
     ```json
     {
       "role": "1"
-    }
-    ```
-
-- #### **Admin: Create New Content**
-  - **Endpoint**: `/api/contents/admin`
-  - **Description**: Infuse the spiritual realm with new "content" as an admin.
-  - **Authorization**: Bearer Admin Token Required
-  - **Example**: `POST https://eazyeaze.190304.xyz/api/contents/admin`
-  - **Request Body**:
-    ```json
-    {
-      "content_name": "NewContent",
-      "description": "NewDescription",
-      "audio": "NewAudio",
-      "image": "NewImage",
-      "author": "NewAuthor",
-      "section_name": "Section 1"
     }
     ```
 
