@@ -13,7 +13,6 @@ router.get("/",
         let sortBy = ALLOWED_SECTION_COLUMNS.includes(req.query.sort) ? req.query.sort : "section_id";
         let order = ALLOWED_ORDER.includes(req.query.order) ? req.query.order : "asc";
         const result = await getAllSections(sortBy, order);
-        console.log(result)
         return res.json(result.rows);
   }));
 
