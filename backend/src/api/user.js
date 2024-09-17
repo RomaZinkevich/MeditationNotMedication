@@ -137,7 +137,6 @@ router.delete("/", checkToken,
 router.get("/tags", checkToken,
     tryCatch(async (req, res, next) => {
         const result = await getUserTags(req.user);
-        console.log(result)
         return res.json({"status": "success", "details": result});
     }));
 

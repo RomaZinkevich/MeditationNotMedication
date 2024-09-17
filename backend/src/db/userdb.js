@@ -8,13 +8,12 @@ const createUser = async (newUser) => {
     const query = `INSERT INTO "user" (user_name, email, password) VALUES ($1, $2, $3) RETURNING user_id;`;
     try {
         const result = await pool.query(query, [newUser.name, newUser.email, newUser.password]);
-
         if (result.rowCount === 0)
             throw new UserError("AuthenticationError", "Email doesn't exist");
 
         return result.rows[0];
     } catch (error) {
-        if (error.message === "duplicate key value violates unique constraint \"email\"")
+        if (error.message === "duplicate key value violates unique constraint \"unique_email\"")
             throw new UserError("EmailValidationError", "Email already exists");
         throw new UserError("UserDatabaseError", "Unexpected database error");
     }

@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require('path');
 const sections = require("./sections");
 const content = require("./content");
 const user = require("./user");
@@ -14,7 +15,15 @@ router.get("/", (req, res) => {
   });
 });
 
-router.use('/media', express.static('/mnt/volume_1/eazyeaze_files'));
+const isProduction = process.env.NODE_ENV === 'PROD';
+
+const mediaPath = isProduction
+    ? '/mnt/volume_1/eazyeaze_files' // Server path
+    : path.join(__dirname, 'local_media'); // Local path for development
+
+// Serve media files
+router.use('/media', express.static(mediaPath));
+
 router.use("/sections", sections);
 router.use("/contents", content);
 router.use("/users", user);
