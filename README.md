@@ -62,6 +62,24 @@
   - **Example with Sorting**:
     - `GET https://eazyeaze.190304.xyz/api/sections/1?sort=content_name&order=desc`
 
+- #### **Get Content's tags**
+
+  - **Endpoint**: `/api/contents/tags/:id`
+  - **Description**: Dive deep into a section’s essence by revealing the wisdom tied to its unique "Tags".
+  - **Example**: `GET https://eazyeaze.190304.xyz/api/contents/tags/1`
+
+- #### **Get All Tags**
+  
+  - **Endpoint**: `/api/tags`
+  - **Description**: Uncover the endless possibilities of "Tags", each holding a unique narrative waiting to be discovered.
+  - **Example**: `GET https://eazyeaze.190304.xyz/api/tags`
+
+- #### **Get Tag's content**
+  
+  - **Endpoint**: `/api/tags/contents/:id`
+  - **Description**: Traverse through content bound by a specific "Tag", revealing stories interconnected by theme.
+  - **Example**: `GET https://eazyeaze.190304.xyz/api/tags/contents/1`
+
 - #### **Create New User**
 
   - **Endpoint**: `/api/users`
@@ -128,6 +146,25 @@
   - **Description**: Bid farewell to your account, gracefully leaving the tranquil space.
   - **Authorization**: Bearer Token Required
   - **Example**: `DELETE https://eazyeaze.190304.xyz/api/users`
+ 
+- #### **Get User's tags**
+  
+  - **Endpoint**: `/api/users/tags`
+  - **Description**: Reflect on the personal mosaic of "Tags" that shape a user's journey.
+  - **Authorization**: Bearer Token Required
+  - **Example**: `GET https://eazyeaze.190304.xyz/api/users/tags`
+
+- #### **Add User's tags**
+  - **Endpoint**: `/api/users/tags`
+  - **Description**: Let users enrich their experience by weaving together their personal tapestry of "Tags".
+  - **Authorization**: Bearer Token Required
+  - **Example**: `POST https://eazyeaze.190304.xyz/api/users/tags`
+  - **Request Body**:
+    ```json
+    {
+      "tag_ids": [1, 2, 3, 4, 5]
+    }
+    ```
 
 - #### **Admin: Update Content Data**
 
