@@ -114,6 +114,18 @@ const getAllUsers = async (sortBy="user_id", order="asc") => {
     }
 };
 
+//@desc Gets all user's tags
+const getUserTags = async (user) => {
+    const query = `SELECT t.tag_id, t.tag_name FROM tags t JOIN usertags ut ON t.tag_id = ut.tag_id WHERE ut.user_id = ${user.id};`
+    try {
+        const results =  await pool.query(query);
+        return results.rows;
+    } catch (error) {
+        console.log(error)
+        throw new UserError("UserTagsDatabaseError", error.details ? error.details : "Unexpected database error");
+    }
+};
+
 //@desc Changes user's role
 const changeUserRole = async (role, user_id) => {
     const query = "UPDATE \"user\" SET role=$1 WHERE user_id=$2;"
@@ -167,6 +179,7 @@ module.exports = {
     getAllUsers: getAllUsers,
     changeUserRole: changeUserRole,
     clearUsers: clearUsers,
-    seedDb: seedDb
+    seedDb: seedDb,
+    getUserTags: getUserTags
 };
 

@@ -2,7 +2,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 const { checkToken, adminToken } = require("../middleware/auth");
-const { createUser, loginUser, getUser, changeUser, changeUserPassword, deleteSingleUser } = require("../db/userdb");
+const { createUser, loginUser, getUser, changeUser, changeUserPassword, deleteSingleUser, getUserTags } = require("../db/userdb");
 const { tryCatch } = require("../utils/tryCatch");
 
 const DEFAULT_IMAGE = "https://ih1.redbubble.net/image.1046392292.3346/st,medium,507x507-pad,600x600,f8f8f8.jpg";
@@ -130,6 +130,16 @@ router.delete("/", checkToken,
 
         return res.json({"status": "success", "details": user});
 }));
+
+// @desc Gets all user's tags
+// @route GET /api/users/tags
+// @access Private
+router.get("/tags", checkToken,
+    tryCatch(async (req, res, next) => {
+        const result = await getUserTags(req.user);
+        console.log(result)
+        return res.json({"status": "success", "details": result});
+    }));
 
 
 module.exports = router;

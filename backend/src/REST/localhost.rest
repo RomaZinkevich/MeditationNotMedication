@@ -9,6 +9,10 @@
 GET {{host}}
 
 ###
+GET {{host}}/api/sections
+
+
+###
 POST {{host}}/api/users
 content-Type: application/json
 
