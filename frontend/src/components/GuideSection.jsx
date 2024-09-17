@@ -11,6 +11,7 @@ const GuideSection = ({ sectionID, name }) => {
     )
       .then((res) => res.json())
       .then((data) => {
+        console.log(data)
         setCards(data);
       });
   }, []);

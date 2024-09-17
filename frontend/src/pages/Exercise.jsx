@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import AudioPlayer from "../components/AudioPlayer";
 import "../styles/components/exercise.scss";
+import ExerciseTags from "../components/ExerciseTags";
 
 function Exercise() {
   const { id } = useParams();
@@ -45,6 +46,7 @@ function Exercise() {
           <div className="music-player">
             <AudioPlayer src={card.audio} />
           </div>
+          <ExerciseTags exerciseId={id} />
         </div>
       )}
     </>

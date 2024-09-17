@@ -35,7 +35,7 @@ const Profile = () => {
       ) : (
         <>
           <div className="profile-not-logged">
-            Not Logged In, go back
+            Not Logged In, for full functionalities, go back
             <Link to="/"> Home </Link>
             for login
           </div>

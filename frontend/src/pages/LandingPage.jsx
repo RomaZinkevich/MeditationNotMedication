@@ -41,10 +41,10 @@ function LandingPage() {
             }
           );
           // send the access token to the server, checks it, if it is valid, gets back a JWT token, if not valid, returns 401
-          const response = await axios.post(`${import.meta.env.VITE_FETCH_URL}/google/auth`, {
-            access_token: user.access_token,
-          });
-          localStorage.setItem("token", response.data.token);
+          // const response = await axios.post(`${import.meta.env.VITE_FETCH_URL}/google/auth`, {
+          //   access_token: user.access_token,
+          // });
+          // localStorage.setItem("token", response.data.token);
           setProfile(googleUserInfo.data);
         } catch (err) {
           console.error(
@@ -64,7 +64,7 @@ function LandingPage() {
   }, [user, navigating]);
 
   return (
-    <>
+    <div className="background-wrapper">
       <nav className="landing-nav">
         <div className="logo">
           <img src="../../logo.png" alt="logo img" />
@@ -109,7 +109,7 @@ function LandingPage() {
       </nav>
       <main className="cta">
         <h1 className="cta-header">Meditation, Not Medication.</h1>
-        <p>Ease Your Chronic Pain Through Meditation</p>
+        <p className="cta-description">Ease Your Chronic Pain Through Meditation</p>
         <div className="cta-buttons">
           <Link
             className="google-cta"
@@ -122,7 +122,7 @@ function LandingPage() {
           </Link>
         </div>
       </main>
-    </>
+    </div>
   );
 }
 

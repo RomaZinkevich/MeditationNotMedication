@@ -6,6 +6,8 @@ import Exercise from "./pages/Exercise";
 import Profile from "./pages/Profile";
 import LandingPage from "./pages/LandingPage";
 import NewUserFlow from "./pages/NewUserFlow";
+import TagPage from "./pages/TagPage";
+
 
 export const routes = createBrowserRouter([
   {
@@ -31,5 +33,9 @@ export const routes = createBrowserRouter([
   {
     path: "/newUserFlow",
     element: <NewUserFlow />,
+  },
+  {
+    path: "/tags/:tag",
+    element: <TagPage />,
   }
 ]);
