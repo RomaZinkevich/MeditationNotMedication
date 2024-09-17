@@ -14,6 +14,7 @@ router.get("/", (req, res) => {
   });
 });
 
+router.use('/media', express.static('/mnt/volume_1/eazyeaze_files'));
 router.use("/sections", sections);
 router.use("/contents", content);
 router.use("/users", user);
