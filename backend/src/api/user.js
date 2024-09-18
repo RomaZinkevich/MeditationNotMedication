@@ -101,7 +101,7 @@ router.post("/google_auth",
         result.id = result.user_id
         // delete result.user_id
         let token = jwt.sign(result, process.env.JWT_SECRET_KEY, {
-            expiresIn: "10m",
+            expiresIn: "30d",
         });
         return res.json({ "status": "success", "token": token, "details": result })
     }));
