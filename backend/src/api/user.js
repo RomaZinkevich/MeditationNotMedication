@@ -73,6 +73,29 @@ router.post("/login",
         return res.json({ "status": "success", "token": token, "details": user });
 }));
 
+// @desc Google authorization
+// @route POST /api/users/google_auth
+// @access Public
+// router.post("/google_auth",
+//     tryCatch(async (req, res, next) => {
+//         let user = {
+//             email: req.body.email,
+//             password: req.body.password
+//         };
+//         let response = await loginUser(user);
+//
+//         delete user.password;
+//         user.id = response.user_id;
+//         user.name = response.name;
+//         user.image = response.image;
+//         user.role = response.role;
+//
+//         let token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
+//             expiresIn: "10m",
+//         });
+//         return res.json({ "status": "success", "token": token, "details": user });
+//     }));
+
 // @desc Gets user info
 // @route GET /api/users
 // @access Private
