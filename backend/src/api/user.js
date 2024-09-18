@@ -77,44 +77,45 @@ router.post("/login",
 // @desc Google authorization
 // @route POST /api/users/google_auth
 // @access Public
-// router.post("/google_auth",
-//     tryCatch(async (req, res, next) => {
-//         let user = {
-//             email: req.body.email,
-//             access_token: req.body.access_token
-//         };
-//         axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`)
-//             .then(response => {
-//                 if (response.data.email===user.email){
-//                     return response.data}
-//                 else
-//                     throw new Error("Emails are different");
-//             })
-//             .then(data => {
-//                 const newUser = {
-//                     name: data.name,
-//                     email: data.email,
-//                     password: data.id
-//                 }
-//                 return createUser(newUser);
-//             })
-//             .then(db_response => {
-//                 console.log(db_response)
-//             })
-//             .catch(error => {
-//                 console.error(error);
-//             });
-//         // delete user.password;
-//         // user.id = response.user_id;
-//         // user.name = response.name;
-//         // user.image = response.image;
-//         // user.role = response.role;
-//         //
-//         // let token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
-//         //     expiresIn: "10m",
-//         // });
-//         return res.json({ "status": "success", "token": token, "details": user });
-//     }));
+router.post("/google_auth",
+    tryCatch(async (req, res, next) => {
+        let user = {
+            email: req.body.email,
+            access_token: req.body.access_token
+        };
+        axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`)
+            .then(response => {
+                if (response.data.email===user.email){
+                    return response.data
+                }
+                else
+                    throw new Error("Emails are different");
+            })
+            .then(data => {
+                const newUser = {
+                    name: data.name,
+                    email: data.email,
+                    password: data.id
+                }
+                return createUser(newUser);
+            })
+            .then(db_response => {
+                console.log(db_response)
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        // delete user.password;
+        // user.id = response.user_id;
+        // user.name = response.name;
+        // user.image = response.image;
+        // user.role = response.role;
+        //
+        // let token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
+        //     expiresIn: "10m",
+        // });
+        return res.json({ "status": "success", "token": token, "details": user });
+    }));
 
 // @desc Gets user info
 // @route GET /api/users
