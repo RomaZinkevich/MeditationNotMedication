@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 
 import NavBar from "../components/NavBar";
@@ -10,11 +10,10 @@ import ExerciseTags from "../components/ExerciseTags";
 function Exercise() {
   const { id } = useParams();
   const [card, setCard] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(
-      `${import.meta.env.VITE_FETCH_URL}/contents/${id}`
-    )
+    fetch(`${import.meta.env.VITE_FETCH_URL}/contents/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setCard(data);
@@ -31,7 +30,7 @@ function Exercise() {
       ) : (
         <div className="exercise-page">
           <header>
-            <Link to={"/home"} className="back">
+            <Link onClick={() => navigate(-1)} className="back-button">
               <h1>Back</h1>
             </Link>
           </header>

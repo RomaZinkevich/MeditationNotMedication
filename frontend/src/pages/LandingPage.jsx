@@ -31,6 +31,7 @@ function LandingPage() {
     const fetchGoogleUserInfo = async () => {
       if (user) {
         try {
+          console.log(user.access_token)
           const googleUserInfo = await axios(
             `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
             {
@@ -40,6 +41,7 @@ function LandingPage() {
               },
             }
           );
+          console.log("Google User Info:", googleUserInfo);
           // send the access token to the server, checks it, if it is valid, gets back a JWT token, if not valid, returns 401
           // const response = await axios.post(`${import.meta.env.VITE_FETCH_URL}/google/auth`, {
           //   access_token: user.access_token,

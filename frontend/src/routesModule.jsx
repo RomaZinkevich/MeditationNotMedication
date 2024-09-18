@@ -35,7 +35,7 @@ export const routes = createBrowserRouter([
     element: <NewUserFlow />,
   },
   {
-    path: "/tags/:tag",
+    path: "/tags/:id",
     element: <TagPage />,
   }
 ]);

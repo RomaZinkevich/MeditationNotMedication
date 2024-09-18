@@ -6,9 +6,11 @@ import NavBar from "../components/NavBar";
 import "../styles/components/profile.scss";
 import { useProfile } from "../contexts/ProfileProvider";
 import { googleLogout } from "@react-oauth/google";
+import ExerciseTags from "../components/ExerciseTags";
 
 const Profile = () => {
   const { profile, setProfile } = useProfile();
+  const [tags, setTags] = useState([]);
   const navigate = useNavigate();
 
   const logout = async () => {
@@ -16,6 +18,15 @@ const Profile = () => {
     setProfile(null);
     navigate("/");
   };
+
+  // useEffect(() => {
+  //   fetch(`${import.meta.env.VITE_FETCH_URL}/tags`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setTags(data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   return (
     <>
@@ -30,7 +41,17 @@ const Profile = () => {
               <Link onClick={() => logout()}>Log out</Link>
             </button>
           </div>
-          {/* <h2>My saved exercises:</h2> */}
+          <h3 className="profile-header">My pain type:</h3>
+          {tags.length > 0 ? (
+            <>List of pain types</>
+          ) : (
+            <>
+              <div>
+                No pain type found, go back to{" "}
+                <Link to="/newUserFlow"> Here </Link> to set your pain type
+              </div>
+            </>
+          )}
         </>
       ) : (
         <>
