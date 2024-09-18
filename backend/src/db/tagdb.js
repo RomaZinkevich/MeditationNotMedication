@@ -7,7 +7,16 @@ const getAllTags = async () => {
     try {
         return await pool.query(query);
     } catch (error) {
-        console.log(error)
+        throw new TagError("TagDatabaseError", "Unexpected database error");
+    }
+};
+
+//@desc Gets one Tag from database
+const getTag = async (tag_id) => {
+    const query = `SELECT * FROM tags WHERE tag_id=${tag_id};`;
+    try {
+        return await pool.query(query);
+    } catch (error) {
         throw new TagError("TagDatabaseError", "Unexpected database error");
     }
 };
@@ -25,6 +34,7 @@ const getTagsContent = async (tag_id) => {
 
 module.exports = {
     getAllTags: getAllTags,
+    getTag: getTag,
     getTagsContent: getTagsContent
 };
 
