@@ -2,6 +2,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 const axios = require('axios');
+const UserError = require('../utils/UserError');
 const { checkToken, adminToken } = require("../middleware/auth");
 const { createUser, loginUser, getUser, changeUser, changeUserPassword, deleteSingleUser, getUserTags, postUserTags } = require("../db/userdb");
 const { tryCatch } = require("../utils/tryCatch");
@@ -77,44 +78,32 @@ router.post("/login",
 // @desc Google authorization
 // @route POST /api/users/google_auth
 // @access Public
-// router.post("/google_auth",
-//     tryCatch(async (req, res, next) => {
-//         let user = {
-//             email: req.body.email,
-//             access_token: req.body.access_token
-//         };
-//         axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`)
-//             .then(response => {
-//                 if (response.data.email===user.email){
-//                     return response.data}
-//                 else
-//                     throw new Error("Emails are different");
-//             })
-//             .then(data => {
-//                 const newUser = {
-//                     name: data.name,
-//                     email: data.email,
-//                     password: data.id
-//                 }
-//                 return createUser(newUser);
-//             })
-//             .then(db_response => {
-//                 console.log(db_response)
-//             })
-//             .catch(error => {
-//                 console.error(error);
-//             });
-//         // delete user.password;
-//         // user.id = response.user_id;
-//         // user.name = response.name;
-//         // user.image = response.image;
-//         // user.role = response.role;
-//         //
-//         // let token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
-//         //     expiresIn: "10m",
-//         // });
-//         return res.json({ "status": "success", "token": token, "details": user });
-//     }));
+router.post("/google_auth",
+    tryCatch(async (req, res, next) => {
+        let result;
+        let response = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${req.body.access_token}`)
+        if (response.data.email!==req.body.email)
+            throw new UserError("EmailValidationError","Emails are different");
+
+        const newUser = {
+            name: response.data.name,
+            email: response.data.email,
+            password: response.data.id
+        }
+
+        try {
+            result = await createUser({ ...newUser });
+        }
+        catch (error) {
+            if (error.message === "Email already exists") result = await loginUser(newUser)
+            else throw new UserError("UserError", error.message)
+        }
+
+        let token = jwt.sign(result, process.env.JWT_SECRET_KEY, {
+            expiresIn: "10m",
+        });
+        return res.json({ "status": "success", "token": token, "details": result })
+    }));
 
 // @desc Gets user info
 // @route GET /api/users
