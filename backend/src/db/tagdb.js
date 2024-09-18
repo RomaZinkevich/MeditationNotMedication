@@ -14,7 +14,7 @@ const getAllTags = async () => {
 
 //@desc Gets all tag's content
 const getTagsContent = async (tag_id) => {
-    const query = `SELECT c.content_id, c.content_name FROM content c JOIN contenttags ct ON c.content_id = ct.content_id WHERE ct.tag_id = ${tag_id};`;
+    const query = `SELECT c.content_id, c.content_name, c.image, c.description FROM content c JOIN contenttags ct ON c.content_id = ct.content_id WHERE ct.tag_id = ${tag_id};`;
     try {
         return await pool.query(query);
     } catch (error) {
