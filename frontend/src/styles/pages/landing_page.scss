@@ -83,12 +83,12 @@ ul.hide {
 }
 
 .cta-header {
-  color: #1A3E6F;
+  color: white;
 }
 
 .cta-description {
   font-weight:500;
-
+  color:white;
 }
 
 .cta-buttons {
@@ -101,16 +101,14 @@ ul.hide {
     font-size: 1rem;
   }
   .google-cta {
-    background: linear-gradient(90deg, #1A3E6F, #4285f5);
+    background: linear-gradient(90deg, #76987F, #4285f5);
     color: white;
   }
 
   .trial-cta {
-    border: 1.5px black solid;
-    &:hover {
-      border:1.5px white solid;
-      color:white;
-    }
+    border: 1.5px white solid;
+    color:white;
+
   }
 
   a {
@@ -147,8 +145,8 @@ ul.hide {
 }
 
 .background-wrapper {
-  background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.85)),
-                    url("../../images/landing_page_background.jpg");
+  background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5)),
+                    url("../../images/test.jpg");
   background-size: cover;
   background-position: center;
   height: 100vh;

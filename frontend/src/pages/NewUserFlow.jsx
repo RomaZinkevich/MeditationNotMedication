@@ -1,9 +1,59 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 import "../styles/pages/new_user_flow.scss";
+import { useProfile } from "../contexts/ProfileProvider";
+import axios from "axios";
 
 function NewUserFlow() {
+  const { profile, setProfile } = useProfile();
+  const [navigating, setNavigating] = useState(false);
+  const [painTypes, setPainTypes] = useState([]);
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!profile) {
+      navigate("/");
+    }
+  }, []);
+
+  const nextHandler = async () => {
+    try {
+      if (painTypes.length === 0) {
+        toast.error("Please select at least one pain type");
+        return;
+      }
+      console.log("painTypes", painTypes);
+      const response = await axios.post(
+        `${import.meta.env.VITE_FETCH_URL}/users/tags`,
+        {
+          tag_ids: painTypes,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      console.log("response", response);
+    } catch (error) {
+      console.error("Error posting tags:", error);
+    }
+  };
+
+  const painTypeChangeHandler = (e) => {
+    const { id, checked } = e.target;
+    let tagId = id.split("-").pop();
+    tagId = parseInt(tagId);
+    if (checked) {
+      setPainTypes([...painTypes, tagId]);
+    } else {
+      setPainTypes(painTypes.filter((painType) => painType !== tagId));
+    }
+  };
+
   return (
     <>
       <section className="new-user__pain-type">
@@ -11,26 +61,48 @@ function NewUserFlow() {
         <p>This will help us provide tailored meditations</p>
         <div className="new-user__pain-type__options">
           <div className="checkbox-container">
-            <input type="checkbox" id="checkbox-musculoskeletal" />
-            <label htmlFor="checkbox-musculoskeletal">
+            <input
+              type="checkbox"
+              id="checkbox-musculoskeletal-paintype-1"
+              onChange={(e) => painTypeChangeHandler(e)}
+            />
+            <label htmlFor="checkbox-musculoskeletal-paintype-1">
               Musculoskeletal Type
             </label>
           </div>
           <div className="checkbox-container">
-            <input type="checkbox" id="checkbox-neuropathic" />
-            <label htmlFor="checkbox-neuropathic">Neuropathic Type</label>
+            <input
+              type="checkbox"
+              id="checkbox-neuropathic-paintype-2"
+              onChange={(e) => painTypeChangeHandler(e)}
+            />
+            <label htmlFor="checkbox-neuropathic-paintype-2">
+              Neuropathic Type
+            </label>
           </div>
           <div className="checkbox-container">
-            <input type="checkbox" id="checkbox-visceral" />
-            <label htmlFor="checkbox-visceral">Visceral Type</label>
+            <input
+              type="checkbox"
+              id="checkbox-visceral-paintype-3"
+              onChange={(e) => painTypeChangeHandler(e)}
+            />
+            <label htmlFor="checkbox-visceral-paintype-3">Visceral Type</label>
           </div>
           <div className="checkbox-container">
-            <input type="checkbox" id="checkbox-headache" />
-            <label htmlFor="checkbox-headache">Headache</label>
+            <input
+              type="checkbox"
+              id="checkbox-headache-paintype-4"
+              onChange={(e) => painTypeChangeHandler(e)}
+            />
+            <label htmlFor="checkbox-headache-paintype-4">Headache</label>
           </div>
           <div className="checkbox-container">
-            <input type="checkbox" id="checkbox-other" />
-            <label htmlFor="checkbox-other">Other</label>
+            <input
+              type="checkbox"
+              id="checkbox-other-paintype-5"
+              onChange={(e) => painTypeChangeHandler(e)}
+            />
+            <label htmlFor="checkbox-other-paintype-5">Other</label>
           </div>
         </div>
       </section>
@@ -51,8 +123,22 @@ function NewUserFlow() {
         </div>
       </section>
       <div className="button-wrapper">
-        <Link className="next-button" to={"/home"}>Next</Link>
+        <Link className="next-button" onClick={() => nextHandler()}>
+          Next
+        </Link>
       </div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 }

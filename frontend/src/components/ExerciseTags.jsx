@@ -19,7 +19,7 @@ function ExerciseTags({ exerciseId }) {
       <ul>
         {tags.map((tag) => (
           <li key={tag.id}>
-            <Link to={`/tags/${tag.tag_id}`}>{tag.tag_name}</Link>
+            <Link to={`/tags/${tag.tag_id}`}>#{tag.tag_name}</Link>
           </li>
         ))}
       </ul>

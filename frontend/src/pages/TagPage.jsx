@@ -36,8 +36,8 @@ function TagPage() {
         </Link>
       </header>
       <NavBar />
-      <div className="container">
-        <h2>Bulll</h2>
+      <div className="container" style={{marginBottom:"10rem"}}>
+        <h2>{tag.tag_name}</h2>
         <div className="cards_container">
           {exercises.map((card) => (
             <CardComponent key={card.content_id} card={card} />

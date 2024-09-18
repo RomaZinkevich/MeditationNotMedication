@@ -11,9 +11,10 @@ import { useProfile } from "../contexts/ProfileProvider";
 function LandingPage() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [user, setUser] = useState(null);
-  const [navigating, setNavigating] = useState(false); // Added state to control navigation
+  const [navigating, setNavigating] = useState(false);
   const { profile, setProfile } = useProfile();
   const navigate = useNavigate();
+  const [isNewUser, setIsNewUser] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -22,7 +23,7 @@ function LandingPage() {
   const login = useGoogleLogin({
     onSuccess: async (response) => {
       setUser(response);
-      setNavigating(true); // Set navigating state to true
+      setNavigating(true);
     },
     onFailure: (response) => console.log("Login failed" + response),
   });
@@ -31,7 +32,7 @@ function LandingPage() {
     const fetchGoogleUserInfo = async () => {
       if (user) {
         try {
-          console.log(user.access_token)
+          console.log(user.access_token);
           const googleUserInfo = await axios(
             `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
             {
@@ -42,12 +43,18 @@ function LandingPage() {
             }
           );
           console.log("Google User Info:", googleUserInfo);
-          // send the access token to the server, checks it, if it is valid, gets back a JWT token, if not valid, returns 401
-          // const response = await axios.post(`${import.meta.env.VITE_FETCH_URL}/google/auth`, {
-          //   access_token: user.access_token,
-          // });
-          // localStorage.setItem("token", response.data.token);
+
+          const response = await axios.post(
+            `${import.meta.env.VITE_FETCH_URL}/users/google_auth`,
+            {
+              email: googleUserInfo.data.email,
+              access_token: user.access_token,
+            }
+          );
+          localStorage.setItem("token", response.data.token);
           setProfile(googleUserInfo.data);
+          setIsNewUser(response.data.new_user);
+
         } catch (err) {
           console.error(
             "Error fetching user info or communicating with backend:",
@@ -55,6 +62,9 @@ function LandingPage() {
           );
         } finally {
           if (navigating) {
+            if(isNewUser) {
+              navigate("/newUserFlow");
+            }
             navigate("/home");
             setNavigating(false);
           }
@@ -111,12 +121,11 @@ function LandingPage() {
       </nav>
       <main className="cta">
         <h1 className="cta-header">Meditation, Not Medication.</h1>
-        <p className="cta-description">Ease Your Chronic Pain Through Meditation</p>
+        <p className="cta-description">
+          Ease Your Chronic Pain Through Meditation
+        </p>
         <div className="cta-buttons">
-          <Link
-            className="google-cta"
-            onClick={() => login()}
-          >
+          <Link className="google-cta" onClick={() => login()}>
             Login With Google
           </Link>
           <Link to="/home" className="trial-cta">

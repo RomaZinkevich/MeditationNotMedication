@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import NavBar from "../components/NavBar";
-import "../styles/components/profile.scss";
+import "../styles/pages/profile.scss";
 import { useProfile } from "../contexts/ProfileProvider";
 import { googleLogout } from "@react-oauth/google";
 import ExerciseTags from "../components/ExerciseTags";
@@ -19,14 +20,22 @@ const Profile = () => {
     navigate("/");
   };
 
-  // useEffect(() => {
-  //   fetch(`${import.meta.env.VITE_FETCH_URL}/tags`)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setTags(data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
+  useEffect(() => {
+    const getUserTags = async () => {
+      const response = await axios.get(
+        `${import.meta.env.VITE_FETCH_URL}/users/tags`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      setTags(response.data.details);
+    };
+    if (profile) {
+      getUserTags();
+    }
+  }, []);
 
   return (
     <>
@@ -41,15 +50,23 @@ const Profile = () => {
               <Link onClick={() => logout()}>Log out</Link>
             </button>
           </div>
-          <h3 className="profile-header">My pain type:</h3>
-          {tags.length > 0 ? (
-            <>List of pain types</>
+          <h3 className="profile-tags-header">My pain type(s):</h3>
+          {tags ? (
+            <ul className="profile-tags-ul">
+              {tags.map((tag) => {
+                return (
+                  <div key={tag.tag_id} className="profile-tag">
+                    <Link to={`/tags/${tag.tag_id}`}>#{tag.tag_name}</Link>
+                  </div>
+                );
+              })}
+            </ul>
           ) : (
             <>
-              <div>
+              <p className="no-pain-types-p">
                 No pain type found, go back to{" "}
-                <Link to="/newUserFlow"> Here </Link> to set your pain type
-              </div>
+                <Link to="/newUserFlow"> here </Link> to set your pain type
+              </p>
             </>
           )}
         </>

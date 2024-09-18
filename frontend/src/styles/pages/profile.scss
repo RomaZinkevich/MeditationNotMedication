@@ -43,6 +43,33 @@
   }
 }
 
-.profile-header {
+.profile-tags-header {
+  text-align: center;
+  margin-top: 2rem;
+}
 
+.no-pain-types-p {
+  text-align: center;
+  margin-top: 1rem;
+  a {
+    color: red;
+  }
+}
+
+.profile-tags-ul {
+  display:flex;
+  margin-top:1rem;
+  justify-content: center;
+  a {
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+
+    background-color: #76987f;
+    color: white;
+
+    padding: 0.25rem 1rem;
+    border-radius: 5px;
+
+    cursor: pointer;
+  }
 }
