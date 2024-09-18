@@ -128,7 +128,7 @@ router.put("/", checkToken,
         await changeUser(user, req.user);
 
         let token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
-            expiresIn: "10m",
+            expiresIn: "11m",
         });
         return res.json({"status": "success", "token": token, "details": user});
 }));
