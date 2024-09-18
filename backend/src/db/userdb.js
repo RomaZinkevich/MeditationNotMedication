@@ -113,6 +113,7 @@ const getAllUsers = async (sortBy="user_id", order="asc") => {
 
 //@desc Gets all user's tags
 const getUserTags = async (user) => {
+    console.log(user);
     const query = `SELECT t.tag_id, t.tag_name FROM tags t JOIN usertags ut ON t.tag_id = ut.tag_id WHERE ut.user_id = ${user.id};`
     try {
         const results =  await pool.query(query);
