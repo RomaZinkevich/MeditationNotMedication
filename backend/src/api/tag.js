@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { getAllTags, getTagsContent } = require("../db/tagdb");
+const { getAllTags, getTag, getTagsContent } = require("../db/tagdb");
 const { tryCatch } = require("../utils/tryCatch");
 
 
@@ -12,6 +12,16 @@ router.get("/",
         const result = await getAllTags();
         res.json(result.rows);
     }));
+
+// @desc Get Tag
+// @route GET /api/tags/:id
+// @access Public
+router.get("/:id",
+    tryCatch(async (req, res, next) => {
+        const result = await getTag(req.params.id);
+        res.json(result.rows[0]);
+    }));
+
 
 // @desc Get Tag's content
 // @route GET /api/tags/contents/:id
