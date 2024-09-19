@@ -1,0 +1,19 @@
+.tags {
+  padding-bottom: 10rem;
+  li {
+    display: inline-block;
+
+    a {
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+
+      background-color: #76987f;
+      color: white;
+
+      padding: 0.25rem 1rem;
+      border-radius: 5px;
+
+      cursor: pointer;
+    }
+  }
+}
