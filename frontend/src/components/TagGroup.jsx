@@ -3,11 +3,11 @@ import CardComponent from "./CardComponent";
 
 import "../styles/components/guide_section.scss";
 
-const GuideSection = ({ sectionID, name }) => {
+const TagGroup = ({ tagId, tagName }) => {
   const [cards, setCards] = useState([]);
   useEffect(() => {
     fetch(
-      `${import.meta.env.VITE_FETCH_URL}/sections/${sectionID}`
+      `${import.meta.env.VITE_FETCH_URL}/tags/contents/${tagId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -17,7 +17,7 @@ const GuideSection = ({ sectionID, name }) => {
 
   return (
     <div className="container">
-      <h2>{name}</h2>
+      <h2>{tagName}</h2>
       <div className="cards_container">
         {cards.map((card) => (
           <CardComponent key={card.content_id} card={card} />
@@ -27,4 +27,4 @@ const GuideSection = ({ sectionID, name }) => {
   );
 };
 
-export default GuideSection;
+export default TagGroup;
