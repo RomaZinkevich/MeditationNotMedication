@@ -90,12 +90,16 @@ router.post("/google_auth",
             email: response.data.email,
             password: response.data.id
         }
-
+        let isNewUser;
         try {
             result = await createUser({ ...newUser });
+            isNewUser=true;
         }
         catch (error) {
-            if (error.message === "Email already exists") result = await loginUser(newUser)
+            if (error.message === "Email already exists") {
+                result = await loginUser(newUser)
+                isNewUser=false;
+            }
             else throw new UserError("UserError", error.message)
         }
         result.id = result.user_id
@@ -103,7 +107,7 @@ router.post("/google_auth",
         let token = jwt.sign(result, process.env.JWT_SECRET_KEY, {
             expiresIn: "30d",
         });
-        return res.json({ "status": "success", "token": token, "details": result })
+        return res.json({ "status": "success", "token": token, "details": result, "newUser": isNewUser })
     }));
 
 // @desc Gets user info
