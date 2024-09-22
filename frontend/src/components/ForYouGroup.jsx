@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Skeleton from "react-loading-skeleton";
 
 import CardComponent from "./CardComponent";
 function ForYouGroup() {
   const [tags, setTags] = useState([]);
   const [contents, setContents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getUserTags = async () => {
@@ -37,6 +39,7 @@ function ForYouGroup() {
           allContent.push(...response.data);
         }
         setContents(allContent);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching content:", error);
       }
@@ -48,14 +51,35 @@ function ForYouGroup() {
   }, [tags]);
 
   return (
-    <div className="container">
-      <h2>Made For You</h2>
-      <div className="cards_container">
-        {contents.map((content) => (
-          <CardComponent key={content.content_id} card={content} />
-        ))}
-      </div>
-    </div>
+    <>
+      {loading ? (
+        <div className="skeleton-container">
+          <Skeleton height={40}></Skeleton>
+          <Skeleton
+            height={200}
+            width={"100%"}
+            style={{ marginBottom: "1rem" }}
+          />
+          <Skeleton height={40}></Skeleton>
+          <Skeleton
+            height={200}
+            width={"100%"}
+            style={{ marginBottom: "1rem" }}
+          />
+        </div>
+      ) : (
+        <>
+          <h2 className="tag-group-header">Made For You</h2>
+          <div className="container">
+            <div className="cards_container">
+              {contents.map((content) => (
+                <CardComponent key={content.content_id} card={content} />
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+    </>
   );
 }
 

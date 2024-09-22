@@ -16,7 +16,7 @@ function NewUserFlow() {
     if (!profile) {
       navigate("/");
     }
-  }, []);
+  }, [profile, navigate]); // Add dependencies for useEffect
 
   const nextHandler = async () => {
     try {
@@ -36,12 +36,20 @@ function NewUserFlow() {
           },
         }
       );
-
+      setNavigating(true);
       console.log("response", response);
+      console.log(navigating);
     } catch (error) {
       console.error("Error posting tags:", error);
+      toast.error("Error posting tags");
     }
   };
+
+  useEffect(() => {
+    if (navigating) {
+      navigate("/home");
+    }
+  }, [navigating]);
 
   const painTypeChangeHandler = (e) => {
     const { id, checked } = e.target;
@@ -99,10 +107,10 @@ function NewUserFlow() {
           <div className="checkbox-container">
             <input
               type="checkbox"
-              id="checkbox-other-paintype-5"
+              id="checkbox-other-paintype-0"
               onChange={(e) => painTypeChangeHandler(e)}
             />
-            <label htmlFor="checkbox-other-paintype-5">Other</label>
+            <label htmlFor="checkbox-other-paintype-0">Other</label>
           </div>
         </div>
       </section>
@@ -123,7 +131,7 @@ function NewUserFlow() {
         </div>
       </section>
       <div className="button-wrapper">
-        <Link className="next-button" onClick={() => nextHandler()}>
+        <Link className="next-button" onClick={nextHandler}>
           Next
         </Link>
       </div>

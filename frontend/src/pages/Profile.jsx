@@ -46,12 +46,12 @@ const Profile = () => {
             <img src={profile.picture} alt="profile picture" />
             <p>User Name: {profile.name}</p>
             <p>User Email: {profile.email}</p>
-            <button>
-              <Link onClick={() => logout()}>Log out</Link>
+            <button onClick={() => logout()}>
+              <Link >Log out</Link>
             </button>
           </div>
           <h3 className="profile-tags-header">My pain type(s):</h3>
-          {tags ? (
+          {tags.length > 0 ? (
             <ul className="profile-tags-ul">
               {tags.map((tag) => {
                 return (

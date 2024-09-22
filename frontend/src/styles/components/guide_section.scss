@@ -40,3 +40,11 @@
       margin-right: 3rem;
     }
   }
+
+  .tag-group-header {
+    margin-left: 70px;
+    margin-top: 10px;
+    @media(max-width: 768px) {
+      margin-left: 20px;
+    }
+  }

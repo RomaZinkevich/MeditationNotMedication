@@ -23,7 +23,6 @@ function LandingPage() {
   const login = useGoogleLogin({
     onSuccess: async (response) => {
       setUser(response);
-      setNavigating(true);
     },
     onFailure: (response) => console.log("Login failed" + response),
   });
@@ -42,7 +41,6 @@ function LandingPage() {
               },
             }
           );
-          console.log("Google User Info:", googleUserInfo);
 
           const response = await axios.post(
             `${import.meta.env.VITE_FETCH_URL}/users/google_auth`,
@@ -53,7 +51,8 @@ function LandingPage() {
           );
           localStorage.setItem("token", response.data.token);
           setProfile(googleUserInfo.data);
-          setIsNewUser(response.data.new_user);
+          setIsNewUser(response.data.newUser);
+          setNavigating(true);
 
         } catch (err) {
           console.error(
@@ -62,11 +61,12 @@ function LandingPage() {
           );
         } finally {
           if (navigating) {
-            if(isNewUser) {
-              navigate("/newUserFlow");
-            }
-            navigate("/home");
             setNavigating(false);
+            if (isNewUser) {
+              navigate("/newUserFlow");
+            } else {
+              navigate("/home");
+            }
           }
         }
       }
