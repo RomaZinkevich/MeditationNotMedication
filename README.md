@@ -111,7 +111,8 @@
     ```json
     {
       "name": "ExistingUser",
-      "password": "TheirSecretPa$$w0rd"
+      "password": "TheirSecretPa$$w0rd",
+      "email": "theircoolemail@cool.cool"
     }
     ```
 
