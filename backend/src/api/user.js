@@ -47,7 +47,7 @@ router.post("/",
         newUser.id = response.user_id
 
         let token = jwt.sign(newUser, process.env.JWT_SECRET_KEY, {
-            expiresIn: "10m",
+            expiresIn: "30d",
         });
         return res.json({"status": "success", "token": token, "details": newUser});
 }));
@@ -70,7 +70,7 @@ router.post("/login",
         user.role = response.role;
 
         let token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
-            expiresIn: "10m",
+            expiresIn: "30d",
         });
         return res.json({ "status": "success", "token": token, "details": user });
 }));
@@ -133,7 +133,7 @@ router.put("/", checkToken,
         await changeUser(user, req.user);
 
         let token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
-            expiresIn: "11m",
+            expiresIn: "30d",
         });
         return res.json({"status": "success", "token": token, "details": user});
 }));
@@ -183,13 +183,10 @@ router.get("/tags", checkToken,
 router.post("/tags", checkToken,
     tryCatch(async (req, res, next) => {
         let { tag_ids } = req.body;
-        let user_tags = await getUserTags(req.user);
-        user_tags = user_tags.map(tag => tag.tag_id)
-        tag_ids = tag_ids.filter(tag => !user_tags.includes(tag));
         if (tag_ids.length === 0) return res.json({"status": "failed", "details": "No new tags to add"})
 
         const id_pairs = tag_ids.map(tag_id => `(${req.user.id}, ${tag_id})`).join(', ');
-        const result = await postUserTags(id_pairs);
+        const result = await postUserTags(id_pairs, req.user.id);
         return res.json({"status": "success", "details": result});
     }));
 
