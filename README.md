@@ -97,7 +97,8 @@
     ```json
     {
       "name": "NewUser",
-      "password": "SecurePa$$word123"
+      "password": "SecurePa$$word123",
+      "email": "mycoolemail@cool.cool"
     }
     ```
 
@@ -111,6 +112,19 @@
     {
       "name": "ExistingUser",
       "password": "TheirSecretPa$$w0rd"
+    }
+    ```
+
+- #### **User GoogleOauth Login**
+
+  - **Endpoint**: `/api/users/google_auth`
+  - **Description**: Glide effortlessly into the serene space using your Google account, bypassing the need to remember passwords.
+  - **Example**: `POST https://eazyeaze.190304.xyz/api/users/google_auth`
+  - **Request Body**:
+    ```json
+    {
+      "access_token":"TOKENTOKENTOKENTOKEN",
+      "email":"token@email.com"
     }
     ```
 
