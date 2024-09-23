@@ -125,13 +125,12 @@ const getUserTags = async (user) => {
 };
 
 //@desc Posts user's tags
-const postUserTags = async (id_pairs) => {
-    const query = `INSERT INTO usertags (user_id, tag_id) VALUES ${id_pairs} RETURNING usertags.tag_id;`
+const postUserTags = async (id_pairs, user_id) => {
+    const query = `DELETE FROM usertags WHERE user_id=${user_id};INSERT INTO usertags (user_id, tag_id) VALUES ${id_pairs} RETURNING usertags.tag_id;`
     try {
         const results =  await pool.query(query);
-        return results.rows;
+        return results[1].rows;
     } catch (error) {
-        console.log(error)
         throw new UserError("UserTagsDatabaseError", error.details ? error.details : "Unexpected database error");
     }
 };
